@@ -3,7 +3,9 @@ import { ScrollView, View } from 'react-native';
 
 import { useTranslation } from '@/core/i18n';
 import { colorOf, useAppColorScheme } from '@/shared/theme';
-import { Card, EmptyState, Icon, IconButton, Section, Text } from '@/shared/ui';
+import { Button, Card, EmptyState, Icon, IconButton, Section, Text } from '@/shared/ui';
+
+import { useCaptureSession } from '../capture/capture-session.store';
 
 import { TimelineIcon } from '../components/timeline-icon';
 import { useTimelineDetails } from '../hooks/use-timelines';
@@ -17,9 +19,14 @@ export function TimelineScreen({ timelineId }: { timelineId: string }) {
   if (details.status === 'loading') return null;
   if (!details.data) return <EmptyState title={t('timeline.notFound')} />;
 
-  const { timeline, angles } = details.data;
+  const { timeline, angles, entryCount } = details.data;
   const template = getTemplate(timeline.templateKey);
   const activeAngles = angles.filter((a) => a.isActive);
+
+  const newEntry = () => {
+    useCaptureSession.getState().start(timelineId);
+    router.push({ pathname: '/timeline/[timelineId]/session', params: { timelineId } });
+  };
 
   const openSettings = () =>
     router.push({ pathname: '/timeline/[timelineId]/settings', params: { timelineId } });
@@ -61,12 +68,18 @@ export function TimelineScreen({ timelineId }: { timelineId: string }) {
           </View>
         </Section>
 
-        <Card className="items-center py-10">
-          <EmptyState
-            title={t('timeline.noEntries')}
-            description={t('timeline.noEntriesDescription')}
-          />
-        </Card>
+        <Button label={t('timeline.newEntry')} onPress={newEntry} />
+
+        {entryCount === 0 ? (
+          <Card className="items-center py-10">
+            <EmptyState
+              title={t('timeline.noEntries')}
+              description={t('timeline.noEntriesDescription')}
+            />
+          </Card>
+        ) : (
+          <Text variant="caption">{t('home.entries', { count: entryCount })}</Text>
+        )}
 
         <Section title={t('timeline.tips')}>
           <Card className="gap-3">

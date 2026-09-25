@@ -1,5 +1,7 @@
 import type { IconName } from '@/shared/ui';
 
+import type { LevelTarget } from '../capture/level';
+
 import type { TemplateKey } from '../db/progress-photos.schema';
 
 export type CameraFacing = 'front' | 'back';
@@ -38,6 +40,8 @@ export type TemplateAngle = {
   mirrorOverlay?: boolean;
   camera: CameraFacing;
   captureMode: CaptureMode;
+  /** Pose the level indicator aims for (default: upright). */
+  level?: LevelTarget;
   aspectRatio: AspectRatio;
   /** Created but disabled; the user can enable it later. */
   optional?: boolean;

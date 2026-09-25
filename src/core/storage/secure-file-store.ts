@@ -1,4 +1,5 @@
 import { Directory, File, Paths } from 'expo-file-system';
+import { fromByteArray } from 'react-native-quick-base64';
 
 import { decrypt, encrypt } from '@/core/crypto';
 import { utf8Encode } from '@/shared/lib/bytes';
@@ -21,7 +22,7 @@ function aadFor(area: VaultArea, name: string) {
 }
 
 export function createSecureFileStore(getKey: () => Promise<Uint8Array>) {
-  return {
+  const store = {
     async write(area: VaultArea, name: string, plaintext: Uint8Array): Promise<void> {
       const key = await getKey();
       const file = new File(areaDir(area), `${name}.enc`);
@@ -33,6 +34,11 @@ export function createSecureFileStore(getKey: () => Promise<Uint8Array>) {
       const key = await getKey();
       const file = new File(areaDir(area), `${name}.enc`);
       return decrypt(key, await file.bytes(), aadFor(area, name));
+    },
+
+    /** Decrypts into memory as a data URI (thumbnails: small, never touch the disk). */
+    async readAsDataUri(area: VaultArea, name: string, mime = 'image/jpeg'): Promise<string> {
+      return `data:${mime};base64,${fromByteArray(await store.read(area, name))}`;
     },
 
     remove(area: VaultArea, name: string): void {
@@ -57,7 +63,7 @@ export function createSecureFileStore(getKey: () => Promise<Uint8Array>) {
       if (!dir.exists) dir.create({ intermediates: true });
       const file = new File(dir, `${name}.${extension}`);
       file.create({ overwrite: true });
-      file.write(await this.read(area, name));
+      file.write(await store.read(area, name));
       return file.uri;
     },
 
@@ -66,6 +72,7 @@ export function createSecureFileStore(getKey: () => Promise<Uint8Array>) {
       if (dir.exists) dir.delete();
     },
   };
+  return store;
 }
 
 export type SecureFileStore = ReturnType<typeof createSecureFileStore>;

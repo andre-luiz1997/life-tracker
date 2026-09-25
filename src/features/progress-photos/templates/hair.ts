@@ -13,8 +13,9 @@ export const hairTemplate: TimelineTemplate = {
     { key: 'hairline', overlay: 'head-front', ...selfie },
     { key: 'temple_left', overlay: 'head-temple', ...selfie },
     { key: 'temple_right', overlay: 'head-temple', mirrorOverlay: true, ...selfie },
-    { key: 'mid_scalp', overlay: 'head-top', ...handsFree },
-    { key: 'crown', overlay: 'head-top', ...handsFree },
+    // Phone held flat above the head, back camera facing down.
+    { key: 'mid_scalp', overlay: 'head-top', level: 'flat', ...handsFree },
+    { key: 'crown', overlay: 'head-top', level: 'flat', ...handsFree },
     { key: 'nape', overlay: 'head-back', ...handsFree },
   ],
   metrics: [{ key: 'self_rating', unit: '/5', optional: true }],

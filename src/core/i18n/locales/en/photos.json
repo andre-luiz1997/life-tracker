@@ -106,7 +106,8 @@
     "noEntries": "No entries yet",
     "noEntriesDescription": "Photos you take or import show up here.",
     "tips": "Tips for good photos",
-    "notFound": "Timeline not found."
+    "notFound": "Timeline not found.",
+    "newEntry": "New entry"
   },
   "timelineSettings": {
     "title": "Configure timeline",
@@ -138,5 +139,55 @@
     "removeMetricConfirmTitle": "Remove the “{{label}}” metric?",
     "removeMetricConfirmMessage": "Values already recorded for this metric will be deleted.",
     "lastAngle": "The timeline needs at least one active angle."
+  },
+  "session": {
+    "title": "New entry",
+    "date": "Entry of {{date}}",
+    "progress": "{{done}} of {{total}} angles",
+    "takePhoto": "Take photo",
+    "import": "Import from gallery",
+    "done": "Done",
+    "captured": "Done",
+    "pending": "Pending"
+  },
+  "capture": {
+    "permissionTitle": "Camera access",
+    "permissionMessage": "To take progress photos, allow camera access. Photos stay in the app, encrypted.",
+    "permissionButton": "Allow camera",
+    "openSettings": "Open settings",
+    "shutter": "Take photo",
+    "flipCamera": "Flip camera",
+    "flash": "Flash",
+    "grid": "Grid",
+    "ghost": "Previous photo",
+    "ghostOpacity": "Previous photo opacity",
+    "silhouette": "Silhouette",
+    "timer": "Timer",
+    "timerOff": "No timer",
+    "timerSeconds": "{{count}} s",
+    "close": "Close",
+    "handsFree": "Hands-free",
+    "handsFreeHint": "Position the phone. It vibrates faster near level and shoots by itself once steady.",
+    "handsFreeStart": "Start hands-free",
+    "handsFreeStop": "Stop",
+    "handsFreeSearching": "Finding level…",
+    "handsFreeHolding": "Hold still…",
+    "handsFreeDone": "Photos taken!",
+    "askHelp": "Someone will take it for me",
+    "levelOk": "Level",
+    "burst": "Pick the best photo",
+    "review": "Review photo",
+    "retake": "Retake",
+    "use": "Use photo",
+    "saving": "Saving…",
+    "saveError": "Couldn't save the photo."
+  },
+  "gallery": {
+    "removeTitle": "Remove from the phone's gallery?",
+    "removeMessage": "The photo is already saved and encrypted in the app. You can delete the original from the gallery.",
+    "remove": "Remove",
+    "keep": "Keep",
+    "manualTitle": "Delete the original manually",
+    "manualMessage": "The photo couldn't be deleted automatically. Open your Gallery/Photos app and delete the original."
   }
 }

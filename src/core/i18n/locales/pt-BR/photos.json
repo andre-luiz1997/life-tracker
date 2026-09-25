@@ -106,7 +106,8 @@
     "noEntries": "Nenhum registro ainda",
     "noEntriesDescription": "As fotos que você tirar ou importar aparecem aqui.",
     "tips": "Dicas para boas fotos",
-    "notFound": "Linha do tempo não encontrada."
+    "notFound": "Linha do tempo não encontrada.",
+    "newEntry": "Novo registro"
   },
   "timelineSettings": {
     "title": "Configurar linha do tempo",
@@ -138,5 +139,55 @@
     "removeMetricConfirmTitle": "Remover a métrica “{{label}}”?",
     "removeMetricConfirmMessage": "Os valores já registrados desta métrica serão apagados.",
     "lastAngle": "A linha do tempo precisa de pelo menos um ângulo ativo."
+  },
+  "session": {
+    "title": "Novo registro",
+    "date": "Registro de {{date}}",
+    "progress": "{{done}} de {{total}} ângulos",
+    "takePhoto": "Tirar foto",
+    "import": "Importar da galeria",
+    "done": "Concluir",
+    "captured": "Feito",
+    "pending": "Pendente"
+  },
+  "capture": {
+    "permissionTitle": "Acesso à câmera",
+    "permissionMessage": "Para tirar as fotos de progresso, permita o acesso à câmera. As fotos ficam só no app, criptografadas.",
+    "permissionButton": "Permitir câmera",
+    "openSettings": "Abrir ajustes",
+    "shutter": "Tirar foto",
+    "flipCamera": "Trocar câmera",
+    "flash": "Flash",
+    "grid": "Grade",
+    "ghost": "Foto anterior",
+    "ghostOpacity": "Opacidade da foto anterior",
+    "silhouette": "Silhueta",
+    "timer": "Timer",
+    "timerOff": "Sem timer",
+    "timerSeconds": "{{count}} s",
+    "close": "Fechar",
+    "handsFree": "Mãos-livres",
+    "handsFreeHint": "Posicione o celular. Ele vibra mais rápido perto do nível e dispara sozinho quando ficar estável.",
+    "handsFreeStart": "Iniciar mãos-livres",
+    "handsFreeStop": "Parar",
+    "handsFreeSearching": "Procurando o nível…",
+    "handsFreeHolding": "Segure firme…",
+    "handsFreeDone": "Fotos tiradas!",
+    "askHelp": "Alguém vai tirar para mim",
+    "levelOk": "Nivelado",
+    "burst": "Escolha a melhor foto",
+    "review": "Revisar foto",
+    "retake": "Refazer",
+    "use": "Usar foto",
+    "saving": "Salvando…",
+    "saveError": "Não foi possível salvar a foto."
+  },
+  "gallery": {
+    "removeTitle": "Remover da galeria do celular?",
+    "removeMessage": "A foto já está salva e criptografada no app. Você pode apagar o original da galeria.",
+    "remove": "Remover",
+    "keep": "Manter",
+    "manualTitle": "Apague o original manualmente",
+    "manualMessage": "Não foi possível apagar a foto automaticamente. Abra o app de Galeria/Fotos e apague a foto original."
   }
 }

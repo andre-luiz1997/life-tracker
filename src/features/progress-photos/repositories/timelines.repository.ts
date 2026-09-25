@@ -48,6 +48,12 @@ export function getTimeline(db: DbExecutor, id: string) {
   return db.select().from(timelines).where(eq(timelines.id, id)).get();
 }
 
+export function countEntries(db: DbExecutor, timelineId: string): number {
+  return (
+    db.select({ n: count() }).from(entries).where(eq(entries.timelineId, timelineId)).get()?.n ?? 0
+  );
+}
+
 export function insertTimeline(db: DbExecutor, values: NewTimeline) {
   db.insert(timelines).values(values).run();
 }

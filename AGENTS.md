@@ -60,3 +60,6 @@ Plano completo: `docs/PLANO-MVP.md`. App 100% local (sem backend), dados sensív
 - Todo texto visível passa por `t()`; adicione chaves em `pt-BR` e `en` (teste garante paridade).
 - Testes: Jest (`jest-expo`) + RNTL v14 (`await render(...)`). Módulos nativos de crypto são substituídos pelo `node:crypto` em `test/mocks`.
 - Antes de concluir: `npm run check` (typecheck, lint, prettier, testes).
+- Imagens descriptografadas: sempre `cachePolicy="none"` no `expo-image` (o padrão grava em disco sem criptografia). Miniaturas via `useThumbnail` (memória), fotos cheias via `useFullPhoto` (cache temporário, limpo por `clearDecryptedPhotos`).
+- Todo arquivo temporário em texto puro (câmera, seletor, manipulator) deve ser apagado com `discardTempImage` assim que for cifrado ou descartado.
+- `expo-media-library`: usar a API nova (`Asset`), a antiga lança erro no SDK 57. Não passar `cameraPermission: false` ao `expo-image-picker` (bloqueia a câmera no Android).

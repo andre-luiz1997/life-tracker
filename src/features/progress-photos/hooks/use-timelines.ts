@@ -40,9 +40,14 @@ export function useTimelineDetails(id: string) {
       const db = getDatabase();
       const timeline = repo.getTimeline(db, id);
       if (!timeline) return null;
-      return { timeline, angles: repo.listAngles(db, id), metrics: repo.listMetrics(db, id) };
+      return {
+        timeline,
+        angles: repo.listAngles(db, id),
+        metrics: repo.listMetrics(db, id),
+        entryCount: repo.countEntries(db, id),
+      };
     },
-    [timelines, timelineAngles, metricDefinitions],
+    [timelines, timelineAngles, metricDefinitions, entries],
     [id],
   );
 }
