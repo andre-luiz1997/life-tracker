@@ -3,11 +3,13 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import enCommon from './locales/en/common.json';
+import enPhotos from './locales/en/photos.json';
 import ptBRCommon from './locales/pt-BR/common.json';
+import ptBRPhotos from './locales/pt-BR/photos.json';
 
 export const resources = {
-  'pt-BR': { common: ptBRCommon },
-  en: { common: enCommon },
+  'pt-BR': { common: ptBRCommon, photos: ptBRPhotos },
+  en: { common: enCommon, photos: enPhotos },
 } as const;
 
 export type AppLanguage = keyof typeof resources;
@@ -28,7 +30,7 @@ i18n.use(initReactI18next).init({
   lng: detectLanguage(),
   fallbackLng: DEFAULT_LANGUAGE,
   defaultNS: 'common',
-  ns: ['common'],
+  ns: ['common', 'photos'],
   interpolation: { escapeValue: false },
   returnNull: false,
 });

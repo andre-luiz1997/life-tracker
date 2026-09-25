@@ -1,0 +1,142 @@
+{
+  "templates": {
+    "weight_loss": {
+      "name": "Weight loss / fitness",
+      "description": "Full body from several angles, with a timer for a propped-up phone.",
+      "defaultTitle": "My body"
+    },
+    "hair": {
+      "name": "Hair treatment",
+      "description": "Hairline, temples, top, crown and nape, with a hands-free mode.",
+      "defaultTitle": "My hair"
+    },
+    "face": {
+      "name": "Facial treatment",
+      "description": "Front, 45° and profiles, with a face guide.",
+      "defaultTitle": "My face"
+    },
+    "custom": {
+      "name": "Custom",
+      "description": "You choose the name and the angles.",
+      "defaultTitle": "My timeline"
+    }
+  },
+  "angles": {
+    "body_front": "Front",
+    "body_back": "Back",
+    "body_left": "Left side",
+    "body_right": "Right side",
+    "torso": "Torso / abs",
+    "arms_relaxed": "Arms relaxed",
+    "arms_flexed": "Arms flexed",
+    "legs": "Legs",
+    "glutes": "Glutes",
+    "hairline": "Hairline",
+    "temple_left": "Left temple",
+    "temple_right": "Right temple",
+    "mid_scalp": "Mid scalp",
+    "crown": "Crown / vertex",
+    "nape": "Nape",
+    "face_front": "Front",
+    "face_45_left": "45° left",
+    "face_45_right": "45° right",
+    "profile_left": "Left profile",
+    "profile_right": "Right profile",
+    "closeup": "Treated area close-up",
+    "main": "Main photo"
+  },
+  "metrics": {
+    "weight": "Weight",
+    "waist": "Waist",
+    "hip": "Hip",
+    "body_fat": "Body fat %",
+    "self_rating": "Self rating"
+  },
+  "tips": {
+    "weight_loss": {
+      "sameTime": "Always shoot at the same time, ideally in the morning before eating.",
+      "sameConditions": "Keep the same light, clothes and background.",
+      "distance": "Prop the phone at belly-button height, about 2–3 m away.",
+      "posture": "Relaxed posture; repeat the flexed pose too."
+    },
+    "hair": {
+      "dryClean": "Dry, clean hair with no product and the same hairstyle.",
+      "sameLight": "Always use the same light — overhead light exaggerates thinning.",
+      "interval": "A 2–4 week interval shows progress best.",
+      "crown": "For crown and nape, use hands-free mode: the app vibrates and shoots by itself once the phone is level."
+    },
+    "face": {
+      "noMakeup": "No makeup, hair tied back.",
+      "neutral": "Neutral expression, looking at the camera.",
+      "light": "Soft natural light facing you.",
+      "height": "Phone at eye level."
+    },
+    "custom": {
+      "consistency": "Repeat the same position, light and distance in every photo."
+    }
+  },
+  "home": {
+    "newTimeline": "New timeline",
+    "entries_zero": "No entries",
+    "entries_one": "{{count}} entry",
+    "entries_other": "{{count}} entries",
+    "lastEntryToday": "Last entry today",
+    "lastEntryDays_one": "Last entry {{count}} day ago",
+    "lastEntryDays_other": "Last entry {{count}} days ago",
+    "archived": "Archived",
+    "showArchived": "Show archived",
+    "hideArchived": "Hide archived"
+  },
+  "newTimeline": {
+    "title": "New timeline",
+    "chooseTemplate": "Choose a template",
+    "details": "Details",
+    "create": "Create timeline"
+  },
+  "form": {
+    "title": "Name",
+    "titlePlaceholder": "E.g. Minoxidil treatment",
+    "titleRequired": "Enter a name.",
+    "titleTooLong": "Use at most {{max}} characters.",
+    "color": "Color"
+  },
+  "timeline": {
+    "settings": "Configure",
+    "angles": "Angles",
+    "noEntries": "No entries yet",
+    "noEntriesDescription": "Photos you take or import show up here.",
+    "tips": "Tips for good photos",
+    "notFound": "Timeline not found."
+  },
+  "timelineSettings": {
+    "title": "Configure timeline",
+    "general": "General",
+    "angles": "Angles",
+    "anglesHint": "Disabled angles are hidden from capture, but old photos are kept.",
+    "addAngle": "Add angle",
+    "anglePlaceholder": "Angle name",
+    "metrics": "Metrics",
+    "metricsHint": "Values recorded at each check-in, like weight or measurements.",
+    "addMetric": "Add metric",
+    "metricLabelPlaceholder": "Name (e.g. Arm)",
+    "metricUnitPlaceholder": "Unit (e.g. cm)",
+    "suggestions": "Suggestions",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "rename": "Rename",
+    "remove": "Remove",
+    "enable": "Enable",
+    "disable": "Disable",
+    "dangerZone": "Danger zone",
+    "archive": "Archive",
+    "unarchive": "Unarchive",
+    "delete": "Delete timeline",
+    "deleteConfirmTitle": "Delete “{{title}}”?",
+    "deleteConfirmMessage": "All photos and entries in this timeline will be permanently deleted.",
+    "removeAngleConfirmTitle": "Remove the “{{label}}” angle?",
+    "removeAngleConfirmMessage": "Photos of this angle will be deleted too. To keep them, disable the angle instead.",
+    "removeMetricConfirmTitle": "Remove the “{{label}}” metric?",
+    "removeMetricConfirmMessage": "Values already recorded for this metric will be deleted.",
+    "lastAngle": "The timeline needs at least one active angle."
+  }
+}

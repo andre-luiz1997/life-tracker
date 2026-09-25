@@ -1,0 +1,142 @@
+{
+  "templates": {
+    "weight_loss": {
+      "name": "Emagrecimento / academia",
+      "description": "Corpo inteiro em vários ângulos, com timer para o celular apoiado.",
+      "defaultTitle": "Meu corpo"
+    },
+    "hair": {
+      "name": "Tratamento capilar",
+      "description": "Linha frontal, têmporas, topo, coroa e nuca, com modo mãos-livres.",
+      "defaultTitle": "Meu cabelo"
+    },
+    "face": {
+      "name": "Tratamento facial",
+      "description": "Frente, 45° e perfis, com guia de rosto.",
+      "defaultTitle": "Meu rosto"
+    },
+    "custom": {
+      "name": "Personalizado",
+      "description": "Você define o nome e os ângulos.",
+      "defaultTitle": "Minha linha do tempo"
+    }
+  },
+  "angles": {
+    "body_front": "Frente",
+    "body_back": "Costas",
+    "body_left": "Lateral esquerda",
+    "body_right": "Lateral direita",
+    "torso": "Torso / abdômen",
+    "arms_relaxed": "Braços relaxados",
+    "arms_flexed": "Braços contraídos",
+    "legs": "Pernas",
+    "glutes": "Glúteos",
+    "hairline": "Linha frontal",
+    "temple_left": "Têmpora esquerda",
+    "temple_right": "Têmpora direita",
+    "mid_scalp": "Meio do couro cabeludo",
+    "crown": "Coroa / vértice",
+    "nape": "Nuca",
+    "face_front": "Frente",
+    "face_45_left": "45° esquerda",
+    "face_45_right": "45° direita",
+    "profile_left": "Perfil esquerdo",
+    "profile_right": "Perfil direito",
+    "closeup": "Close da área tratada",
+    "main": "Foto principal"
+  },
+  "metrics": {
+    "weight": "Peso",
+    "waist": "Cintura",
+    "hip": "Quadril",
+    "body_fat": "% de gordura",
+    "self_rating": "Avaliação pessoal"
+  },
+  "tips": {
+    "weight_loss": {
+      "sameTime": "Tire sempre no mesmo horário, de preferência de manhã e em jejum.",
+      "sameConditions": "Mantenha a mesma luz, roupa e fundo.",
+      "distance": "Apoie o celular na altura do umbigo, a uns 2–3 m de distância.",
+      "posture": "Postura relaxada; repita também a pose contraída."
+    },
+    "hair": {
+      "dryClean": "Cabelo seco e limpo, sem produto, com o mesmo penteado.",
+      "sameLight": "Use sempre a mesma luz — luz de teto realça falhas.",
+      "interval": "Um intervalo de 2 a 4 semanas mostra melhor a evolução.",
+      "crown": "Para coroa e nuca, use o modo mãos-livres: o app vibra e dispara sozinho quando o celular estiver nivelado."
+    },
+    "face": {
+      "noMakeup": "Sem maquiagem e com o cabelo preso.",
+      "neutral": "Expressão neutra, olhando para a câmera.",
+      "light": "Luz natural difusa, de frente para o rosto.",
+      "height": "Celular na altura dos olhos."
+    },
+    "custom": {
+      "consistency": "Repita a mesma posição, luz e distância em todas as fotos."
+    }
+  },
+  "home": {
+    "newTimeline": "Nova linha do tempo",
+    "entries_zero": "Nenhum registro",
+    "entries_one": "{{count}} registro",
+    "entries_other": "{{count}} registros",
+    "lastEntryToday": "Último registro hoje",
+    "lastEntryDays_one": "Último registro há {{count}} dia",
+    "lastEntryDays_other": "Último registro há {{count}} dias",
+    "archived": "Arquivadas",
+    "showArchived": "Mostrar arquivadas",
+    "hideArchived": "Ocultar arquivadas"
+  },
+  "newTimeline": {
+    "title": "Nova linha do tempo",
+    "chooseTemplate": "Escolha um modelo",
+    "details": "Detalhes",
+    "create": "Criar linha do tempo"
+  },
+  "form": {
+    "title": "Nome",
+    "titlePlaceholder": "Ex.: Tratamento com minoxidil",
+    "titleRequired": "Informe um nome.",
+    "titleTooLong": "Use no máximo {{max}} caracteres.",
+    "color": "Cor"
+  },
+  "timeline": {
+    "settings": "Configurar",
+    "angles": "Ângulos",
+    "noEntries": "Nenhum registro ainda",
+    "noEntriesDescription": "As fotos que você tirar ou importar aparecem aqui.",
+    "tips": "Dicas para boas fotos",
+    "notFound": "Linha do tempo não encontrada."
+  },
+  "timelineSettings": {
+    "title": "Configurar linha do tempo",
+    "general": "Geral",
+    "angles": "Ângulos",
+    "anglesHint": "Ângulos desativados não aparecem na captura, mas as fotos antigas são mantidas.",
+    "addAngle": "Adicionar ângulo",
+    "anglePlaceholder": "Nome do ângulo",
+    "metrics": "Métricas",
+    "metricsHint": "Valores registrados em cada check-in, como peso ou medidas.",
+    "addMetric": "Adicionar métrica",
+    "metricLabelPlaceholder": "Nome (ex.: Braço)",
+    "metricUnitPlaceholder": "Unidade (ex.: cm)",
+    "suggestions": "Sugestões",
+    "moveUp": "Mover para cima",
+    "moveDown": "Mover para baixo",
+    "rename": "Renomear",
+    "remove": "Remover",
+    "enable": "Ativar",
+    "disable": "Desativar",
+    "dangerZone": "Zona de perigo",
+    "archive": "Arquivar",
+    "unarchive": "Desarquivar",
+    "delete": "Excluir linha do tempo",
+    "deleteConfirmTitle": "Excluir “{{title}}”?",
+    "deleteConfirmMessage": "Todas as fotos e registros desta linha do tempo serão apagados permanentemente.",
+    "removeAngleConfirmTitle": "Remover o ângulo “{{label}}”?",
+    "removeAngleConfirmMessage": "As fotos deste ângulo também serão apagadas. Para mantê-las, desative o ângulo.",
+    "removeMetricConfirmTitle": "Remover a métrica “{{label}}”?",
+    "removeMetricConfirmMessage": "Os valores já registrados desta métrica serão apagados.",
+    "lastAngle": "A linha do tempo precisa de pelo menos um ângulo ativo."
+  }
+}

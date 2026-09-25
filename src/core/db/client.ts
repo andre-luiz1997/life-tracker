@@ -1,4 +1,5 @@
 import { drizzle, type ExpoSQLiteDatabase } from 'drizzle-orm/expo-sqlite';
+import type { BaseSQLiteDatabase } from 'drizzle-orm/sqlite-core';
 import { openDatabaseSync, type SQLiteDatabase } from 'expo-sqlite';
 
 import { getDatabaseKey } from '@/core/crypto';
@@ -7,6 +8,9 @@ import { bytesToHex } from '@/shared/lib/bytes';
 export const DATABASE_NAME = 'life-tracker.db';
 
 export type AppDatabase = ExpoSQLiteDatabase;
+
+/** The database or a transaction: repositories accept either, so they compose inside `transaction`. */
+export type DbExecutor = BaseSQLiteDatabase<'sync', unknown>;
 
 let connection: { sqlite: SQLiteDatabase; db: AppDatabase } | null = null;
 
