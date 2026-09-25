@@ -1,0 +1,32 @@
+# Enable a PIN, background the app, and unlock (wrong PIN first).
+appId: com.andreluiz.lifetracker
+---
+- launchApp
+- tapOn: 'Ajustes'
+- tapOn: 'Ativar PIN'
+- tapOn: '2'
+- tapOn: '4'
+- tapOn: '6'
+- tapOn: '8'
+- tapOn: 'Confirmar'
+- tapOn: '2'
+- tapOn: '4'
+- tapOn: '6'
+- tapOn: '8'
+- tapOn: 'Confirmar'
+- assertVisible: 'Ativado'
+- pressKey: Home
+- launchApp
+- assertVisible: 'Life Tracker bloqueado'
+- tapOn: '1'
+- tapOn: '1'
+- tapOn: '1'
+- tapOn: '1'
+- tapOn: 'Confirmar'
+- assertVisible: 'PIN incorreto'
+- tapOn: '2'
+- tapOn: '4'
+- tapOn: '6'
+- tapOn: '8'
+- tapOn: 'Confirmar'
+- assertNotVisible: 'Life Tracker bloqueado'

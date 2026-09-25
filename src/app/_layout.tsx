@@ -28,6 +28,7 @@ function RootStack() {
   return (
     <Stack screenOptions={{ headerBackButtonDisplayMode: 'minimal' }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false, title: t('tabs.home') }} />
+      <Stack.Screen name="onboarding" options={{ headerShown: false, gestureEnabled: false }} />
       <Stack.Screen name="timeline/new" options={{ presentation: 'modal' }} />
       <Stack.Screen name="security/pin" options={{ presentation: 'modal' }} />
       <Stack.Screen name="backup/export" options={{ presentation: 'modal' }} />

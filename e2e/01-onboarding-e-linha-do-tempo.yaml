@@ -1,0 +1,17 @@
+# Fresh install: onboarding → create a timeline from a template → configure it.
+appId: com.andreluiz.lifetracker
+---
+- clearState
+- launchApp
+- assertVisible: 'Sua evolução, em fotos'
+- tapOn: 'Continuar'
+- tapOn: 'Continuar'
+- tapOn: 'Continuar'
+- tapOn: 'Agora não'
+- assertVisible: 'Nenhuma linha do tempo ainda'
+- tapOn: 'Nova linha do tempo'
+- tapOn: 'Tratamento capilar'
+- assertVisible: 'Meu cabelo'
+- tapOn: 'Criar linha do tempo'
+- assertVisible: 'Linha frontal'
+- assertVisible: 'Novo registro'

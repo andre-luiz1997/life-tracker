@@ -1,11 +1,17 @@
+import { Redirect } from 'expo-router';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 
 import { useTranslation } from '@/core/i18n';
+import { useOnboardingDone } from '@/features/onboarding';
 import { colorOf, useAppColorScheme } from '@/shared/theme';
 
 export default function TabsLayout() {
   const { t } = useTranslation();
   const scheme = useAppColorScheme();
+  const onboarding = useOnboardingDone();
+
+  if (onboarding.status === 'loading') return null;
+  if (onboarding.data === false) return <Redirect href="/onboarding" />;
 
   return (
     <NativeTabs

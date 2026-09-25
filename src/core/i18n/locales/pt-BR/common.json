@@ -24,5 +24,30 @@
   "errors": {
     "generic": "Algo deu errado. Tente novamente.",
     "dbInit": "Não foi possível abrir o banco de dados."
+  },
+  "onboarding": {
+    "skip": "Pular",
+    "next": "Continuar",
+    "start": "Começar",
+    "createPin": "Criar PIN agora",
+    "later": "Agora não",
+    "slides": {
+      "welcome": {
+        "title": "Sua evolução, em fotos",
+        "body": "Acompanhe emagrecimento, tratamento capilar, facial ou o que quiser, com fotos sempre no mesmo enquadramento."
+      },
+      "capture": {
+        "title": "Fotos comparáveis",
+        "body": "Silhuetas, foto anterior como guia, nível e timer. Para a coroa, o modo mãos-livres vibra e dispara sozinho."
+      },
+      "privacy": {
+        "title": "Privado de verdade",
+        "body": "Sem conta e sem nuvem. As fotos ficam só neste aparelho, criptografadas, e nunca vão para a galeria."
+      },
+      "pin": {
+        "title": "Proteja com um PIN",
+        "body": "Opcional: exija PIN ou biometria para abrir o app. Lembre-se de fazer backups — desinstalar o app apaga tudo."
+      }
+    }
   }
 }

@@ -24,5 +24,30 @@
   "errors": {
     "generic": "Something went wrong. Please try again.",
     "dbInit": "Could not open the database."
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "next": "Continue",
+    "start": "Get started",
+    "createPin": "Create PIN now",
+    "later": "Not now",
+    "slides": {
+      "welcome": {
+        "title": "Your progress, in photos",
+        "body": "Track weight loss, hair or skin treatments, or anything else, with photos always framed the same way."
+      },
+      "capture": {
+        "title": "Comparable photos",
+        "body": "Silhouettes, the previous photo as a guide, a level and a timer. For the crown, hands-free mode vibrates and shoots by itself."
+      },
+      "privacy": {
+        "title": "Truly private",
+        "body": "No account, no cloud. Photos stay on this device only, encrypted, and never go to the gallery."
+      },
+      "pin": {
+        "title": "Protect it with a PIN",
+        "body": "Optional: require a PIN or biometrics to open the app. Remember to make backups — uninstalling the app deletes everything."
+      }
+    }
   }
 }
