@@ -10,6 +10,8 @@ import { withExternalActivity } from '@/core/lifecycle';
 import { cn } from '@/shared/lib/cn';
 import { Button, Chip, EmptyState, IconButton, Screen, Text } from '@/shared/ui';
 
+import { AngleIllustration, hasIllustration } from '../components/angle-illustration';
+import type { TemplateKey } from '../db/progress-photos.schema';
 import { useGhostPhoto } from '../hooks/use-photos';
 import { useTimelineDetails } from '../hooks/use-timelines';
 import { resolveAngleConfig } from '../templates';
@@ -80,6 +82,8 @@ export function CaptureScreen({ timelineId, angleId }: { timelineId: string; ang
   return (
     <Camera
       timelineId={timelineId}
+      templateKey={details.data.timeline.templateKey}
+      angleKey={angle.key}
       angleId={angle.id}
       angleLabel={angle.label}
       overlay={(angle.overlayKey as OverlayKey | null) ?? config.overlay ?? null}
@@ -94,6 +98,8 @@ export function CaptureScreen({ timelineId, angleId }: { timelineId: string; ang
 
 type CameraProps = {
   timelineId: string;
+  templateKey: TemplateKey;
+  angleKey: string;
   angleId: string;
   angleLabel: string;
   overlay: OverlayKey | null;
@@ -121,6 +127,8 @@ function Camera(props: CameraProps) {
   const [timer, setTimer] = useState(props.initialTimer);
   const [showGrid, setShowGrid] = useState(true);
   const [showSilhouette, setShowSilhouette] = useState(true);
+  const hasGuide = hasIllustration(props.templateKey, props.angleKey);
+  const [showGuide, setShowGuide] = useState(hasGuide);
   const [ghostOpacity, setGhostOpacity] = useState<number>(0.3);
   const [mode, setMode] = useState<Mode>(props.initialMode);
   const [handsFreePhase, setHandsFreePhase] = useState<HandsFreePhase>('idle');
@@ -255,6 +263,15 @@ function Camera(props: CameraProps) {
         </View>
 
         <View className="absolute right-3 top-16 gap-2">
+          {hasGuide ? (
+            <Chip
+              tone="onDark"
+              role="switch"
+              label={t('capture.guide')}
+              selected={showGuide}
+              onPress={() => setShowGuide((v) => !v)}
+            />
+          ) : null}
           <Chip
             tone="onDark"
             role="switch"
@@ -308,8 +325,16 @@ function Camera(props: CameraProps) {
           ) : null}
         </View>
 
-        <View pointerEvents="none" className="absolute left-3 top-16">
+        <View pointerEvents="none" className="absolute left-3 top-16 gap-3">
           <LevelIndicator reading={level} />
+          {showGuide ? (
+            <AngleIllustration
+              templateKey={props.templateKey}
+              angleKey={props.angleKey}
+              size={112}
+              className="border-2 border-white/80"
+            />
+          ) : null}
         </View>
 
         {countdown.remaining !== null ? (

@@ -34,6 +34,7 @@ export const icons = {
   bell: { ios: 'bell', android: 'notifications', codepoint: 0xe7f4 },
   shield: { ios: 'lock.shield', android: 'shield_lock', codepoint: 0xf686 },
   backup: { ios: 'externaldrive', android: 'backup', codepoint: 0xe864 },
+  drag: { ios: 'line.3.horizontal', android: 'drag_indicator', codepoint: 0xe945 },
 } as const satisfies Record<string, { ios: SFSymbol; android: AndroidSymbol; codepoint: number }>;
 
 export type IconName = keyof typeof icons;

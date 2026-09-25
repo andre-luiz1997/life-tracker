@@ -12,5 +12,5 @@ export { Slider } from './slider';
 export { DateField } from './date-field';
 export { PinPad } from './pin-pad';
 export { Tag } from './tag';
-export { ReorderControl } from './reorder-control';
 export { Toggle } from './toggle';
+export { SortableList } from './sortable-list';

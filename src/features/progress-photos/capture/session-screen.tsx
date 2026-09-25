@@ -6,6 +6,7 @@ import { i18n, useTranslation } from '@/core/i18n';
 import { colorOf, useAppColorScheme } from '@/shared/theme';
 import { Button, Card, EmptyState, Icon, IconButton, Text } from '@/shared/ui';
 
+import { AngleIllustration, hasIllustration } from '../components/angle-illustration';
 import { PhotoThumb } from '../components/photo-thumb';
 import { useEntryPhotos } from '../hooks/use-photos';
 import { useTimelineDetails } from '../hooks/use-timelines';
@@ -31,6 +32,7 @@ export function SessionScreen({ timelineId }: { timelineId: string }) {
   if (!details.data) return <EmptyState title={t('timeline.notFound')} />;
 
   const angles = details.data.angles.filter((a) => a.isActive);
+  const templateKey = details.data.timeline.templateKey;
   const photoByAngle = new Map((entry.data?.photos ?? []).map((p) => [p.angleId, p]));
   const done = angles.filter((a) => photoByAngle.has(a.id)).length;
   const takenAt = entry.data?.entry?.takenAt ?? new Date();
@@ -79,9 +81,11 @@ export function SessionScreen({ timelineId }: { timelineId: string }) {
           return (
             <Card key={angle.id} className="flex-row items-center gap-3 p-3">
               {photo ? (
-                <PhotoThumb thumbFileName={photo.thumbFileName} />
+                <PhotoThumb thumbFileName={photo.thumbFileName} size={64} />
+              ) : hasIllustration(templateKey, angle.key) ? (
+                <AngleIllustration templateKey={templateKey} angleKey={angle.key} size={64} />
               ) : (
-                <View className="h-14 w-14 items-center justify-center rounded-lg bg-surface-muted">
+                <View className="h-16 w-16 items-center justify-center rounded-2xl bg-surface-muted">
                   <Icon name="camera" color={colorOf(scheme, 'muted')} />
                 </View>
               )}

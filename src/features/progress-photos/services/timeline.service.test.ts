@@ -142,6 +142,16 @@ describe('timeline.service', () => {
       expect(repo.listAngles(db, id)[0]!.id).toBe(second!.id);
     });
 
+    it('persists a drag-and-drop order, ignoring foreign ids', () => {
+      const id = service.create({ templateKey: 'hair', title: 'X', color: '#000' });
+      const other = service.create({ templateKey: 'face', title: 'Y', color: '#000' });
+      const ids = repo.listAngles(db, id).map((a) => a.id);
+      const reversed = [...ids].reverse();
+      service.reorderAngles(id, [repo.listAngles(db, other)[0]!.id, ...reversed]);
+      expect(repo.listAngles(db, id).map((a) => a.id)).toEqual(reversed);
+      expect(repo.listAngles(db, other)[0]!.sortOrder).toBe(0);
+    });
+
     it('keeps at least one active angle', () => {
       const id = service.create({ templateKey: 'custom', title: 'X', color: '#000' });
       const only = repo.listAngles(db, id)[0]!;
@@ -185,6 +195,12 @@ describe('timeline.service', () => {
 
       service.moveMetric(fat, 'up');
       expect(repo.listMetrics(db, id).at(-1)!.id).toBe(arm);
+
+      // Partial order: listed first, the rest keep their relative order after them.
+      service.reorderMetrics(id, [arm, fat]);
+      const order = repo.listMetrics(db, id).map((m) => m.key);
+      expect(order.slice(0, 2)).toEqual([`custom_${arm}`, 'body_fat']);
+      expect(order.slice(2)).toEqual(['weight', 'waist', 'hip']);
 
       service.removeMetric(arm);
       expect(repo.getMetric(db, arm)).toBeUndefined();

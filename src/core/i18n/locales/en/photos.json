@@ -139,7 +139,8 @@
     "removeMetricConfirmTitle": "Remove the “{{label}}” metric?",
     "removeMetricConfirmMessage": "Values already recorded for this metric will be deleted.",
     "lastAngle": "The timeline needs at least one active angle.",
-    "inactive": "Disabled"
+    "inactive": "Disabled",
+    "reorder": "Drag to reorder"
   },
   "session": {
     "title": "New entry",
@@ -182,7 +183,8 @@
     "use": "Use photo",
     "saving": "Saving…",
     "saveError": "Couldn't save the photo.",
-    "edit": "Edit"
+    "edit": "Edit",
+    "guide": "Guide"
   },
   "gallery": {
     "removeTitle": "Remove from the phone's gallery?",

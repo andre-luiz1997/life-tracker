@@ -3,7 +3,7 @@ import { Alert, Pressable, View } from 'react-native';
 
 import { useTranslation } from '@/core/i18n';
 import { cn } from '@/shared/lib/cn';
-import { Chip, IconButton, ReorderControl, Tag, Text, TextField } from '@/shared/ui';
+import { Chip, IconButton, SortableList, Tag, Text, TextField } from '@/shared/ui';
 
 import type { MetricDefinition, TemplateKey } from '../db/progress-photos.schema';
 import type { TimelineService } from '../services/timeline.service';
@@ -54,14 +54,24 @@ export function MetricsEditor({ timelineId, templateKey, metrics, service }: Pro
   return (
     <View className="gap-3">
       {metrics.length ? (
-        <View className="gap-2">
-          {metrics.map((metric, index) => (
+        <SortableList
+          items={metrics}
+          keyOf={(metric) => metric.id}
+          rowHeight={72}
+          onReorder={(ids) => service.reorderMetrics(timelineId, ids)}
+          onMove={(id, direction) => service.moveMetric(id, direction)}
+          labels={{
+            handle: t('timelineSettings.reorder'),
+            up: t('timelineSettings.moveUp'),
+            down: t('timelineSettings.moveDown'),
+          }}
+          renderItem={(metric, handle) => (
             <View
-              key={metric.id}
               className={cn(
-                'min-h-16 flex-row items-center gap-2 rounded-2xl bg-surface-muted py-2 pl-4 pr-2',
+                'h-full flex-row items-center gap-2 rounded-2xl bg-surface-muted pl-1 pr-2',
                 draft.id === metric.id && 'border-2 border-primary',
               )}>
+              {handle}
               <Pressable
                 className="flex-1 flex-row items-center gap-2 py-1"
                 onPress={() => setDraft({ id: metric.id, label: metric.label, unit: metric.unit })}
@@ -72,13 +82,6 @@ export function MetricsEditor({ timelineId, templateKey, metrics, service }: Pro
                 </Text>
                 <Tag tone="soft" label={metric.unit} />
               </Pressable>
-              <ReorderControl
-                canMoveUp={index > 0}
-                canMoveDown={index < metrics.length - 1}
-                onUp={() => service.moveMetric(metric.id, 'up')}
-                onDown={() => service.moveMetric(metric.id, 'down')}
-                labels={{ up: t('timelineSettings.moveUp'), down: t('timelineSettings.moveDown') }}
-              />
               <IconButton
                 icon="trash"
                 variant="danger"
@@ -88,8 +91,8 @@ export function MetricsEditor({ timelineId, templateKey, metrics, service }: Pro
                 onPress={() => confirmRemove(metric)}
               />
             </View>
-          ))}
-        </View>
+          )}
+        />
       ) : null}
 
       <View className="flex-row items-center gap-2">

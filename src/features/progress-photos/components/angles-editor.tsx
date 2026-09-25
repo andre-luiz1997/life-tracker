@@ -3,16 +3,25 @@ import { Alert, Pressable, View } from 'react-native';
 
 import { useTranslation } from '@/core/i18n';
 import { cn } from '@/shared/lib/cn';
-import { IconButton, ReorderControl, Text, TextField, Toggle } from '@/shared/ui';
+import { IconButton, SortableList, Text, TextField, Toggle } from '@/shared/ui';
 
-import type { TimelineAngle } from '../db/progress-photos.schema';
+import type { TemplateKey, TimelineAngle } from '../db/progress-photos.schema';
 import type { TimelineService } from '../services/timeline.service';
 import { AddItemField } from './add-item-field';
+import { AngleIllustration } from './angle-illustration';
 import { runGuarded } from './run-guarded';
 
-type Props = { timelineId: string; angles: TimelineAngle[]; service: TimelineService };
+/** Row slot height (64 px row + 8 px gap). */
+const ROW_HEIGHT = 72;
 
-export function AnglesEditor({ timelineId, angles, service }: Props) {
+type Props = {
+  timelineId: string;
+  templateKey: TemplateKey;
+  angles: TimelineAngle[];
+  service: TimelineService;
+};
+
+export function AnglesEditor({ timelineId, templateKey, angles, service }: Props) {
   const { t } = useTranslation('photos');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draft, setDraft] = useState('');
@@ -43,11 +52,21 @@ export function AnglesEditor({ timelineId, angles, service }: Props) {
 
   return (
     <View className="gap-3">
-      <View className="gap-2">
-        {angles.map((angle, index) => (
-          <View
-            key={angle.id}
-            className="min-h-16 flex-row items-center gap-2 rounded-2xl bg-surface-muted py-2 pl-4 pr-2">
+      <SortableList
+        items={angles}
+        keyOf={(angle) => angle.id}
+        rowHeight={ROW_HEIGHT}
+        onReorder={(ids) => service.reorderAngles(timelineId, ids)}
+        onMove={(id, direction) => service.moveAngle(id, direction)}
+        labels={{
+          handle: t('timelineSettings.reorder'),
+          up: t('timelineSettings.moveUp'),
+          down: t('timelineSettings.moveDown'),
+        }}
+        renderItem={(angle, handle) => (
+          <View className="h-full flex-row items-center gap-2 rounded-2xl bg-surface-muted pl-1 pr-2">
+            {handle}
+            <AngleIllustration templateKey={templateKey} angleKey={angle.key} size={44} />
             {editingId === angle.id ? (
               <TextField
                 containerClassName="flex-1"
@@ -78,13 +97,6 @@ export function AnglesEditor({ timelineId, angles, service }: Props) {
                 ) : null}
               </Pressable>
             )}
-            <ReorderControl
-              canMoveUp={index > 0}
-              canMoveDown={index < angles.length - 1}
-              onUp={() => service.moveAngle(angle.id, 'up')}
-              onDown={() => service.moveAngle(angle.id, 'down')}
-              labels={{ up: t('timelineSettings.moveUp'), down: t('timelineSettings.moveDown') }}
-            />
             <Toggle
               value={angle.isActive}
               accessibilityLabel={
@@ -103,8 +115,8 @@ export function AnglesEditor({ timelineId, angles, service }: Props) {
               onPress={() => confirmRemove(angle)}
             />
           </View>
-        ))}
-      </View>
+        )}
+      />
       <AddItemField
         placeholder={t('timelineSettings.anglePlaceholder')}
         accessibilityLabel={t('timelineSettings.addAngle')}

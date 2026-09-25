@@ -2,7 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { router, Stack } from 'expo-router';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform, View } from 'react-native';
+// Gesture-handler's ScrollView coordinates with the drag handles (native one would steal the pan).
+import { ScrollView } from 'react-native-gesture-handler';
 
 import { useTranslation } from '@/core/i18n';
 import { Button, EmptyState, Section } from '@/shared/ui';
@@ -41,7 +43,12 @@ export function TimelineSettingsScreen({ timelineId }: { timelineId: string }) {
         </Section>
 
         <Section title={t('timelineSettings.angles')} hint={t('timelineSettings.anglesHint')}>
-          <AnglesEditor timelineId={timelineId} angles={angles} service={service} />
+          <AnglesEditor
+            timelineId={timelineId}
+            templateKey={timeline.templateKey}
+            angles={angles}
+            service={service}
+          />
         </Section>
 
         <Section title={t('timelineSettings.metrics')} hint={t('timelineSettings.metricsHint')}>

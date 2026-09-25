@@ -139,7 +139,8 @@
     "removeMetricConfirmTitle": "Remover a métrica “{{label}}”?",
     "removeMetricConfirmMessage": "Os valores já registrados desta métrica serão apagados.",
     "lastAngle": "A linha do tempo precisa de pelo menos um ângulo ativo.",
-    "inactive": "Desativado"
+    "inactive": "Desativado",
+    "reorder": "Arrastar para reordenar"
   },
   "session": {
     "title": "Novo registro",
@@ -182,7 +183,8 @@
     "use": "Usar foto",
     "saving": "Salvando…",
     "saveError": "Não foi possível salvar a foto.",
-    "edit": "Editar"
+    "edit": "Editar",
+    "guide": "Guia"
   },
   "gallery": {
     "removeTitle": "Remover da galeria do celular?",

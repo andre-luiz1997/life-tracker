@@ -25,6 +25,14 @@ type Deps = {
 export type CreateTimelineInput = { templateKey: TemplateKey; title: string; color: string };
 export type Direction = 'up' | 'down';
 
+/** `ordered` ids that exist in `current` first, then the rest in their current order. */
+function applyOrder(current: string[], ordered: string[]) {
+  const known = new Set(current);
+  const head = ordered.filter((id) => known.has(id));
+  const listed = new Set(head);
+  return [...head, ...current.filter((id) => !listed.has(id))];
+}
+
 export function createTimelineService({ db, files, translate }: Deps) {
   function removePhotoFiles(list: { fileName: string; thumbFileName: string }[]) {
     for (const { fileName, thumbFileName } of list) {
@@ -165,6 +173,16 @@ export function createTimelineService({ db, files, translate }: Deps) {
       });
     },
 
+    /** Persists a drag-and-drop order. Unknown ids are ignored; unlisted ones keep going last. */
+    reorderAngles(timelineId: string, orderedIds: string[]) {
+      db.transaction((tx) => {
+        const current = repo.listAngles(tx, timelineId).map((a) => a.id);
+        applyOrder(current, orderedIds).forEach((id, sortOrder) =>
+          repo.updateAngle(tx, id, { sortOrder }),
+        );
+      });
+    },
+
     /** Deletes the angle and its photos. */
     removeAngle(id: string) {
       const photoFiles = db.transaction((tx) => {
@@ -209,6 +227,15 @@ export function createTimelineService({ db, files, translate }: Deps) {
         if (!metric) throw new TimelineError('not_found');
         move(repo.listMetrics(tx, metric.timelineId), id, direction, (metricId, sortOrder) =>
           repo.updateMetric(tx, metricId, { sortOrder }),
+        );
+      });
+    },
+
+    reorderMetrics(timelineId: string, orderedIds: string[]) {
+      db.transaction((tx) => {
+        const current = repo.listMetrics(tx, timelineId).map((m) => m.id);
+        applyOrder(current, orderedIds).forEach((id, sortOrder) =>
+          repo.updateMetric(tx, id, { sortOrder }),
         );
       });
     },
