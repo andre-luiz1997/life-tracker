@@ -84,7 +84,7 @@ export function LevelIndicator({ reading }: { reading: LevelReading | null }) {
           style={{ width: dot, height: dot, transform: [{ translateX: x }, { translateY: y }] }}
         />
       </View>
-      <Text className="text-xs font-semibold text-white">
+      <Text className="font-body-semibold text-xs text-white">
         {ok ? t('capture.levelOk') : `${Math.round(reading.deviation)}°`}
       </Text>
     </View>

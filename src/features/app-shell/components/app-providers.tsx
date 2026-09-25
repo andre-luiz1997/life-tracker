@@ -1,3 +1,10 @@
+import {
+  Palanquin_400Regular,
+  Palanquin_500Medium,
+  Palanquin_600SemiBold,
+  Palanquin_700Bold,
+} from '@expo-google-fonts/palanquin';
+import { useFonts } from 'expo-font';
 import { DarkTheme, DefaultTheme, ThemeProvider as NavigationThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -41,6 +48,15 @@ function NavigationTheme({ children }: PropsWithChildren) {
 }
 
 export function AppProviders({ children }: PropsWithChildren) {
+  // Keep the splash screen up until the brand font is ready (avoids a flash of system font).
+  const [fontsLoaded, fontError] = useFonts({
+    Palanquin_400Regular,
+    Palanquin_500Medium,
+    Palanquin_600SemiBold,
+    Palanquin_700Bold,
+  });
+  if (!fontsLoaded && !fontError) return null;
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>

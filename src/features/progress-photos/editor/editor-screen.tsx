@@ -17,7 +17,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from '@/core/i18n';
 import { cn } from '@/shared/lib/cn';
 import { uuidv7 } from '@/shared/lib/id';
-import { Button, EmptyState, IconButton, Slider, Text } from '@/shared/ui';
+import { Button, Chip, EmptyState, IconButton, Slider, Text } from '@/shared/ui';
 
 import { type PendingShot, useCaptureSession } from '../capture/capture-session.store';
 import { MAX_PHOTO_SIDE, MAX_THUMB_SIDE, prepareForEditing } from '../capture/image-processing';
@@ -229,7 +229,7 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
         />
         <IconButton
           icon="undo"
-          color="on-primary"
+          color="on-dark"
           accessibilityLabel={t('editor.undo')}
           disabled={!history.past.length || saving}
           onPress={() => dispatch({ type: 'undo' })}
@@ -292,22 +292,29 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
               showsHorizontalScrollIndicator={false}>
               {ASPECTS.map((aspect) => (
                 <Chip
+                  tone="onDark"
                   key={aspect}
                   label={aspect === 'free' ? t('editor.free') : aspect}
-                  active={state.aspect === aspect}
+                  selected={state.aspect === aspect}
                   onPress={() => apply({ type: 'setAspect', aspect })}
                 />
               ))}
-              <Chip label={t('editor.rotate')} onPress={() => apply({ type: 'rotate' })} />
               <Chip
+                tone="onDark"
+                label={t('editor.rotate')}
+                onPress={() => apply({ type: 'rotate' })}
+              />
+              <Chip
+                tone="onDark"
                 label={t('editor.flip')}
-                active={state.flipH}
+                selected={state.flipH}
                 onPress={() => apply({ type: 'flip' })}
               />
               {ghostUri ? (
                 <Chip
+                  tone="onDark"
                   label={t('editor.ghost')}
-                  active={showGhost}
+                  selected={showGhost}
                   onPress={() => setShowGhost((v) => !v)}
                 />
               ) : null}
@@ -347,14 +354,16 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
               showsHorizontalScrollIndicator={false}>
               {CENSOR_KINDS.map((kind) => (
                 <Chip
+                  tone="onDark"
                   key={kind}
                   label={t(`editor.censorKinds.${kind}`)}
-                  active={censorKind === kind}
+                  selected={censorKind === kind}
                   onPress={() => setCensorKind(kind)}
                 />
               ))}
               {state.censors.map((censor, i) => (
                 <Chip
+                  tone="onDark"
                   key={censor.id}
                   label={`✕ ${i + 1}`}
                   accessibilityLabel={t('editor.removeCensor', { n: i + 1 })}
@@ -373,7 +382,8 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
               accessibilityState={{ selected: tool === key }}
               onPress={() => setTool(key)}
               className="px-4 py-2">
-              <Text className={cn('font-semibold', tool === key ? 'text-white' : 'text-white/50')}>
+              <Text
+                className={cn('font-body-semibold', tool === key ? 'text-white' : 'text-white/50')}>
                 {t(`editor.tools.${key}`)}
               </Text>
             </Pressable>
@@ -381,30 +391,5 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
         </View>
       </View>
     </View>
-  );
-}
-
-function Chip({
-  label,
-  active = false,
-  onPress,
-  accessibilityLabel,
-}: {
-  label: string;
-  active?: boolean;
-  onPress: () => void;
-  accessibilityLabel?: string;
-}) {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel ?? label}
-      accessibilityState={{ selected: active }}
-      onPress={onPress}
-      className={cn('rounded-full px-3 py-1.5', active ? 'bg-white' : 'bg-white/15')}>
-      <Text className={cn('text-sm font-medium', active ? 'text-black' : 'text-white')}>
-        {label}
-      </Text>
-    </Pressable>
   );
 }

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Alert, Pressable, View } from 'react-native';
+import { Alert, View } from 'react-native';
 
 import { useTranslation } from '@/core/i18n';
 import { cn } from '@/shared/lib/cn';
-import { Card, IconButton, Text, TextField } from '@/shared/ui';
+import { Card, Chip, IconButton, Text, TextField } from '@/shared/ui';
 
 import type { MetricDefinition, TemplateKey } from '../db/progress-photos.schema';
 import type { TimelineService } from '../services/timeline.service';
@@ -130,9 +130,8 @@ export function MetricsEditor({ timelineId, templateKey, metrics, service }: Pro
           <Text variant="caption">{t('timelineSettings.suggestions')}</Text>
           <View className="flex-row flex-wrap gap-2">
             {suggestions.map((metric) => (
-              <Pressable
+              <Chip
                 key={metric.key}
-                accessibilityRole="button"
                 onPress={() =>
                   service.addMetric(timelineId, {
                     key: metric.key,
@@ -140,11 +139,8 @@ export function MetricsEditor({ timelineId, templateKey, metrics, service }: Pro
                     unit: metric.unit,
                   })
                 }
-                className="rounded-full border border-border px-3 py-1.5 active:bg-surface-muted">
-                <Text variant="caption" className="text-foreground">
-                  + {t(`metrics.${metric.key}` as 'metrics.weight')} ({metric.unit})
-                </Text>
-              </Pressable>
+                label={`+ ${t(`metrics.${metric.key}` as 'metrics.weight')} (${metric.unit})`}
+              />
             ))}
           </View>
         </View>

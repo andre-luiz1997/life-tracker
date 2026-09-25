@@ -5,7 +5,7 @@ const selfie = { camera: 'front', captureMode: 'standard', aspectRatio: '3:4' } 
 export const faceTemplate: TimelineTemplate = {
   key: 'face',
   icon: 'face',
-  color: '#EC4899',
+  color: '#F4B6C9',
   angles: [
     { key: 'face_front', overlay: 'face-front', ...selfie },
     { key: 'face_45_left', overlay: 'face-45', ...selfie },

@@ -80,9 +80,9 @@
     "entries_zero": "No entries",
     "entries_one": "{{count}} entry",
     "entries_other": "{{count}} entries",
-    "lastEntryToday": "Last entry today",
-    "lastEntryDays_one": "Last entry {{count}} day ago",
-    "lastEntryDays_other": "Last entry {{count}} days ago",
+    "lastEntryToday": "Today",
+    "lastEntryDays_one": "{{count}} day ago",
+    "lastEntryDays_other": "{{count}} days ago",
     "archived": "Archived",
     "showArchived": "Show archived",
     "hideArchived": "Hide archived"

@@ -8,7 +8,7 @@ const handsFree = { camera: 'back', captureMode: 'hands-free', aspectRatio: '1:1
 export const hairTemplate: TimelineTemplate = {
   key: 'hair',
   icon: 'hair',
-  color: '#8B5CF6',
+  color: '#B5BEF5',
   angles: [
     { key: 'hairline', overlay: 'head-front', ...selfie },
     { key: 'temple_left', overlay: 'head-temple', ...selfie },

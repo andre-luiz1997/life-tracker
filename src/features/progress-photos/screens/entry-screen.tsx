@@ -189,7 +189,7 @@ function EntryForm({ timelineId, entry, values, metrics, photos }: FormProps) {
             ))}
           </View>
           <Pressable accessibilityRole="button" onPress={addPhotos} className="py-2">
-            <Text className="font-semibold text-primary">{t('entry.addPhotos')}</Text>
+            <Text className="font-body-semibold text-primary">{t('entry.addPhotos')}</Text>
           </Pressable>
         </Section>
 

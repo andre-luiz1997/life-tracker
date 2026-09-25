@@ -9,7 +9,9 @@
     "empty": {
       "title": "No timelines yet",
       "description": "Create your first timeline to track your progress with photos."
-    }
+    },
+    "greeting": "Hi there!",
+    "subtitle": "Track your progress, photo by photo."
   },
   "settings": {
     "title": "Settings",

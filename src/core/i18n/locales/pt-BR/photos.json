@@ -80,9 +80,9 @@
     "entries_zero": "Nenhum registro",
     "entries_one": "{{count}} registro",
     "entries_other": "{{count}} registros",
-    "lastEntryToday": "Último registro hoje",
-    "lastEntryDays_one": "Último registro há {{count}} dia",
-    "lastEntryDays_other": "Último registro há {{count}} dias",
+    "lastEntryToday": "Hoje",
+    "lastEntryDays_one": "Há {{count}} dia",
+    "lastEntryDays_other": "Há {{count}} dias",
     "archived": "Arquivadas",
     "showArchived": "Mostrar arquivadas",
     "hideArchived": "Ocultar arquivadas"

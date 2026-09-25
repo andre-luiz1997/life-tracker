@@ -1,12 +1,11 @@
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Alert, Pressable, Switch, View } from 'react-native';
+import { Alert, Switch, View } from 'react-native';
 
 import { useDatabaseRestart } from '@/core/db';
 import { useTranslation } from '@/core/i18n';
 import { eraseAllData } from '@/core/maintenance';
-import { cn } from '@/shared/lib/cn';
-import { Button, Card, Section, Text } from '@/shared/ui';
+import { Button, Card, Chip, Section, Text } from '@/shared/ui';
 
 import { useSecurityPreferences, useSecurityService } from '../hooks/use-security';
 import { authenticateWithBiometrics, isBiometricsAvailable } from '../lib/biometrics';
@@ -98,24 +97,16 @@ export function SecuritySettings() {
                 onChange={toggleBiometrics}
               />
               <View className="gap-2">
-                <Text className="font-medium">{t('settings.autoLock')}</Text>
+                <Text className="font-body-medium">{t('settings.autoLock')}</Text>
                 <View className="flex-row flex-wrap gap-2">
                   {AUTO_LOCK_OPTIONS.map((option) => (
-                    <Pressable
+                    <Chip
                       key={option}
-                      accessibilityRole="radio"
-                      accessibilityState={{ selected: p.autoLock === option }}
+                      role="radio"
+                      selected={p.autoLock === option}
                       onPress={() => service.setPreferences({ autoLock: option })}
-                      className={cn(
-                        'rounded-full px-3 py-1.5',
-                        p.autoLock === option ? 'bg-primary' : 'bg-surface-muted',
-                      )}>
-                      <Text
-                        variant="caption"
-                        className={p.autoLock === option ? 'text-on-primary' : 'text-foreground'}>
-                        {t(`settings.autoLockOptions.${option}`)}
-                      </Text>
-                    </Pressable>
+                      label={t(`settings.autoLockOptions.${option}`)}
+                    />
                   ))}
                 </View>
               </View>
@@ -141,7 +132,7 @@ export function SecuritySettings() {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <View className="flex-row items-center justify-between">
-      <Text className="font-medium">{label}</Text>
+      <Text className="font-body-medium">{label}</Text>
       <Text variant="caption">{value}</Text>
     </View>
   );
@@ -163,7 +154,7 @@ function ToggleRow({
   return (
     <View className="flex-row items-center gap-3">
       <View className="flex-1 gap-0.5">
-        <Text className="font-medium">{label}</Text>
+        <Text className="font-body-medium">{label}</Text>
         {hint ? <Text variant="caption">{hint}</Text> : null}
       </View>
       <Switch

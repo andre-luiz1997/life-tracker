@@ -41,7 +41,7 @@ export function TimelineFormFields({ control, errors, onSubmitEditing }: Props) 
         name="color"
         render={({ field }) => (
           <View className="gap-2">
-            <Text variant="caption" className="font-medium">
+            <Text variant="caption" className="font-body-medium">
               {t('form.color')}
             </Text>
             <ColorPicker label={t('form.color')} value={field.value} onChange={field.onChange} />

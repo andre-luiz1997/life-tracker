@@ -48,13 +48,13 @@ export function MetricsScreen({ timelineId }: { timelineId: string }) {
                   <View className="flex-row justify-between">
                     <View>
                       <Text variant="caption">{t('metricsScreen.last')}</Text>
-                      <Text className="text-xl font-bold">
+                      <Text className="font-body-bold text-xl">
                         {formatDecimal(summary.last.value, locale)} {metric.unit}
                       </Text>
                     </View>
                     <View className="items-end">
                       <Text variant="caption">{t('metricsScreen.change')}</Text>
-                      <Text className="text-xl font-bold">
+                      <Text className="font-body-bold text-xl">
                         {formatChange(summary.change, metric.unit, locale)}
                       </Text>
                     </View>

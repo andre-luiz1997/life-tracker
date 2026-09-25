@@ -62,12 +62,12 @@ export function ViewerScreen({ timelineId, angleId, photoId }: Props) {
         style={{ paddingTop: insets.top + 4 }}>
         <IconButton
           icon="close"
-          color="on-primary"
+          color="on-dark"
           accessibilityLabel={t('viewer.close')}
           onPress={() => router.back()}
         />
         <View className="flex-1 items-center">
-          <Text className="font-semibold text-white">{angle?.label}</Text>
+          <Text className="font-body-semibold text-white">{angle?.label}</Text>
           {item ? (
             <Text className="text-xs text-white/80">
               {item.takenAt.toLocaleDateString(i18n.language, { dateStyle: 'medium' })}

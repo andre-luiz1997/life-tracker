@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from '@/core/i18n';
 import { withExternalActivity } from '@/core/lifecycle';
 import { cn } from '@/shared/lib/cn';
-import { Button, EmptyState, IconButton, Screen, Text } from '@/shared/ui';
+import { Button, Chip, EmptyState, IconButton, Screen, Text } from '@/shared/ui';
 
 import { useGhostPhoto } from '../hooks/use-photos';
 import { useTimelineDetails } from '../hooks/use-timelines';
@@ -244,34 +244,40 @@ function Camera(props: CameraProps) {
         <View className="absolute left-0 right-0 top-0 flex-row items-center justify-between bg-black/30 px-2 py-1">
           <IconButton
             icon="close"
-            color="on-primary"
+            color="on-dark"
             accessibilityLabel={t('capture.close')}
             onPress={() => router.back()}
           />
-          <Text className="flex-1 text-center font-semibold text-white" numberOfLines={1}>
+          <Text className="flex-1 text-center font-body-semibold text-white" numberOfLines={1}>
             {props.angleLabel}
           </Text>
           <View className="w-10" />
         </View>
 
         <View className="absolute right-3 top-16 gap-2">
-          <ToggleChip
+          <Chip
+            tone="onDark"
+            role="switch"
             label={t('capture.grid')}
-            active={showGrid}
+            selected={showGrid}
             onPress={() => setShowGrid((v) => !v)}
           />
           {props.overlay ? (
-            <ToggleChip
+            <Chip
+              tone="onDark"
+              role="switch"
               label={t('capture.silhouette')}
-              active={showSilhouette}
+              selected={showSilhouette}
               onPress={() => setShowSilhouette((v) => !v)}
             />
           ) : null}
           {ghost.data ? (
-            <ToggleChip
+            <Chip
+              tone="onDark"
+              role="switch"
               label={`${t('capture.ghost')} ${Math.round(ghostOpacity * 100)}%`}
               accessibilityLabel={t('capture.ghostOpacity')}
-              active={ghostOpacity > 0}
+              selected={ghostOpacity > 0}
               onPress={() =>
                 setGhostOpacity((v) =>
                   cycle(GHOST_OPACITIES, v as (typeof GHOST_OPACITIES)[number]),
@@ -280,19 +286,23 @@ function Camera(props: CameraProps) {
             />
           ) : null}
           {mode === 'standard' ? (
-            <ToggleChip
+            <Chip
+              tone="onDark"
+              role="switch"
               label={timer ? t('capture.timerSeconds', { count: timer }) : t('capture.timerOff')}
               accessibilityLabel={t('capture.timer')}
-              active={timer > 0}
+              selected={timer > 0}
               onPress={() =>
                 setTimer((v) => cycle(TIMER_OPTIONS, v as (typeof TIMER_OPTIONS)[number]))
               }
             />
           ) : null}
           {facing === 'back' ? (
-            <ToggleChip
+            <Chip
+              tone="onDark"
+              role="switch"
               label={t('capture.flash')}
-              active={flash === 'on'}
+              selected={flash === 'on'}
               onPress={() => setFlash((f) => (f === 'on' ? 'off' : 'on'))}
             />
           ) : null}
@@ -307,7 +317,7 @@ function Camera(props: CameraProps) {
             pointerEvents="none"
             style={StyleSheet.absoluteFill}
             className="items-center justify-center">
-            <Text className="text-8xl font-bold text-white">{countdown.remaining}</Text>
+            <Text className="font-body-bold text-8xl text-white">{countdown.remaining}</Text>
           </View>
         ) : null}
       </View>
@@ -359,7 +369,7 @@ function Camera(props: CameraProps) {
             </Pressable>
             <IconButton
               icon="camera"
-              color="on-primary"
+              color="on-dark"
               accessibilityLabel={t('capture.flipCamera')}
               onPress={() => setFacing((f) => (f === 'back' ? 'front' : 'back'))}
             />
@@ -374,30 +384,5 @@ function Camera(props: CameraProps) {
         ) : null}
       </View>
     </View>
-  );
-}
-
-function ToggleChip({
-  label,
-  active,
-  onPress,
-  accessibilityLabel,
-}: {
-  label: string;
-  active: boolean;
-  onPress: () => void;
-  accessibilityLabel?: string;
-}) {
-  return (
-    <Pressable
-      accessibilityRole="switch"
-      accessibilityLabel={accessibilityLabel ?? label}
-      accessibilityState={{ checked: active }}
-      onPress={onPress}
-      className={cn('rounded-full px-3 py-1.5', active ? 'bg-white' : 'bg-black/50')}>
-      <Text className={cn('text-xs font-semibold', active ? 'text-black' : 'text-white')}>
-        {label}
-      </Text>
-    </Pressable>
   );
 }

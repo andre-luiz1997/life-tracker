@@ -1,11 +1,10 @@
 import { router, Stack } from 'expo-router';
 import { useState } from 'react';
-import { FlatList, Pressable, ScrollView, View } from 'react-native';
+import { FlatList, ScrollView, View } from 'react-native';
 
 import { useTranslation } from '@/core/i18n';
-import { cn } from '@/shared/lib/cn';
 import { colorOf, useAppColorScheme } from '@/shared/theme';
-import { Button, Card, EmptyState, Icon, IconButton, Section, Text } from '@/shared/ui';
+import { Button, Card, Chip, EmptyState, Icon, IconButton, Tag, Text } from '@/shared/ui';
 
 import { useCaptureSession } from '../capture/capture-session.store';
 import { EntryCard } from '../components/entry-card';
@@ -44,37 +43,42 @@ export function TimelineScreen({ timelineId }: { timelineId: string }) {
   };
 
   const header = (
-    <View className="gap-5 pb-2">
-      <View className="flex-row items-center gap-4">
-        <TimelineIcon icon={timeline.icon} color={timeline.color} size={56} />
-        <View className="flex-1">
-          <Text variant="title" numberOfLines={2}>
-            {timeline.title}
-          </Text>
-          <Text variant="caption">
-            {t(`templates.${timeline.templateKey}.name`)} ·{' '}
-            {t('home.entries', { count: entries.length })}
-          </Text>
+    <View className="gap-6 pb-2">
+      <Card className="gap-5">
+        <View className="flex-row items-center gap-4">
+          <TimelineIcon icon={timeline.icon} color={timeline.color} size={64} />
+          <View className="flex-1 gap-1">
+            <Text variant="title" numberOfLines={3}>
+              {timeline.title}
+            </Text>
+            <Text variant="caption">{t(`templates.${timeline.templateKey}.name`)}</Text>
+          </View>
         </View>
-      </View>
+        <View className="flex-row items-center gap-2">
+          <Tag color={`${timeline.color}66`} label={t('home.entries', { count: entries.length })} />
+          <View className="flex-1" />
+          {entries.length > 1 ? (
+            <IconButton
+              icon="photos"
+              color="on-accent"
+              style={{ backgroundColor: timeline.color }}
+              accessibilityLabel={t('feed.compare')}
+              onPress={() => push('/timeline/[timelineId]/compare')}
+            />
+          ) : null}
+          {metrics.length ? (
+            <IconButton
+              icon="chart"
+              color="on-accent"
+              style={{ backgroundColor: timeline.color }}
+              accessibilityLabel={t('feed.metrics')}
+              onPress={() => push('/timeline/[timelineId]/metrics')}
+            />
+          ) : null}
+        </View>
+      </Card>
 
-      <View className="flex-row gap-2">
-        <Button label={t('timeline.newEntry')} onPress={newEntry} className="flex-1" />
-        {entries.length > 1 ? (
-          <Button
-            variant="secondary"
-            label={t('feed.compare')}
-            onPress={() => push('/timeline/[timelineId]/compare')}
-          />
-        ) : null}
-        {metrics.length ? (
-          <Button
-            variant="secondary"
-            label={t('feed.metrics')}
-            onPress={() => push('/timeline/[timelineId]/metrics')}
-          />
-        ) : null}
-      </View>
+      <Button label={t('timeline.newEntry')} onPress={newEntry} />
 
       {entries.length ? (
         <ScrollView
@@ -83,43 +87,34 @@ export function TimelineScreen({ timelineId }: { timelineId: string }) {
           contentContainerClassName="gap-2"
           accessibilityLabel={t('feed.filterByAngle')}>
           {[{ id: null, label: t('feed.all') }, ...activeAngles].map((angle) => (
-            <Pressable
+            <Chip
               key={angle.id ?? 'all'}
-              accessibilityRole="button"
-              accessibilityState={{ selected: angleFilter === angle.id }}
+              label={angle.label}
+              selected={angleFilter === angle.id}
               onPress={() => setAngleFilter(angle.id)}
-              className={cn(
-                'rounded-full px-3 py-1.5',
-                angleFilter === angle.id ? 'bg-primary' : 'bg-surface-muted',
-              )}>
-              <Text
-                variant="caption"
-                className={angleFilter === angle.id ? 'text-on-primary' : 'text-foreground'}>
-                {angle.label}
-              </Text>
-            </Pressable>
+            />
           ))}
         </ScrollView>
       ) : (
         <>
           <Card className="items-center py-10">
             <EmptyState
+              icon="camera"
               title={t('timeline.noEntries')}
               description={t('timeline.noEntriesDescription')}
             />
           </Card>
-          <Section title={t('timeline.tips')}>
-            <Card className="gap-3">
-              {template.tips.map((tip) => (
-                <View key={tip} className="flex-row gap-3">
-                  <Icon name="lightbulb" size={18} color={colorOf(scheme, 'muted')} />
-                  <Text className="flex-1">
-                    {t(`tips.${timeline.templateKey}.${tip}` as 'tips.custom.consistency')}
-                  </Text>
-                </View>
-              ))}
-            </Card>
-          </Section>
+          <View className="gap-3 rounded-card bg-accent p-5">
+            <View className="flex-row items-center gap-2">
+              <Icon name="lightbulb" size={18} color={colorOf(scheme, 'on-accent')} />
+              <Text className="font-body-semibold text-on-accent">{t('timeline.tips')}</Text>
+            </View>
+            {template.tips.map((tip) => (
+              <Text key={tip} className="text-on-accent">
+                • {t(`tips.${timeline.templateKey}.${tip}` as 'tips.custom.consistency')}
+              </Text>
+            ))}
+          </View>
         </>
       )}
     </View>
@@ -141,7 +136,7 @@ export function TimelineScreen({ timelineId }: { timelineId: string }) {
       />
       <FlatList
         className="flex-1 bg-background"
-        contentContainerClassName="gap-3 p-4 pb-12"
+        contentContainerClassName="gap-4 px-5 pb-12 pt-2"
         data={entries}
         keyExtractor={(entry) => entry.id}
         ListHeaderComponent={header}

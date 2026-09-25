@@ -1,6 +1,6 @@
 import '@/core/i18n';
 
-import { render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import type { TimelineSummary } from '../repositories/timelines.repository';
 import { TimelineCard } from './timeline-card';
@@ -29,13 +29,24 @@ const daysAgo = (n: number) => new Date(Date.now() - n * 24 * 60 * 60 * 1000);
 
 describe('TimelineCard', () => {
   it.each([
-    [{ entryCount: 0, lastEntryAt: null }, 'Nenhum registro'],
-    [{ entryCount: 1, lastEntryAt: new Date() }, '1 registro · Último registro hoje'],
-    [{ entryCount: 5, lastEntryAt: daysAgo(1) }, '5 registros · Último registro há 1 dia'],
-    [{ entryCount: 12, lastEntryAt: daysAgo(10) }, '12 registros · Último registro há 10 dias'],
-  ])('summarizes %o', async (stats, expected) => {
-    await render(<TimelineCard timeline={{ ...base, ...stats }} onPress={() => {}} />);
+    [{ entryCount: 0, lastEntryAt: null }, ['Nenhum registro']],
+    [{ entryCount: 1, lastEntryAt: new Date() }, ['1 registro', 'Hoje']],
+    [{ entryCount: 5, lastEntryAt: daysAgo(1) }, ['5 registros', 'Há 1 dia']],
+    [{ entryCount: 12, lastEntryAt: daysAgo(10) }, ['12 registros', 'Há 10 dias']],
+  ])('summarizes %o', async (stats, tags) => {
+    await render(
+      <TimelineCard timeline={{ ...base, ...stats }} onPress={() => {}} onNewEntry={() => {}} />,
+    );
     expect(screen.getByText('Meu cabelo')).toBeOnTheScreen();
-    expect(screen.getByText(expected)).toBeOnTheScreen();
+    for (const tag of tags) expect(screen.getByText(tag)).toBeOnTheScreen();
+  });
+
+  it('starts a new entry from the round button', async () => {
+    const onNewEntry = jest.fn();
+    const onPress = jest.fn();
+    await render(<TimelineCard timeline={base} onPress={onPress} onNewEntry={onNewEntry} />);
+    await fireEvent.press(screen.getByRole('button', { name: 'Novo registro' }));
+    expect(onNewEntry).toHaveBeenCalled();
+    expect(onPress).not.toHaveBeenCalled();
   });
 });

@@ -1,5 +1,6 @@
 export { Button, type ButtonProps } from './button';
 export { Card, PressableCard } from './card';
+export { Chip } from './chip';
 export { EmptyState } from './empty-state';
 export { Icon, type IconName } from './icon';
 export { IconButton, type IconButtonProps } from './icon-button';
@@ -10,3 +11,4 @@ export { TextField, type TextFieldProps } from './text-field';
 export { Slider } from './slider';
 export { DateField } from './date-field';
 export { PinPad } from './pin-pad';
+export { Tag } from './tag';

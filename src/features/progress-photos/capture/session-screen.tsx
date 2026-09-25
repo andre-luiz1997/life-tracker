@@ -86,7 +86,7 @@ export function SessionScreen({ timelineId }: { timelineId: string }) {
                 </View>
               )}
               <View className="flex-1 gap-0.5">
-                <Text className="font-semibold" numberOfLines={1}>
+                <Text className="font-body-semibold" numberOfLines={1}>
                   {angle.label}
                 </Text>
                 <View className="flex-row items-center gap-1">

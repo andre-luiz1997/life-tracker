@@ -35,14 +35,14 @@ export function resolveAngleConfig(templateKey: TemplateKey, angleKey: string): 
   );
 }
 
-/** Palette offered in the timeline form (template colors first). */
+/** Pastel palette offered in the timeline form (template colors first). Ink icons/text on top. */
 export const TIMELINE_COLORS = [
-  '#F97316',
-  '#8B5CF6',
-  '#EC4899',
-  '#14B8A6',
-  '#3B82F6',
-  '#22C55E',
-  '#EAB308',
-  '#EF4444',
+  '#F6A58F', // salmon
+  '#B5BEF5', // lavender
+  '#F4B6C9', // rose
+  '#A8E6C3', // mint
+  '#F7D786', // yellow
+  '#A9D8F5', // sky
+  '#F9C99B', // peach
+  '#D6BCF2', // lilac
 ] as const;

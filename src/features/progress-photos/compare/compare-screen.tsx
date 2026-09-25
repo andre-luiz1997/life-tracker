@@ -6,7 +6,7 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 import { i18n, useTranslation } from '@/core/i18n';
 import { cn } from '@/shared/lib/cn';
-import { Button, Card, EmptyState, Slider, Text } from '@/shared/ui';
+import { Button, Card, Chip, EmptyState, Slider, Text } from '@/shared/ui';
 
 import { PhotoThumb } from '../components/photo-thumb';
 import type { Photo } from '../db/progress-photos.schema';
@@ -51,7 +51,7 @@ export function CompareScreen({
             <Chip
               key={angle.id}
               label={angle.label}
-              active={angle.id === current}
+              selected={angle.id === current}
               onPress={() => setAngleId(angle.id)}
             />
           ))}
@@ -116,7 +116,7 @@ function AngleComparison({ timelineId, angleId }: { timelineId: string; angleId:
           <Chip
             key={m}
             label={t(`compare.modes.${m}`)}
-            active={mode === m}
+            selected={mode === m}
             onPress={() => setMode(m)}
           />
         ))}
@@ -128,7 +128,7 @@ function AngleComparison({ timelineId, angleId }: { timelineId: string; angleId:
         <Text variant="caption">{caption(before)}</Text>
         <Text variant="caption">{caption(after)}</Text>
       </View>
-      <Text className="text-center font-semibold">
+      <Text className="text-center font-body-semibold">
         {apart === 0 ? t('compare.sameDay') : t('compare.daysApart', { count: apart })}
       </Text>
 
@@ -137,7 +137,9 @@ function AngleComparison({ timelineId, angleId }: { timelineId: string; angleId:
           {diffs.map((d) => (
             <View key={d.metric.id} className="flex-row justify-between">
               <Text>{d.metric.label}</Text>
-              <Text className="font-semibold">{formatChange(d.change, d.metric.unit, locale)}</Text>
+              <Text className="font-body-semibold">
+                {formatChange(d.change, d.metric.unit, locale)}
+              </Text>
             </View>
           ))}
         </Card>
@@ -271,7 +273,7 @@ function PhotoStrip({
   const { t } = useTranslation('photos');
   return (
     <View className="gap-2">
-      <Text variant="caption" className="font-medium">
+      <Text variant="caption" className="font-body-medium">
         {label}
       </Text>
       <ScrollView
@@ -299,19 +301,5 @@ function PhotoStrip({
         })}
       </ScrollView>
     </View>
-  );
-}
-
-function Chip({ label, active, onPress }: { label: string; active: boolean; onPress: () => void }) {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityState={{ selected: active }}
-      onPress={onPress}
-      className={cn('rounded-full px-3 py-1.5', active ? 'bg-primary' : 'bg-surface-muted')}>
-      <Text variant="caption" className={active ? 'text-on-primary' : 'text-foreground'}>
-        {label}
-      </Text>
-    </Pressable>
   );
 }

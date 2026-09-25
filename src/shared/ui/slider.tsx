@@ -55,7 +55,7 @@ export function Slider({
   return (
     <View className="gap-1">
       <View className="flex-row justify-between">
-        <Text variant="caption" className="font-medium">
+        <Text variant="caption" className="font-body-medium">
           {label}
         </Text>
         <Text variant="caption">{formatValue(value)}</Text>

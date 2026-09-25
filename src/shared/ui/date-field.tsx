@@ -31,7 +31,7 @@ export function DateField({
 
   return (
     <View className="flex-row items-center justify-between gap-3">
-      <Text variant="caption" className="font-medium">
+      <Text variant="caption" className="font-body-medium">
         {label}
       </Text>
       {Platform.OS === 'ios' ? (

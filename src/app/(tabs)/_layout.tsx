@@ -16,7 +16,7 @@ export default function TabsLayout() {
   return (
     <NativeTabs
       backgroundColor={colorOf(scheme, 'surface')}
-      indicatorColor={colorOf(scheme, 'surface-muted')}
+      indicatorColor={colorOf(scheme, 'accent')}
       labelStyle={{ selected: { color: colorOf(scheme, 'foreground') } }}>
       <NativeTabs.Trigger name="index">
         <NativeTabs.Trigger.Label>{t('tabs.home')}</NativeTabs.Trigger.Label>

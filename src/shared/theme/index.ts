@@ -1,2 +1,2 @@
 export { ThemeProvider, useAppColorScheme } from './theme-provider';
-export { colorOf, palettes, type ColorScheme, type ColorToken } from './tokens';
+export { colorOf, type ColorScheme, type ColorToken, fonts, palettes, softShadow } from './tokens';

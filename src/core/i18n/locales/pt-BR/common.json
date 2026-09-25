@@ -9,7 +9,9 @@
     "empty": {
       "title": "Nenhuma linha do tempo ainda",
       "description": "Crie sua primeira linha do tempo para acompanhar sua evolução por fotos."
-    }
+    },
+    "greeting": "Olá!",
+    "subtitle": "Acompanhe sua evolução, foto a foto."
   },
   "settings": {
     "title": "Ajustes",

@@ -11,7 +11,7 @@ export function Screen({ children, className, safeTop = true }: ScreenProps) {
   return (
     <View
       style={{ paddingTop: safeTop ? insets.top : 0 }}
-      className={cn('flex-1 bg-background px-4', className)}>
+      className={cn('flex-1 bg-background px-5', className)}>
       {children}
     </View>
   );

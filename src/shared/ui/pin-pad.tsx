@@ -51,7 +51,7 @@ export function PinPad({
       disabled={disabled || isDisabled}
       onPress={onPress}
       className={cn(
-        'h-16 w-16 items-center justify-center rounded-full active:bg-surface-muted',
+        'h-[72px] w-[72px] items-center justify-center rounded-full bg-surface-muted active:bg-accent',
         (disabled || isDisabled) && 'opacity-30',
       )}>
       {content}
@@ -69,19 +69,21 @@ export function PinPad({
           <View
             key={i}
             className={cn(
-              'h-3.5 w-3.5 rounded-full border-2 border-foreground',
-              i < value.length && 'bg-foreground',
+              'h-4 w-4 rounded-full border-2 border-foreground',
+              i < value.length && 'border-primary bg-primary',
               i >= minLength && i >= value.length && 'opacity-30',
             )}
           />
         ))}
       </View>
 
-      <View className="w-64 flex-row flex-wrap justify-between gap-y-3">
+      <View className="w-[264px] flex-row flex-wrap justify-between gap-y-4">
         {KEYS.map((d) => (
-          <View key={d}>{key(<Text className="text-3xl">{d}</Text>, () => press(d), d)}</View>
+          <View key={d}>
+            {key(<Text className="font-body-medium text-[28px]">{d}</Text>, () => press(d), d)}
+          </View>
         ))}
-        <View className="h-16 w-16">
+        <View className="h-[72px] w-[72px]">
           {leftAction
             ? key(
                 <Icon name={leftAction.icon} size={28} color={colorOf(scheme, 'primary')} />,
@@ -90,7 +92,9 @@ export function PinPad({
               )
             : null}
         </View>
-        <View>{key(<Text className="text-3xl">0</Text>, () => press('0'), '0')}</View>
+        <View>
+          {key(<Text className="font-body-medium text-[28px]">0</Text>, () => press('0'), '0')}
+        </View>
         <View>
           {key(
             <Icon name="undo" size={24} color={colorOf(scheme, 'foreground')} />,
@@ -107,10 +111,10 @@ export function PinPad({
         disabled={disabled || value.length < minLength}
         onPress={onSubmit}
         className={cn(
-          'rounded-xl bg-primary px-10 py-3',
+          'min-h-14 min-w-56 items-center justify-center rounded-full bg-primary px-10',
           (disabled || value.length < minLength) && 'opacity-40',
         )}>
-        <Text className="font-semibold text-on-primary">{labels.submit}</Text>
+        <Text className="font-body-semibold text-on-primary">{labels.submit}</Text>
       </Pressable>
     </View>
   );

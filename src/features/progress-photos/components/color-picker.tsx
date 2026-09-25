@@ -3,6 +3,7 @@ import { Pressable, View } from 'react-native';
 import { Icon } from '@/shared/ui';
 
 import { TIMELINE_COLORS } from '../templates';
+import { INK } from './timeline-icon';
 
 type ColorPickerProps = { value: string; onChange: (color: string) => void; label: string };
 
@@ -21,9 +22,13 @@ export function ColorPicker({ value, onChange, label }: ColorPickerProps) {
             accessibilityLabel={color}
             accessibilityState={{ selected }}
             onPress={() => onChange(color)}
-            className="h-10 w-10 items-center justify-center rounded-full"
+            className={
+              selected
+                ? 'h-12 w-12 items-center justify-center rounded-full border-[3px] border-primary'
+                : 'h-12 w-12 items-center justify-center rounded-full'
+            }
             style={{ backgroundColor: color }}>
-            {selected ? <Icon name="check" size={18} color="#ffffff" /> : null}
+            {selected ? <Icon name="check" size={20} color={INK} /> : null}
           </Pressable>
         );
       })}

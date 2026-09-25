@@ -1,10 +1,9 @@
-import { Alert, Linking, Pressable, Switch, View } from 'react-native';
+import { Alert, Linking, Switch, View } from 'react-native';
 
 import { i18n, useTranslation } from '@/core/i18n';
 import { withExternalActivity } from '@/core/lifecycle';
 import { requestNotificationPermission } from '@/core/notifications';
-import { cn } from '@/shared/lib/cn';
-import { Card, DateField, Text } from '@/shared/ui';
+import { Card, Chip, DateField, Text } from '@/shared/ui';
 
 import type { Timeline } from '../db/progress-photos.schema';
 import type { TimelineService } from '../services/timeline.service';
@@ -55,7 +54,7 @@ export function ReminderEditor({
   return (
     <Card className="gap-4">
       <View className="flex-row items-center gap-3">
-        <Text className="flex-1 font-medium">{t('reminders.enable')}</Text>
+        <Text className="flex-1 font-body-medium">{t('reminders.enable')}</Text>
         <Switch
           value={interval !== null}
           onValueChange={enable}
@@ -66,27 +65,20 @@ export function ReminderEditor({
       {interval !== null ? (
         <>
           <View className="gap-2">
-            <Text variant="caption" className="font-medium">
+            <Text variant="caption" className="font-body-medium">
               {t('reminders.every')}
             </Text>
             <View className="flex-row flex-wrap gap-2">
               {options.map((days) => (
-                <Pressable
+                <Chip
                   key={days}
-                  accessibilityRole="radio"
-                  accessibilityState={{ selected: interval === days }}
+                  role="radio"
+                  selected={interval === days}
                   onPress={() => service.setReminder(timeline.id, { intervalDays: days, time })}
-                  className={cn(
-                    'rounded-full px-3 py-1.5',
-                    interval === days ? 'bg-primary' : 'bg-surface-muted',
-                  )}>
-                  <Text
-                    variant="caption"
-                    className={interval === days ? 'text-on-primary' : 'text-foreground'}>
-                    {t('reminders.days', { count: days })}
-                    {days === suggested ? ` (${t('reminders.suggested')})` : ''}
-                  </Text>
-                </Pressable>
+                  label={`${t('reminders.days', { count: days })}${
+                    days === suggested ? ` (${t('reminders.suggested')})` : ''
+                  }`}
+                />
               ))}
             </View>
           </View>

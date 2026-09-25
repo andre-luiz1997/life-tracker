@@ -16,7 +16,7 @@ export function PhotoThumb({ thumbFileName, className, size = 56 }: PhotoThumbPr
   const uri = useThumbnail(thumbFileName);
   return (
     <View
-      className={cn('overflow-hidden rounded-lg bg-surface-muted', className)}
+      className={cn('overflow-hidden rounded-2xl bg-surface-muted', className)}
       style={{ width: size, height: size }}>
       {uri ? (
         <Image

@@ -2,7 +2,7 @@ import type { Ref } from 'react';
 import { TextInput, type TextInputProps, View } from 'react-native';
 
 import { cn } from '@/shared/lib/cn';
-import { colorOf, useAppColorScheme } from '@/shared/theme';
+import { colorOf, fonts, useAppColorScheme } from '@/shared/theme';
 
 import { Text } from './text';
 
@@ -19,25 +19,24 @@ export function TextField({
   containerClassName,
   className,
   ref,
+  style,
   ...props
 }: TextFieldProps) {
   const scheme = useAppColorScheme();
   return (
-    <View className={cn('gap-1.5', containerClassName)}>
-      {label ? (
-        <Text variant="caption" className="font-medium">
-          {label}
-        </Text>
-      ) : null}
+    <View className={cn('gap-2', containerClassName)}>
+      {label ? <Text variant="label">{label}</Text> : null}
       <TextInput
         ref={ref}
         accessibilityLabel={label}
         placeholderTextColor={colorOf(scheme, 'muted')}
         className={cn(
-          'min-h-12 rounded-xl border bg-surface px-4 text-base text-foreground',
-          error ? 'border-danger' : 'border-border',
+          'min-h-14 rounded-2xl border bg-surface-muted px-5 text-base text-foreground',
+          error ? 'border-danger' : 'border-transparent',
           className,
         )}
+        // Custom fonts must be set per element on TextInput.
+        style={[{ fontFamily: fonts.regular }, style]}
         {...props}
       />
       {error ? (

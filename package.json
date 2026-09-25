@@ -17,6 +17,7 @@
     "check": "npm run typecheck && npm run lint && npm run format:check && npm test -- --ci"
   },
   "dependencies": {
+    "@expo-google-fonts/palanquin": "^0.4.1",
     "@expo/ui": "~57.0.20",
     "@hookform/resolvers": "^5.9.1",
     "@react-native-community/datetimepicker": "9.1.0",
@@ -70,6 +71,7 @@
     "react-native-svg": "15.15.4",
     "react-native-web": "~0.21.0",
     "react-native-worklets": "0.10.1",
+    "tailwind-merge": "^2.6.0",
     "zod": "^4.6.5",
     "zustand": "^5.0.15"
   },

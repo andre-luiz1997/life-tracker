@@ -71,7 +71,7 @@ export function ReviewScreen({ timelineId }: { timelineId: string }) {
       className="flex-1 bg-black"
       style={{ paddingTop: insets.top, paddingBottom: insets.bottom + 12 }}>
       <Stack.Screen options={{ headerShown: false }} />
-      <Text className="py-3 text-center font-semibold text-white">
+      <Text className="py-3 text-center font-body-semibold text-white">
         {pending.shots.length > 1 ? t('capture.burst') : t('capture.review')}
       </Text>
       <Image

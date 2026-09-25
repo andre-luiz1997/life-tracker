@@ -11,7 +11,7 @@ const detail = {
 export const weightLossTemplate: TimelineTemplate = {
   key: 'weight_loss',
   icon: 'body',
-  color: '#F97316',
+  color: '#F6A58F',
   angles: [
     { key: 'body_front', overlay: 'body-front', ...body },
     { key: 'body_back', overlay: 'body-back', ...body },

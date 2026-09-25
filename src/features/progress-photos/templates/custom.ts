@@ -10,7 +10,7 @@ export const customAngleDefaults: Omit<TemplateAngle, 'key'> = {
 export const customTemplate: TimelineTemplate = {
   key: 'custom',
   icon: 'sparkles',
-  color: '#14B8A6',
+  color: '#A8E6C3',
   angles: [{ key: 'main', ...customAngleDefaults }],
   metrics: [],
   tips: ['consistency'],

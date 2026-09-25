@@ -30,6 +30,10 @@ export const icons = {
   undo: { ios: 'arrow.uturn.backward', android: 'undo', codepoint: 0xe166 },
   biometrics: { ios: 'faceid', android: 'fingerprint', codepoint: 0xe90d },
   lock: { ios: 'lock', android: 'lock', codepoint: 0xe897 },
+  chart: { ios: 'chart.line.uptrend.xyaxis', android: 'monitoring', codepoint: 0xf190 },
+  bell: { ios: 'bell', android: 'notifications', codepoint: 0xe7f4 },
+  shield: { ios: 'lock.shield', android: 'shield_lock', codepoint: 0xf686 },
+  backup: { ios: 'externaldrive', android: 'backup', codepoint: 0xe864 },
 } as const satisfies Record<string, { ios: SFSymbol; android: AndroidSymbol; codepoint: number }>;
 
 export type IconName = keyof typeof icons;

@@ -5,6 +5,7 @@ import { FlatList, View } from 'react-native';
 import { useTranslation } from '@/core/i18n';
 import { Button, EmptyState, IconButton, Screen, Text } from '@/shared/ui';
 
+import { useCaptureSession } from '../capture/capture-session.store';
 import { TimelineCard } from '../components/timeline-card';
 import { useTimelineSummaries } from '../hooks/use-timelines';
 
@@ -16,43 +17,71 @@ export function HomeScreen() {
   const archived = useTimelineSummaries({ archived: true });
 
   const openNew = () => router.push('/timeline/new');
+  const openTimeline = (timelineId: string) =>
+    router.push({ pathname: '/timeline/[timelineId]', params: { timelineId } });
+  const newEntry = (timelineId: string) => {
+    useCaptureSession.getState().start(timelineId);
+    router.push({ pathname: '/timeline/[timelineId]/session', params: { timelineId } });
+  };
+
   const timelines = (showArchived ? archived.data : active.data) ?? [];
   const hasArchived = (archived.data?.length ?? 0) > 0;
   const isEmpty = active.status === 'success' && !active.data.length && !showArchived;
 
-  return (
-    <Screen>
-      <View className="mb-4 mt-4 flex-row items-center justify-between">
-        <Text variant="title" accessibilityRole="header">
-          {showArchived ? tp('home.archived') : t('home.title')}
+  const header = (
+    <View className="mb-2 mt-6 flex-row items-start justify-between gap-4">
+      <View className="flex-1 gap-1">
+        <Text variant="display" accessibilityRole="header">
+          {showArchived ? tp('home.archived') : t('home.greeting')}
         </Text>
         {!showArchived ? (
-          <IconButton
-            icon="plus"
-            color="primary"
-            accessibilityLabel={tp('home.newTimeline')}
-            onPress={openNew}
-          />
+          <Text variant="caption" className="text-base">
+            {t('home.subtitle')}
+          </Text>
         ) : null}
       </View>
-
-      {isEmpty ? (
-        <EmptyState
-          title={t('home.empty.title')}
-          description={t('home.empty.description')}
-          action={<Button label={tp('home.newTimeline')} onPress={openNew} className="mt-2" />}
+      {!showArchived ? (
+        <IconButton
+          icon="plus"
+          variant="surface"
+          diameter={52}
+          accessibilityLabel={tp('home.newTimeline')}
+          onPress={openNew}
         />
+      ) : null}
+    </View>
+  );
+
+  return (
+    <Screen className="px-5">
+      {isEmpty ? (
+        <>
+          {header}
+          <EmptyState
+            icon="photos"
+            title={t('home.empty.title')}
+            description={t('home.empty.description')}
+            action={
+              <Button
+                label={tp('home.newTimeline')}
+                onPress={openNew}
+                className="mt-2 self-stretch"
+              />
+            }
+          />
+        </>
       ) : (
         <FlatList
           data={timelines}
           keyExtractor={(item) => item.id}
-          contentContainerClassName="gap-3 pb-8"
+          showsVerticalScrollIndicator={false}
+          contentContainerClassName="gap-4 pb-10"
+          ListHeaderComponent={header}
           renderItem={({ item }) => (
             <TimelineCard
               timeline={item}
-              onPress={() =>
-                router.push({ pathname: '/timeline/[timelineId]', params: { timelineId: item.id } })
-              }
+              onPress={() => openTimeline(item.id)}
+              onNewEntry={() => newEntry(item.id)}
             />
           )}
           ListFooterComponent={

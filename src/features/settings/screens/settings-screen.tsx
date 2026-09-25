@@ -10,8 +10,8 @@ export function SettingsScreen({ children }: PropsWithChildren) {
   const { t } = useTranslation();
   return (
     <Screen className="px-0">
-      <ScrollView contentContainerClassName="gap-8 px-4 pb-16">
-        <Text variant="title" className="mt-4" accessibilityRole="header">
+      <ScrollView contentContainerClassName="gap-8 px-5 pb-16">
+        <Text variant="display" className="mt-6" accessibilityRole="header">
           {t('settings.title')}
         </Text>
         {children}

@@ -10,6 +10,7 @@ import {
   useStartupMaintenance,
 } from '@/features/progress-photos';
 import { AppLock } from '@/features/security';
+import { colorOf, fonts, useAppColorScheme } from '@/shared/theme';
 
 export default function RootLayout() {
   return (
@@ -23,10 +24,19 @@ export default function RootLayout() {
 
 function RootStack() {
   const { t } = useTranslation();
+  const scheme = useAppColorScheme();
   useStartupMaintenance();
   useReminders();
   return (
-    <Stack screenOptions={{ headerBackButtonDisplayMode: 'minimal' }}>
+    <Stack
+      screenOptions={{
+        headerBackButtonDisplayMode: 'minimal',
+        headerShadowVisible: false,
+        headerTitleStyle: { fontFamily: fonts.semibold },
+        headerLargeTitleStyle: { fontFamily: fonts.bold },
+        headerStyle: { backgroundColor: colorOf(scheme, 'background') },
+        contentStyle: { backgroundColor: colorOf(scheme, 'background') },
+      }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false, title: t('tabs.home') }} />
       <Stack.Screen name="onboarding" options={{ headerShown: false, gestureEnabled: false }} />
       <Stack.Screen name="timeline/new" options={{ presentation: 'modal' }} />

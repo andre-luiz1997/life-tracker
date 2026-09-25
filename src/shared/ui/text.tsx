@@ -3,10 +3,12 @@ import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
 import { cn } from '@/shared/lib/cn';
 
 const variants = {
-  title: 'text-2xl font-bold text-foreground',
-  subtitle: 'text-lg font-semibold text-foreground',
-  body: 'text-base text-foreground',
-  caption: 'text-sm text-muted',
+  display: 'font-body-bold text-[32px] leading-[40px] text-foreground',
+  title: 'font-body-bold text-[26px] leading-[34px] text-foreground',
+  subtitle: 'font-body-semibold text-lg leading-6 text-foreground',
+  body: 'font-body text-base text-foreground',
+  caption: 'font-body text-sm text-muted',
+  label: 'font-body-medium text-[13px] text-foreground',
 } as const;
 
 export type TextProps = RNTextProps & { variant?: keyof typeof variants };
