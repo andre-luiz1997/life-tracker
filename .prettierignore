@@ -1,0 +1,9 @@
+node_modules
+.expo
+dist
+ios
+android
+drizzle
+docs
+src/core/db/migrations
+package-lock.json

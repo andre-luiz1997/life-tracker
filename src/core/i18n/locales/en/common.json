@@ -1,0 +1,28 @@
+{
+  "appName": "Life Tracker",
+  "tabs": {
+    "home": "Home",
+    "settings": "Settings"
+  },
+  "home": {
+    "title": "Timelines",
+    "empty": {
+      "title": "No timelines yet",
+      "description": "Create your first timeline to track your progress with photos."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "version": "Version {{version}}"
+  },
+  "actions": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "dbInit": "Could not open the database."
+  }
+}

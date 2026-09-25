@@ -1,0 +1,28 @@
+{
+  "appName": "Life Tracker",
+  "tabs": {
+    "home": "Início",
+    "settings": "Ajustes"
+  },
+  "home": {
+    "title": "Linhas do tempo",
+    "empty": {
+      "title": "Nenhuma linha do tempo ainda",
+      "description": "Crie sua primeira linha do tempo para acompanhar sua evolução por fotos."
+    }
+  },
+  "settings": {
+    "title": "Ajustes",
+    "version": "Versão {{version}}"
+  },
+  "actions": {
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Salvar",
+    "delete": "Excluir"
+  },
+  "errors": {
+    "generic": "Algo deu errado. Tente novamente.",
+    "dbInit": "Não foi possível abrir o banco de dados."
+  }
+}
