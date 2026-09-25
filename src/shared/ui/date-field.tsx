@@ -1,7 +1,4 @@
-import RNDateTimePicker, {
-  DateTimePickerAndroid,
-  type DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
+import RNDateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { Platform, Pressable, View } from 'react-native';
 
 import { Text } from './text';
@@ -24,9 +21,8 @@ export function DateField({
   locale,
   maximumDate,
 }: DateFieldProps) {
-  const handle = (event: DateTimePickerEvent, date?: Date) => {
-    if (event.type === 'set' && date) onChange(date);
-  };
+  // Fired only when a value is picked (dismissals go to onDismiss, which we don't need).
+  const handle = (_: unknown, date: Date) => onChange(date);
 
   const formatted =
     mode === 'date'
@@ -45,7 +41,7 @@ export function DateField({
           display="compact"
           locale={locale}
           maximumDate={maximumDate}
-          onChange={handle}
+          onValueChange={handle}
           accessibilityLabel={label}
         />
       ) : (
@@ -57,7 +53,7 @@ export function DateField({
               value,
               mode,
               maximumDate,
-              onChange: handle,
+              onValueChange: handle,
               is24Hour: true,
             })
           }
