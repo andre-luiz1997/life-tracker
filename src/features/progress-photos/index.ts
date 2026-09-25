@@ -13,3 +13,4 @@ export { NewTimelineScreen } from './screens/new-timeline-screen';
 export { TimelineScreen } from './screens/timeline-screen';
 export { TimelineSettingsScreen } from './screens/timeline-settings-screen';
 export { ViewerScreen } from './screens/viewer-screen';
+export { FigureSettings } from './components/figure-settings';

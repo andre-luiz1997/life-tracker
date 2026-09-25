@@ -6,6 +6,10 @@ import type { TimelineSummary } from '../repositories/timelines.repository';
 import { TimelineCard } from './timeline-card';
 
 jest.mock('expo-symbols', () => ({ SymbolView: () => null }));
+jest.mock('expo-haptics', () => ({
+  impactAsync: () => Promise.resolve(),
+  ImpactFeedbackStyle: {},
+}));
 jest.mock('../hooks/use-photos', () => ({
   useCoverThumb: () => ({ status: 'success', data: null }),
 }));
@@ -39,6 +43,22 @@ describe('TimelineCard', () => {
     );
     expect(screen.getByText('Meu cabelo')).toBeOnTheScreen();
     for (const tag of tags) expect(screen.getByText(tag)).toBeOnTheScreen();
+  });
+
+  it('reports where it was long-pressed, to anchor the menu', async () => {
+    const onLongPress = jest.fn();
+    await render(
+      <TimelineCard
+        timeline={base}
+        onPress={() => {}}
+        onNewEntry={() => {}}
+        onLongPress={onLongPress}
+      />,
+    );
+    await fireEvent(screen.getByText('Meu cabelo'), 'longPress', {
+      nativeEvent: { pageX: 120, pageY: 340 },
+    });
+    expect(onLongPress).toHaveBeenCalledWith({ x: 120, y: 340 });
   });
 
   it('starts a new entry from the round button', async () => {

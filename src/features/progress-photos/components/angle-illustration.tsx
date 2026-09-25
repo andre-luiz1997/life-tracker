@@ -4,13 +4,22 @@ import { SvgXml } from 'react-native-svg';
 import { cn } from '@/shared/lib/cn';
 
 import type { TemplateKey } from '../db/progress-photos.schema';
-import { angleIllustration } from '../templates/illustrations';
+import { useFigureGender } from '../hooks/use-figure-gender';
+import { angleIllustration, type FigureGender } from '../templates/illustrations';
 
-type Props = { templateKey: TemplateKey; angleKey: string; size: number; className?: string };
+type Props = {
+  templateKey: TemplateKey;
+  angleKey: string;
+  size: number;
+  className?: string;
+  /** Overrides the user's figure style (used by the style picker previews). */
+  gender?: FigureGender;
+};
 
 /** Pose guide for an angle on a light rounded tile. Renders nothing for custom angles. */
-export function AngleIllustration({ templateKey, angleKey, size, className }: Props) {
-  const xml = angleIllustration(templateKey, angleKey);
+export function AngleIllustration({ templateKey, angleKey, size, className, gender }: Props) {
+  const preferred = useFigureGender();
+  const xml = angleIllustration(templateKey, angleKey, gender ?? preferred);
   if (!xml) return null;
   return (
     <View
@@ -24,5 +33,5 @@ export function AngleIllustration({ templateKey, angleKey, size, className }: Pr
 }
 
 export function hasIllustration(templateKey: TemplateKey, angleKey: string) {
-  return angleIllustration(templateKey, angleKey) !== null;
+  return angleIllustration(templateKey, angleKey, 'neutral') !== null;
 }

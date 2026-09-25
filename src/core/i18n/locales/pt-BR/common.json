@@ -21,7 +21,8 @@
     "cancel": "Cancelar",
     "confirm": "Confirmar",
     "save": "Salvar",
-    "delete": "Excluir"
+    "delete": "Excluir",
+    "close": "Fechar"
   },
   "errors": {
     "generic": "Algo deu errado. Tente novamente.",

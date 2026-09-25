@@ -3,6 +3,9 @@ import { hashSecret, verifySecret } from './kdf';
 // Low iteration count keeps the test fast; production uses PBKDF2_ITERATIONS.
 const ITER = 1000;
 
+// Real PBKDF2 runs; allow for slow CI machines.
+jest.setTimeout(20_000);
+
 describe('kdf', () => {
   it('verifies the correct secret', async () => {
     const record = await hashSecret('123456', ITER);

@@ -14,3 +14,4 @@ export { PinPad } from './pin-pad';
 export { Tag } from './tag';
 export { Toggle } from './toggle';
 export { SortableList } from './sortable-list';
+export { ContextMenu, type ContextMenuItem } from './context-menu';

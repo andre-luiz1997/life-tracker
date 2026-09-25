@@ -300,5 +300,12 @@
     "permissionDeniedTitle": "Notificações desativadas",
     "permissionDeniedMessage": "Para receber lembretes, permita as notificações do Life Tracker nos ajustes do celular.",
     "openSettings": "Abrir ajustes"
+  },
+  "figures": {
+    "title": "Figuras de guia",
+    "hint": "Escolha o estilo das figuras que mostram como posicionar cada foto.",
+    "feminine": "Feminino",
+    "masculine": "Masculino",
+    "neutral": "Neutro"
   }
 }

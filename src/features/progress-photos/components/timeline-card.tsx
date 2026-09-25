@@ -1,4 +1,5 @@
-import { View } from 'react-native';
+import * as Haptics from 'expo-haptics';
+import { Dimensions, View } from 'react-native';
 
 import { useTranslation } from '@/core/i18n';
 import { IconButton, PressableCard, Tag, Text } from '@/shared/ui';
@@ -14,10 +15,12 @@ type TimelineCardProps = {
   onPress: () => void;
   /** Round shortcut button: start a new entry right from the list. */
   onNewEntry: () => void;
+  /** Press-and-hold: screen coordinates of the finger, to anchor a context menu. */
+  onLongPress?: (anchor: { x: number; y: number }) => void;
 };
 
 /** White card; the timeline's pastel color goes on its icon, tags and round action button. */
-export function TimelineCard({ timeline, onPress, onNewEntry }: TimelineCardProps) {
+export function TimelineCard({ timeline, onPress, onNewEntry, onLongPress }: TimelineCardProps) {
   const { t } = useTranslation('photos');
   const cover = useCoverThumb(timeline.id);
   // Soft tint of the timeline color for the tags (hex + alpha).
@@ -32,7 +35,24 @@ export function TimelineCard({ timeline, onPress, onNewEntry }: TimelineCardProp
         : t('home.lastEntryDays', { count: days });
 
   return (
-    <PressableCard onPress={onPress} className="gap-4">
+    <PressableCard
+      onPress={onPress}
+      delayLongPress={400}
+      onLongPress={
+        onLongPress
+          ? (e) => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
+              onLongPress({ x: e.nativeEvent.pageX, y: e.nativeEvent.pageY });
+            }
+          : undefined
+      }
+      accessibilityActions={onLongPress ? [{ name: 'longpress' }] : undefined}
+      onAccessibilityAction={() => {
+        // Screen readers: open the menu in the middle of the screen.
+        const { width, height } = Dimensions.get('window');
+        onLongPress?.({ x: width / 2, y: height / 3 });
+      }}
+      className="gap-4">
       <View className="flex-row items-center gap-4">
         {cover.data ? (
           <PhotoThumb thumbFileName={cover.data} size={56} />

@@ -1,18 +1,24 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { Alert, FlatList, View } from 'react-native';
 
 import { useTranslation } from '@/core/i18n';
-import { Button, EmptyState, IconButton, Screen, Text } from '@/shared/ui';
+import { Button, ContextMenu, EmptyState, IconButton, Screen, Text } from '@/shared/ui';
 
 import { useCaptureSession } from '../capture/capture-session.store';
 import { TimelineCard } from '../components/timeline-card';
-import { useTimelineSummaries } from '../hooks/use-timelines';
+import { useTimelineService, useTimelineSummaries } from '../hooks/use-timelines';
+import type { TimelineSummary } from '../repositories/timelines.repository';
 
 export function HomeScreen() {
   const { t } = useTranslation();
   const { t: tp } = useTranslation('photos');
   const [showArchived, setShowArchived] = useState(false);
+  const service = useTimelineService();
+  const [menu, setMenu] = useState<{
+    timeline: TimelineSummary;
+    anchor: { x: number; y: number };
+  } | null>(null);
   const active = useTimelineSummaries({ archived: false });
   const archived = useTimelineSummaries({ archived: true });
 
@@ -23,6 +29,47 @@ export function HomeScreen() {
     useCaptureSession.getState().start(timelineId);
     router.push({ pathname: '/timeline/[timelineId]/session', params: { timelineId } });
   };
+
+  const confirmDelete = (timeline: TimelineSummary) =>
+    Alert.alert(
+      tp('timelineSettings.deleteConfirmTitle', { title: timeline.title }),
+      tp('timelineSettings.deleteConfirmMessage'),
+      [
+        { text: t('actions.cancel'), style: 'cancel' },
+        {
+          text: t('actions.delete'),
+          style: 'destructive',
+          onPress: () => service.remove(timeline.id),
+        },
+      ],
+    );
+
+  const menuItems = menu
+    ? [
+        {
+          label: tp('timeline.settings'),
+          icon: 'settings' as const,
+          onPress: () =>
+            router.push({
+              pathname: '/timeline/[timelineId]/settings',
+              params: { timelineId: menu.timeline.id },
+            }),
+        },
+        {
+          label: menu.timeline.archivedAt
+            ? tp('timelineSettings.unarchive')
+            : tp('timelineSettings.archive'),
+          icon: 'archive' as const,
+          onPress: () => service.setArchived(menu.timeline.id, !menu.timeline.archivedAt),
+        },
+        {
+          label: tp('timelineSettings.remove'),
+          icon: 'trash' as const,
+          destructive: true,
+          onPress: () => confirmDelete(menu.timeline),
+        },
+      ]
+    : [];
 
   const timelines = (showArchived ? archived.data : active.data) ?? [];
   const hasArchived = (archived.data?.length ?? 0) > 0;
@@ -82,6 +129,7 @@ export function HomeScreen() {
               timeline={item}
               onPress={() => openTimeline(item.id)}
               onNewEntry={() => newEntry(item.id)}
+              onLongPress={(anchor) => setMenu({ timeline: item, anchor })}
             />
           )}
           ListFooterComponent={
@@ -95,6 +143,13 @@ export function HomeScreen() {
           }
         />
       )}
+      <ContextMenu
+        anchor={menu?.anchor ?? null}
+        title={menu?.timeline.title}
+        items={menuItems}
+        onClose={() => setMenu(null)}
+        closeLabel={t('actions.close')}
+      />
     </Screen>
   );
 }

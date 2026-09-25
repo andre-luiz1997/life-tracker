@@ -300,5 +300,12 @@
     "permissionDeniedTitle": "Notifications are off",
     "permissionDeniedMessage": "To get reminders, allow Life Tracker notifications in your phone settings.",
     "openSettings": "Open settings"
+  },
+  "figures": {
+    "title": "Guide figures",
+    "hint": "Choose the style of the figures that show how to frame each photo.",
+    "feminine": "Feminine",
+    "masculine": "Masculine",
+    "neutral": "Neutral"
   }
 }
