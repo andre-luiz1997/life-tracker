@@ -1,8 +1,6 @@
-import { migrate } from 'drizzle-orm/expo-sqlite/migrator';
 import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 
-import { openDatabase } from './client';
-import migrations from './migrations/migrations';
+import { openMigratedDatabase } from './client';
 
 type State = { status: 'loading' } | { status: 'ready' } | { status: 'error'; error: Error };
 
@@ -29,8 +27,7 @@ export function DatabaseProvider({ children, fallback, renderError }: DatabasePr
   useEffect(() => {
     let cancelled = false;
     (pendingTask ? pendingTask.run() : Promise.resolve())
-      .then(() => openDatabase())
-      .then((db) => migrate(db, migrations))
+      .then(() => openMigratedDatabase())
       .then(() => !cancelled && setState({ status: 'ready' }))
       .catch((e: unknown) => {
         if (cancelled) return;

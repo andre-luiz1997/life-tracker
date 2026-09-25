@@ -1,6 +1,8 @@
+import enBackup from './locales/en/backup.json';
 import enCommon from './locales/en/common.json';
 import enPhotos from './locales/en/photos.json';
 import enSecurity from './locales/en/security.json';
+import ptBRBackup from './locales/pt-BR/backup.json';
 import ptBRCommon from './locales/pt-BR/common.json';
 import ptBRPhotos from './locales/pt-BR/photos.json';
 import ptBRSecurity from './locales/pt-BR/security.json';
@@ -22,6 +24,7 @@ describe('i18n', () => {
     ['common', enCommon, ptBRCommon],
     ['photos', enPhotos, ptBRPhotos],
     ['security', enSecurity, ptBRSecurity],
+    ['backup', enBackup, ptBRBackup],
   ])('has the same %s keys in every locale', (_, en, ptBR) => {
     expect(base(en)).toEqual(base(ptBR));
   });

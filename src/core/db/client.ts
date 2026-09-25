@@ -1,9 +1,12 @@
 import { drizzle, type ExpoSQLiteDatabase } from 'drizzle-orm/expo-sqlite';
+import { migrate } from 'drizzle-orm/expo-sqlite/migrator';
 import type { BaseSQLiteDatabase } from 'drizzle-orm/sqlite-core';
 import { openDatabaseSync, type SQLiteDatabase } from 'expo-sqlite';
 
 import { getDatabaseKey } from '@/core/crypto';
 import { bytesToHex } from '@/shared/lib/bytes';
+
+import migrations from './migrations/migrations';
 
 export const DATABASE_NAME = 'life-tracker.db';
 
@@ -29,6 +32,13 @@ export async function openDatabase(): Promise<AppDatabase> {
 
   connection = { sqlite, db: drizzle(sqlite) };
   return connection.db;
+}
+
+/** Opens the database and applies pending migrations (idempotent). */
+export async function openMigratedDatabase(): Promise<AppDatabase> {
+  const db = await openDatabase();
+  await migrate(db, migrations);
+  return db;
 }
 
 export function getDatabase(): AppDatabase {

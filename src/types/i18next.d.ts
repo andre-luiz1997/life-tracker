@@ -1,5 +1,6 @@
 import 'i18next';
 
+import type ptBRBackup from '@/core/i18n/locales/pt-BR/backup.json';
 import type ptBRCommon from '@/core/i18n/locales/pt-BR/common.json';
 import type ptBRPhotos from '@/core/i18n/locales/pt-BR/photos.json';
 import type ptBRSecurity from '@/core/i18n/locales/pt-BR/security.json';
@@ -11,6 +12,7 @@ declare module 'i18next' {
       common: typeof ptBRCommon;
       photos: typeof ptBRPhotos;
       security: typeof ptBRSecurity;
+      backup: typeof ptBRBackup;
     };
   }
 }

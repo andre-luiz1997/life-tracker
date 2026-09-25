@@ -2,16 +2,18 @@ import { getLocales } from 'expo-localization';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import enBackup from './locales/en/backup.json';
 import enCommon from './locales/en/common.json';
 import enPhotos from './locales/en/photos.json';
 import enSecurity from './locales/en/security.json';
+import ptBRBackup from './locales/pt-BR/backup.json';
 import ptBRCommon from './locales/pt-BR/common.json';
 import ptBRPhotos from './locales/pt-BR/photos.json';
 import ptBRSecurity from './locales/pt-BR/security.json';
 
 export const resources = {
-  'pt-BR': { common: ptBRCommon, photos: ptBRPhotos, security: ptBRSecurity },
-  en: { common: enCommon, photos: enPhotos, security: enSecurity },
+  'pt-BR': { common: ptBRCommon, photos: ptBRPhotos, security: ptBRSecurity, backup: ptBRBackup },
+  en: { common: enCommon, photos: enPhotos, security: enSecurity, backup: enBackup },
 } as const;
 
 export type AppLanguage = keyof typeof resources;
@@ -32,7 +34,7 @@ i18n.use(initReactI18next).init({
   lng: detectLanguage(),
   fallbackLng: DEFAULT_LANGUAGE,
   defaultNS: 'common',
-  ns: ['common', 'photos', 'security'],
+  ns: ['common', 'photos', 'security', 'backup'],
   interpolation: { escapeValue: false },
   returnNull: false,
 });

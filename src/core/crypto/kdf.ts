@@ -4,7 +4,11 @@ import { bytesToHex, hexToBytes, timingSafeEqual, utf8Encode } from '@/shared/li
 
 import { randomKeyBytes } from './aes-gcm';
 
-/** OWASP 2023 recommendation for PBKDF2-HMAC-SHA256. */
+/**
+ * PIN hashing cost (plan: ≥ 210k). OWASP 2023 recommends 600k for PBKDF2-HMAC-SHA256; for a
+ * 4–6 digit PIN stored in the Keychain/Keystore, extra iterations mostly add unlock latency.
+ * Backup passwords, which protect files that leave the device, use BACKUP_KDF_ITERATIONS.
+ */
 export const PBKDF2_ITERATIONS = 210_000;
 const DIGEST = 'sha256';
 const SALT_LENGTH = 16;

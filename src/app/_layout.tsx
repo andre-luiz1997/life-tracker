@@ -30,6 +30,8 @@ function RootStack() {
       <Stack.Screen name="(tabs)" options={{ headerShown: false, title: t('tabs.home') }} />
       <Stack.Screen name="timeline/new" options={{ presentation: 'modal' }} />
       <Stack.Screen name="security/pin" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="backup/export" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="backup/restore" options={{ presentation: 'modal' }} />
       <Stack.Screen name="timeline/[timelineId]/index" />
       <Stack.Screen name="timeline/[timelineId]/settings" />
       <Stack.Screen name="timeline/[timelineId]/session" />
