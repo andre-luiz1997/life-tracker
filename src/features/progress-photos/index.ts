@@ -5,6 +5,7 @@ export { CompareScreen } from './compare/compare-screen';
 export { EditorScreen } from './editor/editor-screen';
 export { clearDecryptedPhotos } from './hooks/use-photo-source';
 export { useStartupMaintenance } from './hooks/use-startup-maintenance';
+export { useReminders } from './reminders/use-reminders';
 export { EntryScreen } from './screens/entry-screen';
 export { HomeScreen } from './screens/home-screen';
 export { MetricsScreen } from './screens/metrics-screen';

@@ -42,7 +42,7 @@ describe('timeline.service', () => {
 
       const timeline = repo.getTimeline(db, id);
       expect(timeline).toMatchObject({ title: 'Corpo', templateKey: 'weight_loss', icon: 'body' });
-      expect(timeline?.reminderIntervalDays).toBe(7);
+      expect(timeline?.reminderIntervalDays).toBeNull(); // suggestion only (opt-in)
 
       const angles = repo.listAngles(db, id);
       expect(angles.map((a) => a.key)).toEqual([

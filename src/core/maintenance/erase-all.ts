@@ -2,6 +2,7 @@ import { Directory, Paths } from 'expo-file-system';
 import { deleteDatabaseSync } from 'expo-sqlite';
 
 import { closeDatabase, DATABASE_NAME } from '@/core/db/client';
+import { cancelAllReminders } from '@/core/notifications';
 import { deleteSecret, SecureKeys } from '@/core/secure-store';
 import { secureFileStore } from '@/core/storage';
 
@@ -10,6 +11,7 @@ import { secureFileStore } from '@/core/storage';
  * and an empty database are created on the next open. Run inside `useDatabaseRestart()`.
  */
 export async function eraseAllData(): Promise<void> {
+  await cancelAllReminders().catch(() => {});
   closeDatabase();
   try {
     deleteDatabaseSync(DATABASE_NAME);

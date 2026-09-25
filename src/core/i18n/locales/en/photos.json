@@ -281,5 +281,21 @@
     "shareTitle": "Share comparison",
     "shareError": "Couldn't create the image.",
     "pick": "Pick photo from {{date}}"
+  },
+  "reminders": {
+    "notificationTitle": "Life Tracker",
+    "notificationBody": "Time for your check-in 📸",
+    "channelName": "Check-in reminders",
+    "title": "Reminder",
+    "enable": "Remind me to check in",
+    "every": "Every",
+    "days_one": "{{count}} day",
+    "days_other": "{{count}} days",
+    "suggested": "suggested",
+    "time": "Time",
+    "hint": "The notification only shows a generic text, never the timeline name.",
+    "permissionDeniedTitle": "Notifications are off",
+    "permissionDeniedMessage": "To get reminders, allow Life Tracker notifications in your phone settings.",
+    "openSettings": "Open settings"
   }
 }

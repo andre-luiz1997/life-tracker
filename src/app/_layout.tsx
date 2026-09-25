@@ -4,7 +4,11 @@ import { Stack } from 'expo-router';
 
 import { useTranslation } from '@/core/i18n';
 import { AppProviders } from '@/features/app-shell';
-import { clearDecryptedPhotos, useStartupMaintenance } from '@/features/progress-photos';
+import {
+  clearDecryptedPhotos,
+  useReminders,
+  useStartupMaintenance,
+} from '@/features/progress-photos';
 import { AppLock } from '@/features/security';
 
 export default function RootLayout() {
@@ -20,6 +24,7 @@ export default function RootLayout() {
 function RootStack() {
   const { t } = useTranslation();
   useStartupMaintenance();
+  useReminders();
   return (
     <Stack screenOptions={{ headerBackButtonDisplayMode: 'minimal' }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false, title: t('tabs.home') }} />

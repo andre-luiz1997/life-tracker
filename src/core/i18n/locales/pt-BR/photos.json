@@ -281,5 +281,21 @@
     "shareTitle": "Compartilhar comparação",
     "shareError": "Não foi possível gerar a imagem.",
     "pick": "Escolher foto de {{date}}"
+  },
+  "reminders": {
+    "notificationTitle": "Life Tracker",
+    "notificationBody": "Hora do seu registro 📸",
+    "channelName": "Lembretes de registro",
+    "title": "Lembrete",
+    "enable": "Lembrar de registrar",
+    "every": "A cada",
+    "days_one": "{{count}} dia",
+    "days_other": "{{count}} dias",
+    "suggested": "sugerido",
+    "time": "Horário",
+    "hint": "A notificação mostra só um texto genérico, sem o nome da linha do tempo.",
+    "permissionDeniedTitle": "Notificações desativadas",
+    "permissionDeniedMessage": "Para receber lembretes, permita as notificações do Life Tracker nos ajustes do celular.",
+    "openSettings": "Abrir ajustes"
   }
 }

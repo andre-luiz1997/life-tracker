@@ -13,6 +13,7 @@ import { TimelineFormFields } from '../components/timeline-form-fields';
 import type { Timeline } from '../db/progress-photos.schema';
 import { useTimelineDetails, useTimelineService } from '../hooks/use-timelines';
 import { timelineFormSchema, type TimelineFormValues } from '../lib/timeline-form';
+import { ReminderEditor } from '../reminders/reminder-editor';
 import type { TimelineService } from '../services/timeline.service';
 
 export function TimelineSettingsScreen({ timelineId }: { timelineId: string }) {
@@ -33,6 +34,10 @@ export function TimelineSettingsScreen({ timelineId }: { timelineId: string }) {
       <ScrollView contentContainerClassName="gap-8 p-4 pb-16" keyboardShouldPersistTaps="handled">
         <Section title={t('timelineSettings.general')}>
           <GeneralForm timeline={timeline} service={service} />
+        </Section>
+
+        <Section title={t('reminders.title')}>
+          <ReminderEditor timeline={timeline} service={service} />
         </Section>
 
         <Section title={t('timelineSettings.angles')} hint={t('timelineSettings.anglesHint')}>

@@ -67,7 +67,9 @@ export function createTimelineService({ db, files, translate }: Deps) {
           templateKey,
           color,
           icon: template.icon,
-          reminderIntervalDays: template.reminderIntervalDays,
+          // The template interval is only a suggestion: reminders need the user's opt-in
+          // (and the notification permission), see setReminder.
+          reminderIntervalDays: null,
         });
         repo.insertAngles(
           tx,
@@ -100,6 +102,14 @@ export function createTimelineService({ db, files, translate }: Deps) {
 
     update(id: string, values: { title?: string; color?: string }) {
       repo.updateTimeline(db, id, { ...values, title: values.title?.trim() });
+    },
+
+    /** `null` turns reminders off. */
+    setReminder(id: string, reminder: { intervalDays: number; time: string } | null) {
+      repo.updateTimeline(db, id, {
+        reminderIntervalDays: reminder?.intervalDays ?? null,
+        reminderTime: reminder?.time ?? null,
+      });
     },
 
     setArchived(id: string, archived: boolean) {
