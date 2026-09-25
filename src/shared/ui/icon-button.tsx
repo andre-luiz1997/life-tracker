@@ -14,6 +14,10 @@ const variants = {
   solid: { container: 'bg-primary', icon: 'on-primary' },
   /** Yellow circle. */
   accent: { container: 'bg-accent', icon: 'on-accent' },
+  /** Flat white circle, for use on muted rows. */
+  soft: { container: 'bg-surface', icon: 'foreground' },
+  /** Destructive action: soft red circle. */
+  danger: { container: 'bg-danger/10', icon: 'danger' },
 } as const satisfies Record<string, { container: string; icon: ColorToken }>;
 
 export type IconButtonProps = Omit<PressableProps, 'children'> & {

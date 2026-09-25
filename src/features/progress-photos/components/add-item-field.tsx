@@ -38,7 +38,8 @@ export function AddItemField({
       />
       <IconButton
         icon="plus"
-        color="primary"
+        variant="solid"
+        diameter={52}
         accessibilityLabel={accessibilityLabel}
         disabled={!value.trim()}
         onPress={submit}

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Alert, Switch, View } from 'react-native';
+import { Alert, Pressable, View } from 'react-native';
 
 import { useTranslation } from '@/core/i18n';
 import { cn } from '@/shared/lib/cn';
-import { Card, IconButton, Text, TextField } from '@/shared/ui';
+import { IconButton, ReorderControl, Text, TextField, Toggle } from '@/shared/ui';
 
 import type { TimelineAngle } from '../db/progress-photos.schema';
 import type { TimelineService } from '../services/timeline.service';
@@ -43,17 +43,15 @@ export function AnglesEditor({ timelineId, angles, service }: Props) {
 
   return (
     <View className="gap-3">
-      <Card className="gap-1 p-2">
+      <View className="gap-2">
         {angles.map((angle, index) => (
           <View
             key={angle.id}
-            className={cn(
-              'flex-row items-center gap-1 py-1 pl-2',
-              index > 0 && 'border-t border-border',
-            )}>
+            className="min-h-16 flex-row items-center gap-2 rounded-2xl bg-surface-muted py-2 pl-4 pr-2">
             {editingId === angle.id ? (
               <TextField
                 containerClassName="flex-1"
+                className="min-h-11 bg-surface"
                 value={draft}
                 onChangeText={setDraft}
                 onSubmitEditing={commitEdit}
@@ -63,15 +61,31 @@ export function AnglesEditor({ timelineId, angles, service }: Props) {
                 accessibilityLabel={t('timelineSettings.rename')}
               />
             ) : (
-              <Text
-                className={cn('flex-1', !angle.isActive && 'text-muted')}
-                numberOfLines={1}
+              <Pressable
+                className="flex-1 py-1"
                 onPress={() => startEditing(angle)}
+                accessibilityRole="button"
                 accessibilityHint={t('timelineSettings.rename')}>
-                {angle.label}
-              </Text>
+                <Text
+                  className={cn('font-body-medium', !angle.isActive && 'text-muted')}
+                  numberOfLines={1}>
+                  {angle.label}
+                </Text>
+                {!angle.isActive ? (
+                  <Text variant="caption" className="text-xs">
+                    {t('timelineSettings.inactive')}
+                  </Text>
+                ) : null}
+              </Pressable>
             )}
-            <Switch
+            <ReorderControl
+              canMoveUp={index > 0}
+              canMoveDown={index < angles.length - 1}
+              onUp={() => service.moveAngle(angle.id, 'up')}
+              onDown={() => service.moveAngle(angle.id, 'down')}
+              labels={{ up: t('timelineSettings.moveUp'), down: t('timelineSettings.moveDown') }}
+            />
+            <Toggle
               value={angle.isActive}
               accessibilityLabel={
                 angle.isActive ? t('timelineSettings.disable') : t('timelineSettings.enable')
@@ -81,29 +95,16 @@ export function AnglesEditor({ timelineId, angles, service }: Props) {
               }
             />
             <IconButton
-              icon="chevron-up"
-              size={18}
-              disabled={index === 0}
-              accessibilityLabel={t('timelineSettings.moveUp')}
-              onPress={() => service.moveAngle(angle.id, 'up')}
-            />
-            <IconButton
-              icon="chevron-down"
-              size={18}
-              disabled={index === angles.length - 1}
-              accessibilityLabel={t('timelineSettings.moveDown')}
-              onPress={() => service.moveAngle(angle.id, 'down')}
-            />
-            <IconButton
               icon="trash"
+              variant="danger"
               size={18}
-              color="danger"
+              diameter={36}
               accessibilityLabel={t('timelineSettings.remove')}
               onPress={() => confirmRemove(angle)}
             />
           </View>
         ))}
-      </Card>
+      </View>
       <AddItemField
         placeholder={t('timelineSettings.anglePlaceholder')}
         accessibilityLabel={t('timelineSettings.addAngle')}

@@ -1,9 +1,9 @@
-import { Alert, Linking, Switch, View } from 'react-native';
+import { Alert, Linking, View } from 'react-native';
 
 import { i18n, useTranslation } from '@/core/i18n';
 import { withExternalActivity } from '@/core/lifecycle';
 import { requestNotificationPermission } from '@/core/notifications';
-import { Card, Chip, DateField, Text } from '@/shared/ui';
+import { Card, Chip, DateField, Text, Toggle } from '@/shared/ui';
 
 import type { Timeline } from '../db/progress-photos.schema';
 import type { TimelineService } from '../services/timeline.service';
@@ -55,7 +55,7 @@ export function ReminderEditor({
     <Card className="gap-4">
       <View className="flex-row items-center gap-3">
         <Text className="flex-1 font-body-medium">{t('reminders.enable')}</Text>
-        <Switch
+        <Toggle
           value={interval !== null}
           onValueChange={enable}
           accessibilityLabel={t('reminders.enable')}

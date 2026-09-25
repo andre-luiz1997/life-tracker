@@ -138,7 +138,8 @@
     "removeAngleConfirmMessage": "As fotos deste ângulo também serão apagadas. Para mantê-las, desative o ângulo.",
     "removeMetricConfirmTitle": "Remover a métrica “{{label}}”?",
     "removeMetricConfirmMessage": "Os valores já registrados desta métrica serão apagados.",
-    "lastAngle": "A linha do tempo precisa de pelo menos um ângulo ativo."
+    "lastAngle": "A linha do tempo precisa de pelo menos um ângulo ativo.",
+    "inactive": "Desativado"
   },
   "session": {
     "title": "Novo registro",

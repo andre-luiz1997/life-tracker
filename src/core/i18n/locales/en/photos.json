@@ -138,7 +138,8 @@
     "removeAngleConfirmMessage": "Photos of this angle will be deleted too. To keep them, disable the angle instead.",
     "removeMetricConfirmTitle": "Remove the “{{label}}” metric?",
     "removeMetricConfirmMessage": "Values already recorded for this metric will be deleted.",
-    "lastAngle": "The timeline needs at least one active angle."
+    "lastAngle": "The timeline needs at least one active angle.",
+    "inactive": "Disabled"
   },
   "session": {
     "title": "New entry",

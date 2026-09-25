@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert, Pressable, View } from 'react-native';
 
 import { useTranslation } from '@/core/i18n';
 import { cn } from '@/shared/lib/cn';
-import { Card, Chip, IconButton, Text, TextField } from '@/shared/ui';
+import { Chip, IconButton, ReorderControl, Tag, Text, TextField } from '@/shared/ui';
 
 import type { MetricDefinition, TemplateKey } from '../db/progress-photos.schema';
 import type { TimelineService } from '../services/timeline.service';
@@ -54,45 +54,42 @@ export function MetricsEditor({ timelineId, templateKey, metrics, service }: Pro
   return (
     <View className="gap-3">
       {metrics.length ? (
-        <Card className="gap-1 p-2">
+        <View className="gap-2">
           {metrics.map((metric, index) => (
             <View
               key={metric.id}
               className={cn(
-                'flex-row items-center gap-1 py-1 pl-2',
-                index > 0 && 'border-t border-border',
+                'min-h-16 flex-row items-center gap-2 rounded-2xl bg-surface-muted py-2 pl-4 pr-2',
+                draft.id === metric.id && 'border-2 border-primary',
               )}>
-              <Text
-                className="flex-1"
-                numberOfLines={1}
+              <Pressable
+                className="flex-1 flex-row items-center gap-2 py-1"
                 onPress={() => setDraft({ id: metric.id, label: metric.label, unit: metric.unit })}
+                accessibilityRole="button"
                 accessibilityHint={t('timelineSettings.rename')}>
-                {metric.label} <Text variant="caption">({metric.unit})</Text>
-              </Text>
-              <IconButton
-                icon="chevron-up"
-                size={18}
-                disabled={index === 0}
-                accessibilityLabel={t('timelineSettings.moveUp')}
-                onPress={() => service.moveMetric(metric.id, 'up')}
-              />
-              <IconButton
-                icon="chevron-down"
-                size={18}
-                disabled={index === metrics.length - 1}
-                accessibilityLabel={t('timelineSettings.moveDown')}
-                onPress={() => service.moveMetric(metric.id, 'down')}
+                <Text className="font-body-medium" numberOfLines={1}>
+                  {metric.label}
+                </Text>
+                <Tag tone="soft" label={metric.unit} />
+              </Pressable>
+              <ReorderControl
+                canMoveUp={index > 0}
+                canMoveDown={index < metrics.length - 1}
+                onUp={() => service.moveMetric(metric.id, 'up')}
+                onDown={() => service.moveMetric(metric.id, 'down')}
+                labels={{ up: t('timelineSettings.moveUp'), down: t('timelineSettings.moveDown') }}
               />
               <IconButton
                 icon="trash"
+                variant="danger"
                 size={18}
-                color="danger"
+                diameter={36}
                 accessibilityLabel={t('timelineSettings.remove')}
                 onPress={() => confirmRemove(metric)}
               />
             </View>
           ))}
-        </Card>
+        </View>
       ) : null}
 
       <View className="flex-row items-center gap-2">
@@ -116,7 +113,8 @@ export function MetricsEditor({ timelineId, templateKey, metrics, service }: Pro
         />
         <IconButton
           icon={draft.id ? 'check' : 'plus'}
-          color="primary"
+          variant="solid"
+          diameter={52}
           disabled={!canSave}
           accessibilityLabel={
             draft.id ? t('actions.save', { ns: 'common' }) : t('timelineSettings.addMetric')

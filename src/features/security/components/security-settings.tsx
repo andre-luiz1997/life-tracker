@@ -1,11 +1,11 @@
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Alert, Switch, View } from 'react-native';
+import { Alert, View } from 'react-native';
 
 import { useDatabaseRestart } from '@/core/db';
 import { useTranslation } from '@/core/i18n';
 import { eraseAllData } from '@/core/maintenance';
-import { Button, Card, Chip, Section, Text } from '@/shared/ui';
+import { Button, Card, Chip, Section, Text, Toggle } from '@/shared/ui';
 
 import { useSecurityPreferences, useSecurityService } from '../hooks/use-security';
 import { authenticateWithBiometrics, isBiometricsAvailable } from '../lib/biometrics';
@@ -157,7 +157,7 @@ function ToggleRow({
         <Text className="font-body-medium">{label}</Text>
         {hint ? <Text variant="caption">{hint}</Text> : null}
       </View>
-      <Switch
+      <Toggle
         value={value}
         onValueChange={onChange}
         disabled={disabled}
