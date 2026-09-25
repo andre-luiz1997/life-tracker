@@ -7,6 +7,8 @@ const BUNDLE_ID = 'com.andreluiz.lifetracker';
 const PHOTOS_PERMISSION =
   'O Life Tracker acessa sua galeria para importar fotos e, se você pedir, apagar os originais importados.';
 
+const FACE_ID_PERMISSION = 'O Life Tracker usa o Face ID para desbloquear o app, se você ativar.';
+
 const CAMERA_PERMISSION =
   'O Life Tracker usa a câmera para tirar as fotos de progresso. As fotos ficam só no app, criptografadas.';
 
@@ -48,10 +50,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       },
     ],
     ['expo-sqlite', { useSQLCipher: true }],
-    [
-      'expo-secure-store',
-      { faceIDPermission: 'O Life Tracker usa o Face ID para desbloquear o app, se você ativar.' },
-    ],
+    ['expo-secure-store', { faceIDPermission: FACE_ID_PERMISSION }],
+    ['expo-local-authentication', { faceIDPermission: FACE_ID_PERMISSION }],
     'expo-localization',
     'react-native-quick-crypto',
     [

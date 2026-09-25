@@ -22,6 +22,8 @@ const icons = {
   'eye-off': { ios: 'eye.slash', android: 'visibility_off' },
   lightbulb: { ios: 'lightbulb', android: 'lightbulb' },
   undo: { ios: 'arrow.uturn.backward', android: 'undo' },
+  biometrics: { ios: 'faceid', android: 'fingerprint' },
+  lock: { ios: 'lock', android: 'lock' },
 } as const satisfies Record<string, { ios: SFSymbol; android: AndroidSymbol }>;
 
 export type IconName = keyof typeof icons;

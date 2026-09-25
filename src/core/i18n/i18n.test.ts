@@ -1,7 +1,9 @@
 import enCommon from './locales/en/common.json';
 import enPhotos from './locales/en/photos.json';
+import enSecurity from './locales/en/security.json';
 import ptBRCommon from './locales/pt-BR/common.json';
 import ptBRPhotos from './locales/pt-BR/photos.json';
+import ptBRSecurity from './locales/pt-BR/security.json';
 
 import { detectLanguage, i18n } from '.';
 
@@ -19,6 +21,7 @@ describe('i18n', () => {
   it.each([
     ['common', enCommon, ptBRCommon],
     ['photos', enPhotos, ptBRPhotos],
+    ['security', enSecurity, ptBRSecurity],
   ])('has the same %s keys in every locale', (_, en, ptBR) => {
     expect(base(en)).toEqual(base(ptBR));
   });

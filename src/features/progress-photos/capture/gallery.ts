@@ -5,6 +5,8 @@ import {
 import { Asset, requestPermissionsAsync } from 'expo-media-library';
 import { Platform } from 'react-native';
 
+import { withExternalActivity } from '@/core/lifecycle';
+
 export type PickedImage = {
   uri: string;
   /** Media library id, when the platform returns it (often null on Android's photo picker). */
@@ -28,14 +30,16 @@ export function parseExifDate(exif: Record<string, unknown> | null | undefined):
 }
 
 export async function pickImage(): Promise<PickedImage | null> {
-  const result = await launchImageLibraryAsync({
-    mediaTypes: ['images'],
-    allowsMultipleSelection: false,
-    exif: true,
-    quality: 1,
-    // HEIC → JPEG on iOS, which the manipulator and every viewer handle.
-    preferredAssetRepresentationMode: UIImagePickerPreferredAssetRepresentationMode.Compatible,
-  });
+  const result = await withExternalActivity(() =>
+    launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsMultipleSelection: false,
+      exif: true,
+      quality: 1,
+      // HEIC → JPEG on iOS, which the manipulator and every viewer handle.
+      preferredAssetRepresentationMode: UIImagePickerPreferredAssetRepresentationMode.Compatible,
+    }),
+  );
   const asset = result.assets?.[0];
   if (result.canceled || !asset) return null;
   return {
@@ -53,18 +57,21 @@ export type DeleteOriginalResult = 'deleted' | 'unavailable' | 'failed';
  */
 export async function deleteOriginal(assetId: string | null): Promise<DeleteOriginalResult> {
   if (!assetId) return 'unavailable';
-  try {
-    if (Platform.OS === 'ios') {
-      // iOS needs read-write access; with "limited" access the picked photo may not be visible.
-      const permission = await requestPermissionsAsync(false);
-      if (!permission.granted) return 'failed';
-      await new Asset(`ph://${assetId}`).delete();
-    } else {
-      // Android 11+: MediaStore delete request (system dialog), no storage permission needed.
-      await new Asset(`content://media/external/images/media/${assetId}`).delete();
+  // The permission prompt and the OS delete confirmation are external UI.
+  return withExternalActivity(async (): Promise<DeleteOriginalResult> => {
+    try {
+      if (Platform.OS === 'ios') {
+        // iOS needs read-write access; with "limited" access the picked photo may not be visible.
+        const permission = await requestPermissionsAsync(false);
+        if (!permission.granted) return 'failed';
+        await new Asset(`ph://${assetId}`).delete();
+      } else {
+        // Android 11+: MediaStore delete request (system dialog), no storage permission needed.
+        await new Asset(`content://media/external/images/media/${assetId}`).delete();
+      }
+      return 'deleted';
+    } catch {
+      return 'failed';
     }
-    return 'deleted';
-  } catch {
-    return 'failed';
-  }
+  });
 }

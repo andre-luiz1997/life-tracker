@@ -1,1 +1,10 @@
-export { SettingsScreen as default } from '@/features/settings';
+import { SecuritySettings } from '@/features/security';
+import { SettingsScreen } from '@/features/settings';
+
+export default function SettingsRoute() {
+  return (
+    <SettingsScreen>
+      <SecuritySettings />
+    </SettingsScreen>
+  );
+}

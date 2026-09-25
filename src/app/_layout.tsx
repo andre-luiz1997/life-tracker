@@ -4,12 +4,15 @@ import { Stack } from 'expo-router';
 
 import { useTranslation } from '@/core/i18n';
 import { AppProviders } from '@/features/app-shell';
-import { useStartupMaintenance } from '@/features/progress-photos';
+import { clearDecryptedPhotos, useStartupMaintenance } from '@/features/progress-photos';
+import { AppLock } from '@/features/security';
 
 export default function RootLayout() {
   return (
     <AppProviders>
-      <RootStack />
+      <AppLock onBackground={clearDecryptedPhotos}>
+        <RootStack />
+      </AppLock>
     </AppProviders>
   );
 }
@@ -21,6 +24,7 @@ function RootStack() {
     <Stack screenOptions={{ headerBackButtonDisplayMode: 'minimal' }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false, title: t('tabs.home') }} />
       <Stack.Screen name="timeline/new" options={{ presentation: 'modal' }} />
+      <Stack.Screen name="security/pin" options={{ presentation: 'modal' }} />
       <Stack.Screen name="timeline/[timelineId]/index" />
       <Stack.Screen name="timeline/[timelineId]/settings" />
       <Stack.Screen name="timeline/[timelineId]/session" />

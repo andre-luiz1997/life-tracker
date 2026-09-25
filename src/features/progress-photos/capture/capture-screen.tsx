@@ -6,6 +6,7 @@ import { Linking, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useTranslation } from '@/core/i18n';
+import { withExternalActivity } from '@/core/lifecycle';
 import { cn } from '@/shared/lib/cn';
 import { Button, EmptyState, IconButton, Screen, Text } from '@/shared/ui';
 
@@ -61,7 +62,10 @@ export function CaptureScreen({ timelineId, angleId }: { timelineId: string; ang
                   permission.canAskAgain ? t('capture.permissionButton') : t('capture.openSettings')
                 }
                 onPress={() =>
-                  permission.canAskAgain ? requestPermission() : Linking.openSettings()
+                  withExternalActivity(async () => {
+                    if (permission.canAskAgain) await requestPermission();
+                    else await Linking.openSettings();
+                  })
                 }
               />
               <Button variant="ghost" label={t('capture.close')} onPress={() => router.back()} />

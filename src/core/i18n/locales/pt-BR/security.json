@@ -1,0 +1,61 @@
+{
+  "lock": {
+    "title": "Life Tracker bloqueado",
+    "subtitle": "Digite seu PIN",
+    "wrong": "PIN incorreto",
+    "lockedOut": "Muitas tentativas. Tente de novo em {{time}}.",
+    "biometricPrompt": "Desbloquear o Life Tracker",
+    "useBiometrics": "Usar biometria",
+    "forgot": "Esqueci o PIN",
+    "forgotTitle": "Esqueceu o PIN?",
+    "forgotMessage": "Sem conta nem servidor, não há como recuperar o PIN. A única saída é apagar todos os dados do app (ou restaurar um backup depois).",
+    "eraseAndReset": "Apagar tudo"
+  },
+  "pinPad": {
+    "delete": "Apagar dígito",
+    "submit": "Confirmar",
+    "digits_one": "{{count}} dígito digitado",
+    "digits_other": "{{count}} dígitos digitados"
+  },
+  "setup": {
+    "title": "Criar PIN",
+    "enter": "Escolha um PIN de 4 a 6 dígitos",
+    "confirm": "Digite o PIN novamente",
+    "mismatch": "Os PINs não conferem. Tente de novo.",
+    "warning": "Importante: se você esquecer o PIN, não haverá como recuperá-lo — será preciso apagar todos os dados do app.",
+    "done": "PIN ativado",
+    "verifyTitle": "Confirme seu PIN",
+    "changeTitle": "Novo PIN"
+  },
+  "settings": {
+    "title": "Segurança e privacidade",
+    "pin": "Bloqueio por PIN",
+    "pinOn": "Ativado",
+    "pinOff": "Desativado",
+    "enablePin": "Ativar PIN",
+    "changePin": "Alterar PIN",
+    "disablePin": "Desativar PIN",
+    "biometrics": "Desbloquear com biometria",
+    "biometricsUnavailable": "Biometria não disponível ou não cadastrada neste aparelho.",
+    "autoLock": "Bloquear automaticamente",
+    "autoLockOptions": {
+      "immediate": "Imediatamente",
+      "1m": "Após 1 minuto",
+      "5m": "Após 5 minutos"
+    },
+    "blockScreenshots": "Bloquear capturas de tela",
+    "blockScreenshotsHint": "No Android, também esconde o app na tela de apps recentes.",
+    "dangerZone": "Zona de perigo",
+    "eraseAll": "Apagar todos os dados",
+    "eraseConfirmTitle": "Apagar todos os dados?",
+    "eraseConfirmMessage": "Todas as linhas do tempo, fotos, métricas e ajustes serão apagados permanentemente deste aparelho. Isso não pode ser desfeito.",
+    "eraseConfirmFinal": "Tem certeza? Esta é a última confirmação.",
+    "erase": "Apagar"
+  },
+  "duration": {
+    "seconds_one": "{{count}} segundo",
+    "seconds_other": "{{count}} segundos",
+    "minutes_one": "{{count}} minuto",
+    "minutes_other": "{{count}} minutos"
+  }
+}

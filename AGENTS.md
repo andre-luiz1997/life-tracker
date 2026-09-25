@@ -58,8 +58,10 @@ Plano completo: `docs/PLANO-MVP.md`. App 100% local (sem backend), dados sensív
 - IDs: `uuidv7()` de `@/shared/lib/id`. Timestamps: `timestamps` de `@/core/db`.
 - Estilo: NativeWind v4 (Tailwind 3) com tokens semânticos (`bg-background`, `text-foreground`, `text-muted`, `bg-primary`…) definidos em `src/shared/theme/tokens.ts`.
 - Todo texto visível passa por `t()`; adicione chaves em `pt-BR` e `en` (teste garante paridade).
-- Testes: Jest (`jest-expo`) + RNTL v14 (`await render(...)`). Módulos nativos de crypto são substituídos pelo `node:crypto` em `test/mocks`.
+- Testes: Jest (`jest-expo`) + RNTL v14 (`await render(...)` e `await fireEvent.press(...)`; ambos são assíncronos). Módulos nativos de crypto são substituídos pelo `node:crypto` em `test/mocks`.
 - Antes de concluir: `npm run check` (typecheck, lint, prettier, testes).
 - Imagens descriptografadas: sempre `cachePolicy="none"` no `expo-image` (o padrão grava em disco sem criptografia). Miniaturas via `useThumbnail` (memória), fotos cheias via `useFullPhoto` (cache temporário, limpo por `clearDecryptedPhotos`).
 - Todo arquivo temporário em texto puro (câmera, seletor, manipulator) deve ser apagado com `discardTempImage` assim que for cifrado ou descartado.
 - `expo-media-library`: usar a API nova (`Asset`), a antiga lança erro no SDK 57. Não passar `cameraPermission: false` ao `expo-image-picker` (bloqueia a câmera no Android).
+- UI do sistema aberta pelo app (seletor de fotos, compartilhar, prompts de permissão/biometria) deve ser envolvida em `withExternalActivity` (`@/core/lifecycle`), senão dispara o auto-bloqueio e a limpeza de cache.
+- Testes com Skia real: arquivos `*.skia.test.ts` rodam no projeto Jest `skia` (CanvasKit/WASM).

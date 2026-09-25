@@ -1,0 +1,61 @@
+{
+  "lock": {
+    "title": "Life Tracker is locked",
+    "subtitle": "Enter your PIN",
+    "wrong": "Wrong PIN",
+    "lockedOut": "Too many attempts. Try again in {{time}}.",
+    "biometricPrompt": "Unlock Life Tracker",
+    "useBiometrics": "Use biometrics",
+    "forgot": "Forgot PIN",
+    "forgotTitle": "Forgot your PIN?",
+    "forgotMessage": "With no account or server, the PIN can't be recovered. The only way out is to erase all app data (or restore a backup afterwards).",
+    "eraseAndReset": "Erase everything"
+  },
+  "pinPad": {
+    "delete": "Delete digit",
+    "submit": "Confirm",
+    "digits_one": "{{count}} digit entered",
+    "digits_other": "{{count}} digits entered"
+  },
+  "setup": {
+    "title": "Create PIN",
+    "enter": "Choose a 4 to 6 digit PIN",
+    "confirm": "Enter the PIN again",
+    "mismatch": "PINs don't match. Try again.",
+    "warning": "Important: if you forget the PIN it can't be recovered — you'd have to erase all app data.",
+    "done": "PIN enabled",
+    "verifyTitle": "Confirm your PIN",
+    "changeTitle": "New PIN"
+  },
+  "settings": {
+    "title": "Security & privacy",
+    "pin": "PIN lock",
+    "pinOn": "On",
+    "pinOff": "Off",
+    "enablePin": "Enable PIN",
+    "changePin": "Change PIN",
+    "disablePin": "Disable PIN",
+    "biometrics": "Unlock with biometrics",
+    "biometricsUnavailable": "Biometrics unavailable or not enrolled on this device.",
+    "autoLock": "Auto-lock",
+    "autoLockOptions": {
+      "immediate": "Immediately",
+      "1m": "After 1 minute",
+      "5m": "After 5 minutes"
+    },
+    "blockScreenshots": "Block screenshots",
+    "blockScreenshotsHint": "On Android, also hides the app in the recent apps screen.",
+    "dangerZone": "Danger zone",
+    "eraseAll": "Erase all data",
+    "eraseConfirmTitle": "Erase all data?",
+    "eraseConfirmMessage": "All timelines, photos, metrics and settings will be permanently deleted from this device. This can't be undone.",
+    "eraseConfirmFinal": "Are you sure? This is the last confirmation.",
+    "erase": "Erase"
+  },
+  "duration": {
+    "seconds_one": "{{count}} second",
+    "seconds_other": "{{count}} seconds",
+    "minutes_one": "{{count}} minute",
+    "minutes_other": "{{count}} minutes"
+  }
+}

@@ -3,6 +3,7 @@ import { File, Paths } from 'expo-file-system';
 import { shareAsync } from 'expo-sharing';
 import { Platform } from 'react-native';
 
+import { withExternalActivity } from '@/core/lifecycle';
 import { secureFileStore } from '@/core/storage';
 import { uuidv7 } from '@/shared/lib/id';
 
@@ -63,7 +64,9 @@ export async function shareComparison(before: Side, after: Side, dialogTitle: st
   file.create({ overwrite: true });
   file.write(bytes);
   try {
-    await shareAsync(file.uri, { mimeType: 'image/jpeg', dialogTitle, UTI: 'public.jpeg' });
+    await withExternalActivity(() =>
+      shareAsync(file.uri, { mimeType: 'image/jpeg', dialogTitle, UTI: 'public.jpeg' }),
+    );
   } finally {
     if (file.exists) file.delete();
   }
