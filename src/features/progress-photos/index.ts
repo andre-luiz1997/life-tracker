@@ -1,6 +1,7 @@
 export { CaptureScreen } from './capture/capture-screen';
 export { ReviewScreen } from './capture/review-screen';
 export { SessionScreen } from './capture/session-screen';
+export { EditorScreen } from './editor/editor-screen';
 export { clearDecryptedPhotos } from './hooks/use-photo-source';
 export { useStartupMaintenance } from './hooks/use-startup-maintenance';
 export { HomeScreen } from './screens/home-screen';

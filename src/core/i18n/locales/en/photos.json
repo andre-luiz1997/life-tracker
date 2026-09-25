@@ -180,7 +180,8 @@
     "retake": "Retake",
     "use": "Use photo",
     "saving": "Saving…",
-    "saveError": "Couldn't save the photo."
+    "saveError": "Couldn't save the photo.",
+    "edit": "Edit"
   },
   "gallery": {
     "removeTitle": "Remove from the phone's gallery?",
@@ -189,5 +190,34 @@
     "keep": "Keep",
     "manualTitle": "Delete the original manually",
     "manualMessage": "The photo couldn't be deleted automatically. Open your Gallery/Photos app and delete the original."
+  },
+  "editor": {
+    "title": "Edit photo",
+    "undo": "Undo",
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Preparing photo…",
+    "loadError": "Couldn't open the photo.",
+    "tools": {
+      "frame": "Frame",
+      "light": "Light",
+      "censor": "Censor"
+    },
+    "frameHint": "Drag and pinch to line up with the previous photo.",
+    "aspect": "Aspect ratio",
+    "free": "Free",
+    "rotate": "Rotate 90°",
+    "flip": "Mirror",
+    "ghost": "Previous photo",
+    "brightness": "Brightness",
+    "contrast": "Contrast",
+    "reset": "Reset",
+    "censorHint": "Drag over the photo to mark the area.",
+    "censorKinds": {
+      "blur": "Blur",
+      "pixelate": "Pixelate",
+      "solid": "Bar"
+    },
+    "removeCensor": "Remove censor {{n}}"
   }
 }

@@ -180,7 +180,8 @@
     "retake": "Refazer",
     "use": "Usar foto",
     "saving": "Salvando…",
-    "saveError": "Não foi possível salvar a foto."
+    "saveError": "Não foi possível salvar a foto.",
+    "edit": "Editar"
   },
   "gallery": {
     "removeTitle": "Remover da galeria do celular?",
@@ -189,5 +190,34 @@
     "keep": "Manter",
     "manualTitle": "Apague o original manualmente",
     "manualMessage": "Não foi possível apagar a foto automaticamente. Abra o app de Galeria/Fotos e apague a foto original."
+  },
+  "editor": {
+    "title": "Editar foto",
+    "undo": "Desfazer",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "loading": "Preparando a foto…",
+    "loadError": "Não foi possível abrir a foto.",
+    "tools": {
+      "frame": "Enquadrar",
+      "light": "Luz",
+      "censor": "Censurar"
+    },
+    "frameHint": "Arraste e faça pinça para alinhar com a foto anterior.",
+    "aspect": "Proporção",
+    "free": "Livre",
+    "rotate": "Girar 90°",
+    "flip": "Espelhar",
+    "ghost": "Foto anterior",
+    "brightness": "Brilho",
+    "contrast": "Contraste",
+    "reset": "Zerar",
+    "censorHint": "Arraste sobre a foto para marcar a área.",
+    "censorKinds": {
+      "blur": "Desfoque",
+      "pixelate": "Pixelado",
+      "solid": "Tarja"
+    },
+    "removeCensor": "Remover censura {{n}}"
   }
 }

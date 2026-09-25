@@ -27,6 +27,8 @@ export type SavePhotoInput = {
   /** Source dimensions when known (avoids decoding huge images just to measure them). */
   sourceSize?: { width: number; height: number };
   source: Photo['source'];
+  /** Already rendered by the editor: skips `processImage`. */
+  image?: ProcessedImage;
   /** Existing entry (same capture session) or a new one taken at `takenAt`. */
   entry: { id: string } | { takenAt: Date; note?: string };
 };
@@ -51,7 +53,7 @@ export function createPhotoService({ db, files, processImage, discardSource }: D
       const thumbFileName = `${photoId}_t`;
 
       try {
-        const image = await processImage(input.sourceUri, input.sourceSize);
+        const image = input.image ?? (await processImage(input.sourceUri, input.sourceSize));
         await files.write('photos', fileName, image.full.bytes);
         await files.write('thumbs', thumbFileName, image.thumb.bytes);
 

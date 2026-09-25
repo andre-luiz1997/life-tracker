@@ -128,6 +128,25 @@ describe('photo.service', () => {
     expect(discardSource).toHaveBeenCalledWith('a');
   });
 
+  it('uses an image already rendered by the editor', async () => {
+    const image = {
+      full: { bytes: new Uint8Array([1, 2, 3]), width: 900, height: 1200 },
+      thumb: { bytes: new Uint8Array([4]) },
+    };
+    const { photoId } = await service.save({
+      timelineId,
+      angleId: angleIds[0]!,
+      sourceUri: 'edited-source',
+      source: 'camera',
+      image,
+      entry: { takenAt: new Date() },
+    });
+    const photo = photosRepo.getPhoto(db, photoId)!;
+    expect(photo).toMatchObject({ width: 900, height: 1200 });
+    expect(files.store.photos.get(photo.fileName)).toEqual(image.full.bytes);
+    expect(discardSource).toHaveBeenCalledWith('edited-source');
+  });
+
   it('discards the source even when processing fails', async () => {
     const failing = createPhotoService({
       db,

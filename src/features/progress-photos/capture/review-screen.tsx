@@ -1,27 +1,24 @@
 import { Image } from 'expo-image';
 import { router, Stack } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, Pressable, ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useTranslation } from '@/core/i18n';
 import { cn } from '@/shared/lib/cn';
 import { Button, Text } from '@/shared/ui';
 
-import { usePhotoService } from '../hooks/use-photos';
-import { type PendingCapture, useCaptureSession } from './capture-session.store';
-import { deleteOriginal, pickImage } from './gallery';
+import { useCaptureSession } from './capture-session.store';
+import { pickImage } from './gallery';
 import { discardTempImage } from './image-processing';
+import { useSavePending } from './use-save-pending';
 
 export function ReviewScreen({ timelineId }: { timelineId: string }) {
   const { t } = useTranslation('photos');
   const insets = useSafeAreaInsets();
-  const service = usePhotoService();
   const pending = useCaptureSession((s) => s.pending);
-  const entryId = useCaptureSession((s) => s.entryId);
-  const { setPending, setEntry } = useCaptureSession.getState();
+  const { save, saving } = useSavePending(timelineId);
   const [selected, setSelected] = useState(0);
-  const [saving, setSaving] = useState(false);
 
   // Whatever is still pending when leaving (not saved) is plaintext in the cache: delete it.
   const pendingRef = useRef(pending);
@@ -37,12 +34,11 @@ export function ReviewScreen({ timelineId }: { timelineId: string }) {
   );
 
   if (!pending) return null;
-  const shot = pending.shots[selected] ?? pending.shots[0]!;
-
-  const backToSession = () =>
-    router.dismissTo({ pathname: '/timeline/[timelineId]/session', params: { timelineId } });
+  const index = pending.shots[selected] ? selected : 0;
+  const shot = pending.shots[index]!;
 
   const retake = async () => {
+    const { setPending } = useCaptureSession.getState();
     pending.shots.forEach((s) => discardTempImage(s.uri));
     if (pending.source === 'camera') {
       setPending(null);
@@ -50,7 +46,11 @@ export function ReviewScreen({ timelineId }: { timelineId: string }) {
       return;
     }
     const picked = await pickImage();
-    if (!picked) return backToSession();
+    if (!picked) {
+      setPending(null);
+      router.back();
+      return;
+    }
     setSelected(0);
     setPending({
       ...pending,
@@ -60,53 +60,11 @@ export function ReviewScreen({ timelineId }: { timelineId: string }) {
     });
   };
 
-  const offerGalleryRemoval = (capture: PendingCapture) =>
-    new Promise<void>((resolve) => {
-      Alert.alert(t('gallery.removeTitle'), t('gallery.removeMessage'), [
-        { text: t('gallery.keep'), style: 'cancel', onPress: () => resolve() },
-        {
-          text: t('gallery.remove'),
-          style: 'destructive',
-          onPress: async () => {
-            const result = await deleteOriginal(capture.assetId ?? null);
-            if (result !== 'deleted') {
-              Alert.alert(t('gallery.manualTitle'), t('gallery.manualMessage'), [
-                { onPress: () => resolve() },
-              ]);
-            } else resolve();
-          },
-        },
-      ]);
+  const openEditor = () =>
+    router.push({
+      pathname: '/timeline/[timelineId]/edit',
+      params: { timelineId, shot: String(index) },
     });
-
-  const use = async () => {
-    setSaving(true);
-    try {
-      const result = await service.save({
-        timelineId,
-        angleId: pending.angleId,
-        sourceUri: shot.uri,
-        // Camera sizes match the decoded orientation; gallery sizes may not (EXIF rotation).
-        sourceSize:
-          pending.source === 'camera' && shot.width && shot.height
-            ? { width: shot.width, height: shot.height }
-            : undefined,
-        source: pending.source,
-        entry: entryId ? { id: entryId } : { takenAt: pending.takenAt ?? new Date() },
-      });
-      setEntry(result.entryId);
-      // The chosen shot was consumed by save(); discard the rest of the burst.
-      pending.shots.filter((s) => s !== shot).forEach((s) => discardTempImage(s.uri));
-      setPending(null);
-      if (pending.source === 'gallery') await offerGalleryRemoval(pending);
-      backToSession();
-    } catch (error) {
-      if (__DEV__) console.error(error);
-      Alert.alert(t('capture.saveError'));
-    } finally {
-      setSaving(false);
-    }
-  };
 
   return (
     <View
@@ -129,12 +87,12 @@ export function ReviewScreen({ timelineId }: { timelineId: string }) {
             <Pressable
               key={s.uri}
               accessibilityRole="radio"
-              accessibilityState={{ selected: i === selected }}
+              accessibilityState={{ selected: i === index }}
               accessibilityLabel={`${i + 1}`}
               onPress={() => setSelected(i)}
               className={cn(
                 'overflow-hidden rounded-lg border-2',
-                i === selected ? 'border-primary' : 'border-transparent',
+                i === index ? 'border-primary' : 'border-transparent',
               )}>
               <Image
                 source={{ uri: s.uri }}
@@ -147,7 +105,7 @@ export function ReviewScreen({ timelineId }: { timelineId: string }) {
         </ScrollView>
       ) : null}
 
-      <View className="flex-row gap-3 px-4 pt-3">
+      <View className="flex-row gap-2 px-4 pt-3">
         <Button
           variant="secondary"
           label={t('capture.retake')}
@@ -156,8 +114,15 @@ export function ReviewScreen({ timelineId }: { timelineId: string }) {
           className="flex-1"
         />
         <Button
+          variant="secondary"
+          label={t('capture.edit')}
+          onPress={openEditor}
+          disabled={saving}
+          className="flex-1"
+        />
+        <Button
           label={saving ? t('capture.saving') : t('capture.use')}
-          onPress={use}
+          onPress={() => save(shot)}
           loading={saving}
           className="flex-1"
         />

@@ -29,6 +29,10 @@ function RootStack() {
         options={{ headerShown: false, animation: 'fade', gestureEnabled: false }}
       />
       <Stack.Screen
+        name="timeline/[timelineId]/edit"
+        options={{ headerShown: false, animation: 'fade', gestureEnabled: false }}
+      />
+      <Stack.Screen
         name="timeline/[timelineId]/review"
         options={{ headerShown: false, animation: 'fade' }}
       />

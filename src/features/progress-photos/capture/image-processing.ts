@@ -53,3 +53,11 @@ export async function processImage(uri: string, size?: ImageSize): Promise<Proce
   const thumb = await renderJpeg(uri, full, MAX_THUMB_SIDE, THUMB_QUALITY);
   return { full, thumb: { bytes: thumb.bytes } };
 }
+
+/**
+ * Downscales a source to ≤ 2560 px (high quality) and returns its JPEG bytes for the editor,
+ * so Skia never decodes a 48 MP image. The temp output is deleted right away.
+ */
+export async function prepareForEditing(uri: string, size?: ImageSize) {
+  return renderJpeg(uri, size, MAX_PHOTO_SIDE, 0.95);
+}

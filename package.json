@@ -19,6 +19,7 @@
   "dependencies": {
     "@expo/ui": "~57.0.20",
     "@hookform/resolvers": "^5.9.1",
+    "@shopify/react-native-skia": "2.6.2",
     "drizzle-orm": "0.45.3",
     "expo": "~57.0.25",
     "expo-audio": "~57.0.5",

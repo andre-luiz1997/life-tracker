@@ -9,3 +9,5 @@ jest.mock('expo-sqlite', () => ({
     throw new Error('Use createTestDatabase() from test/db in tests');
   },
 }));
+
+jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));

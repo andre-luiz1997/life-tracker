@@ -7,3 +7,4 @@ export { Screen } from './screen';
 export { Section } from './section';
 export { Text, type TextProps } from './text';
 export { TextField, type TextFieldProps } from './text-field';
+export { Slider } from './slider';
