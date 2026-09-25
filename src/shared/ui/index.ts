@@ -8,3 +8,4 @@ export { Section } from './section';
 export { Text, type TextProps } from './text';
 export { TextField, type TextFieldProps } from './text-field';
 export { Slider } from './slider';
+export { DateField } from './date-field';

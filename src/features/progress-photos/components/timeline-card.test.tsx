@@ -6,6 +6,9 @@ import type { TimelineSummary } from '../repositories/timelines.repository';
 import { TimelineCard } from './timeline-card';
 
 jest.mock('expo-symbols', () => ({ SymbolView: () => null }));
+jest.mock('../hooks/use-photos', () => ({
+  useCoverThumb: () => ({ status: 'success', data: null }),
+}));
 
 const base: TimelineSummary = {
   id: '1',

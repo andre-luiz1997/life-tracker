@@ -219,5 +219,46 @@
       "solid": "Tarja"
     },
     "removeCensor": "Remover censura {{n}}"
+  },
+  "feed": {
+    "all": "Todos",
+    "day": "Dia {{n}}",
+    "filterByAngle": "Filtrar por ângulo",
+    "noPhotosForAngle": "Sem foto deste ângulo",
+    "metrics": "Métricas",
+    "compare": "Comparar",
+    "openPhoto": "Abrir foto de {{angle}}"
+  },
+  "entry": {
+    "title": "Registro",
+    "date": "Data",
+    "time": "Hora",
+    "note": "Nota",
+    "notePlaceholder": "Ex.: dose, dieta, como se sentiu…",
+    "metrics": "Métricas",
+    "invalidNumber": "Número inválido",
+    "photos": "Fotos",
+    "addPhotos": "Adicionar ou refazer fotos",
+    "deletePhoto": "Excluir foto",
+    "deletePhotoConfirm": "Excluir esta foto?",
+    "delete": "Excluir registro",
+    "deleteConfirmTitle": "Excluir este registro?",
+    "deleteConfirmMessage": "As fotos e os valores deste registro serão apagados permanentemente.",
+    "saved": "Salvo"
+  },
+  "viewer": {
+    "title": "{{angle}}",
+    "position": "{{current}} de {{total}}",
+    "close": "Fechar"
+  },
+  "metricsScreen": {
+    "title": "Métricas",
+    "empty": "Nenhum valor registrado ainda.",
+    "emptyHint": "Registre valores ao editar um registro.",
+    "noMetrics": "Esta linha do tempo não tem métricas.",
+    "change": "Variação total",
+    "last": "Último",
+    "records_one": "{{count}} registro",
+    "records_other": "{{count}} registros"
   }
 }

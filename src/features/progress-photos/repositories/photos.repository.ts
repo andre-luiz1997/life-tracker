@@ -1,8 +1,8 @@
-import { and, desc, eq } from 'drizzle-orm';
+import { and, asc, desc, eq } from 'drizzle-orm';
 
 import type { DbExecutor } from '@/core/db';
 
-import { entries, photos } from '../db/progress-photos.schema';
+import { entries, metricValues, photos } from '../db/progress-photos.schema';
 
 export type NewEntry = typeof entries.$inferInsert;
 export type NewPhoto = typeof photos.$inferInsert;
@@ -62,4 +62,93 @@ export function listAllPhotoFileNames(db: DbExecutor) {
     .select({ fileName: photos.fileName, thumbFileName: photos.thumbFileName })
     .from(photos)
     .all();
+}
+
+// Timeline listing
+
+export function listEntries(db: DbExecutor, timelineId: string) {
+  return db
+    .select()
+    .from(entries)
+    .where(eq(entries.timelineId, timelineId))
+    .orderBy(desc(entries.takenAt))
+    .all();
+}
+
+export function listPhotosOfTimeline(db: DbExecutor, timelineId: string) {
+  return db
+    .select({ photo: photos })
+    .from(photos)
+    .innerJoin(entries, eq(entries.id, photos.entryId))
+    .where(eq(entries.timelineId, timelineId))
+    .all()
+    .map((r) => r.photo);
+}
+
+/** Photos of one angle in chronological order (viewer / comparison). */
+export function listPhotosOfAngle(db: DbExecutor, angleId: string) {
+  return db
+    .select({ photo: photos, takenAt: entries.takenAt })
+    .from(photos)
+    .innerJoin(entries, eq(entries.id, photos.entryId))
+    .where(eq(photos.angleId, angleId))
+    .orderBy(asc(entries.takenAt))
+    .all();
+}
+
+export function updateEntry(
+  db: DbExecutor,
+  id: string,
+  values: Partial<Pick<NewEntry, 'takenAt' | 'note'>>,
+) {
+  db.update(entries).set(values).where(eq(entries.id, id)).run();
+}
+
+// Metric values
+
+export function listMetricValuesOfTimeline(db: DbExecutor, timelineId: string) {
+  return db
+    .select({ value: metricValues, takenAt: entries.takenAt })
+    .from(metricValues)
+    .innerJoin(entries, eq(entries.id, metricValues.entryId))
+    .where(eq(entries.timelineId, timelineId))
+    .orderBy(asc(entries.takenAt))
+    .all();
+}
+
+export function listMetricValuesOfEntry(db: DbExecutor, entryId: string) {
+  return db.select().from(metricValues).where(eq(metricValues.entryId, entryId)).all();
+}
+
+export function upsertMetricValue(
+  db: DbExecutor,
+  values: { id: string; entryId: string; metricId: string; value: number },
+) {
+  db.insert(metricValues)
+    .values(values)
+    .onConflictDoUpdate({
+      target: [metricValues.entryId, metricValues.metricId],
+      set: { value: values.value, updatedAt: new Date() },
+    })
+    .run();
+}
+
+export function deleteMetricValue(db: DbExecutor, entryId: string, metricId: string) {
+  db.delete(metricValues)
+    .where(and(eq(metricValues.entryId, entryId), eq(metricValues.metricId, metricId)))
+    .run();
+}
+
+/** Thumbnail of the most recent photo of a timeline (home card cover). */
+export function getCoverThumb(db: DbExecutor, timelineId: string): string | null {
+  return (
+    db
+      .select({ thumb: photos.thumbFileName })
+      .from(photos)
+      .innerJoin(entries, eq(entries.id, photos.entryId))
+      .where(eq(entries.timelineId, timelineId))
+      .orderBy(desc(entries.takenAt), desc(photos.createdAt))
+      .limit(1)
+      .get()?.thumb ?? null
+  );
 }

@@ -4,8 +4,10 @@ import { useTranslation } from '@/core/i18n';
 import { colorOf, useAppColorScheme } from '@/shared/theme';
 import { Icon, PressableCard, Text } from '@/shared/ui';
 
+import { useCoverThumb } from '../hooks/use-photos';
 import { daysBetween } from '../lib/dates';
 import type { TimelineSummary } from '../repositories/timelines.repository';
+import { PhotoThumb } from './photo-thumb';
 import { TimelineIcon } from './timeline-icon';
 
 type TimelineCardProps = { timeline: TimelineSummary; onPress: () => void };
@@ -13,6 +15,7 @@ type TimelineCardProps = { timeline: TimelineSummary; onPress: () => void };
 export function TimelineCard({ timeline, onPress }: TimelineCardProps) {
   const { t } = useTranslation('photos');
   const scheme = useAppColorScheme();
+  const cover = useCoverThumb(timeline.id);
 
   const days = timeline.lastEntryAt ? daysBetween(timeline.lastEntryAt, new Date()) : null;
   const lastEntry =
@@ -24,7 +27,11 @@ export function TimelineCard({ timeline, onPress }: TimelineCardProps) {
 
   return (
     <PressableCard onPress={onPress} className="flex-row items-center gap-4">
-      <TimelineIcon icon={timeline.icon} color={timeline.color} />
+      {cover.data ? (
+        <PhotoThumb thumbFileName={cover.data} size={44} />
+      ) : (
+        <TimelineIcon icon={timeline.icon} color={timeline.color} />
+      )}
       <View className="flex-1 gap-0.5">
         <Text variant="subtitle" numberOfLines={1}>
           {timeline.title}

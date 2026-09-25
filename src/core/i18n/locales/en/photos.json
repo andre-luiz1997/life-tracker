@@ -219,5 +219,46 @@
       "solid": "Bar"
     },
     "removeCensor": "Remove censor {{n}}"
+  },
+  "feed": {
+    "all": "All",
+    "day": "Day {{n}}",
+    "filterByAngle": "Filter by angle",
+    "noPhotosForAngle": "No photo for this angle",
+    "metrics": "Metrics",
+    "compare": "Compare",
+    "openPhoto": "Open {{angle}} photo"
+  },
+  "entry": {
+    "title": "Entry",
+    "date": "Date",
+    "time": "Time",
+    "note": "Note",
+    "notePlaceholder": "E.g. dose, diet, how you felt…",
+    "metrics": "Metrics",
+    "invalidNumber": "Invalid number",
+    "photos": "Photos",
+    "addPhotos": "Add or retake photos",
+    "deletePhoto": "Delete photo",
+    "deletePhotoConfirm": "Delete this photo?",
+    "delete": "Delete entry",
+    "deleteConfirmTitle": "Delete this entry?",
+    "deleteConfirmMessage": "This entry's photos and values will be permanently deleted.",
+    "saved": "Saved"
+  },
+  "viewer": {
+    "title": "{{angle}}",
+    "position": "{{current}} of {{total}}",
+    "close": "Close"
+  },
+  "metricsScreen": {
+    "title": "Metrics",
+    "empty": "No values recorded yet.",
+    "emptyHint": "Record values when editing an entry.",
+    "noMetrics": "This timeline has no metrics.",
+    "change": "Total change",
+    "last": "Latest",
+    "records_one": "{{count}} record",
+    "records_other": "{{count}} records"
   }
 }
