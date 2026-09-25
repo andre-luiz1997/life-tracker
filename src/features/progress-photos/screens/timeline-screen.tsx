@@ -31,8 +31,12 @@ export function TimelineScreen({ timelineId }: { timelineId: string }) {
   const activeAngles = angles.filter((a) => a.isActive);
   const firstDate = entries.at(-1)?.takenAt;
 
-  const push = (pathname: '/timeline/[timelineId]/settings' | '/timeline/[timelineId]/metrics') =>
-    router.push({ pathname, params: { timelineId } });
+  const push = (
+    pathname:
+      | '/timeline/[timelineId]/settings'
+      | '/timeline/[timelineId]/metrics'
+      | '/timeline/[timelineId]/compare',
+  ) => router.push({ pathname, params: { timelineId } });
 
   const newEntry = () => {
     useCaptureSession.getState().start(timelineId);
@@ -56,6 +60,13 @@ export function TimelineScreen({ timelineId }: { timelineId: string }) {
 
       <View className="flex-row gap-2">
         <Button label={t('timeline.newEntry')} onPress={newEntry} className="flex-1" />
+        {entries.length > 1 ? (
+          <Button
+            variant="secondary"
+            label={t('feed.compare')}
+            onPress={() => push('/timeline/[timelineId]/compare')}
+          />
+        ) : null}
         {metrics.length ? (
           <Button
             variant="secondary"

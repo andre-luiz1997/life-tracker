@@ -26,6 +26,7 @@ function RootStack() {
       <Stack.Screen name="timeline/[timelineId]/session" />
       <Stack.Screen name="timeline/[timelineId]/entry/[entryId]" />
       <Stack.Screen name="timeline/[timelineId]/metrics" />
+      <Stack.Screen name="timeline/[timelineId]/compare" />
       <Stack.Screen
         name="timeline/[timelineId]/viewer"
         options={{ headerShown: false, animation: 'fade' }}

@@ -260,5 +260,26 @@
     "last": "Latest",
     "records_one": "{{count}} record",
     "records_other": "{{count}} records"
+  },
+  "compare": {
+    "title": "Compare",
+    "before": "Before",
+    "after": "After",
+    "modes": {
+      "side": "Side by side",
+      "slider": "Slider",
+      "overlay": "Overlay"
+    },
+    "angle": "Angle",
+    "daysApart_one": "{{count}} day apart",
+    "daysApart_other": "{{count}} days apart",
+    "sameDay": "Same day",
+    "needTwo": "At least two photos of this angle are needed to compare.",
+    "opacity": "After photo opacity",
+    "divider": "Comparison divider",
+    "share": "Share image",
+    "shareTitle": "Share comparison",
+    "shareError": "Couldn't create the image.",
+    "pick": "Pick photo from {{date}}"
   }
 }
