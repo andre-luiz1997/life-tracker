@@ -40,7 +40,7 @@ Docs: https://docs.expo.dev/eas/index.md
 - Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
 - Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
 
-## Project: Life Tracker
+## Project: KRONOS (repo: life-tracker)
 
 Plano completo: `docs/PLANO-MVP.md`. App 100% local (sem backend), dados sensíveis criptografados. UI em pt-BR via i18n.
 

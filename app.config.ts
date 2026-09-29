@@ -5,16 +5,16 @@ const BUNDLE_ID = 'com.andreluiz.lifetracker';
 
 // Both expo-image-picker and expo-media-library write NSPhotoLibraryUsageDescription.
 const PHOTOS_PERMISSION =
-  'O Life Tracker acessa sua galeria para importar fotos e, se você pedir, apagar os originais importados.';
+  'O KRONOS acessa sua galeria para importar fotos e, se você pedir, apagar os originais importados.';
 
-const FACE_ID_PERMISSION = 'O Life Tracker usa o Face ID para desbloquear o app, se você ativar.';
+const FACE_ID_PERMISSION = 'O KRONOS usa o Face ID para desbloquear o app, se você ativar.';
 
 const CAMERA_PERMISSION =
-  'O Life Tracker usa a câmera para tirar as fotos de progresso. As fotos ficam só no app, criptografadas.';
+  'O KRONOS usa a câmera para tirar as fotos de progresso. As fotos ficam só no app, criptografadas.';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'Life Tracker',
+  name: 'KRONOS',
   slug: 'life-tracker',
   version: '1.0.0',
   orientation: 'portrait',
@@ -29,7 +29,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     package: BUNDLE_ID,
     adaptiveIcon: {
-      backgroundColor: '#212121',
+      backgroundColor: '#FAFAF8',
       foregroundImage: './assets/images/android-icon-foreground.png',
       monochromeImage: './assets/images/android-icon-monochrome.png',
     },
@@ -42,7 +42,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-splash-screen',
       {
-        backgroundColor: '#212121',
+        backgroundColor: '#FAFAF8',
         image: './assets/images/splash-icon.png',
         imageWidth: 200,
       },

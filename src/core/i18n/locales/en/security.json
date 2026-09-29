@@ -1,10 +1,10 @@
 {
   "lock": {
-    "title": "Life Tracker is locked",
+    "title": "KRONOS is locked",
     "subtitle": "Enter your PIN",
     "wrong": "Wrong PIN",
     "lockedOut": "Too many attempts. Try again in {{time}}.",
-    "biometricPrompt": "Unlock Life Tracker",
+    "biometricPrompt": "Unlock KRONOS",
     "useBiometrics": "Use biometrics",
     "forgot": "Forgot PIN",
     "forgotTitle": "Forgot your PIN?",

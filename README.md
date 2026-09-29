@@ -1,4 +1,4 @@
-# Life Tracker
+# KRONOS
 
 App de "gestão de vida", 100% local. A primeira funcionalidade são **linhas do tempo de progresso por fotos** (emagrecimento/academia, tratamento capilar, tratamento facial e personalizado), com fotos e dados criptografados no aparelho.
 

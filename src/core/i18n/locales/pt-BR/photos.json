@@ -286,7 +286,7 @@
     "pick": "Escolher foto de {{date}}"
   },
   "reminders": {
-    "notificationTitle": "Life Tracker",
+    "notificationTitle": "KRONOS",
     "notificationBody": "Hora do seu registro 📸",
     "channelName": "Lembretes de registro",
     "title": "Lembrete",
@@ -298,7 +298,7 @@
     "time": "Horário",
     "hint": "A notificação mostra só um texto genérico, sem o nome da linha do tempo.",
     "permissionDeniedTitle": "Notificações desativadas",
-    "permissionDeniedMessage": "Para receber lembretes, permita as notificações do Life Tracker nos ajustes do celular.",
+    "permissionDeniedMessage": "Para receber lembretes, permita as notificações do KRONOS nos ajustes do celular.",
     "openSettings": "Abrir ajustes"
   },
   "figures": {

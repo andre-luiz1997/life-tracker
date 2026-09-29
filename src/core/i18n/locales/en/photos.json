@@ -286,7 +286,7 @@
     "pick": "Pick photo from {{date}}"
   },
   "reminders": {
-    "notificationTitle": "Life Tracker",
+    "notificationTitle": "KRONOS",
     "notificationBody": "Time for your check-in 📸",
     "channelName": "Check-in reminders",
     "title": "Reminder",
@@ -298,7 +298,7 @@
     "time": "Time",
     "hint": "The notification only shows a generic text, never the timeline name.",
     "permissionDeniedTitle": "Notifications are off",
-    "permissionDeniedMessage": "To get reminders, allow Life Tracker notifications in your phone settings.",
+    "permissionDeniedMessage": "To get reminders, allow KRONOS notifications in your phone settings.",
     "openSettings": "Open settings"
   },
   "figures": {

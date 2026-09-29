@@ -1,4 +1,4 @@
-# Life Tracker — Status da implementação do MVP
+# KRONOS — Status da implementação do MVP
 
 Referência: [PLANO-MVP.md](PLANO-MVP.md). Atualizado em 25/09/2026.
 

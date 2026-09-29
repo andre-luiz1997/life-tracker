@@ -17,7 +17,7 @@ appId: com.andreluiz.lifetracker
 - assertVisible: 'Ativado'
 - pressKey: Home
 - launchApp
-- assertVisible: 'Life Tracker bloqueado'
+- assertVisible: 'KRONOS bloqueado'
 - tapOn: '1'
 - tapOn: '1'
 - tapOn: '1'
@@ -29,4 +29,4 @@ appId: com.andreluiz.lifetracker
 - tapOn: '6'
 - tapOn: '8'
 - tapOn: 'Confirmar'
-- assertNotVisible: 'Life Tracker bloqueado'
+- assertNotVisible: 'KRONOS bloqueado'

@@ -1,4 +1,4 @@
-# Política de Privacidade — Life Tracker
+# Política de Privacidade — KRONOS
 
 > **Rascunho para revisão.** Não é aconselhamento jurídico. Revise com quem cuida das questões legais antes de publicar, e preencha os campos entre colchetes.
 
@@ -6,7 +6,7 @@
 
 ## Resumo
 
-O Life Tracker funciona **100% no seu aparelho**. Não há conta, servidor, nuvem, anúncios nem análise de uso. Nós **não coletamos, não recebemos e não temos acesso** às suas fotos, medidas ou anotações.
+O KRONOS funciona **100% no seu aparelho**. Não há conta, servidor, nuvem, anúncios nem análise de uso. Nós **não coletamos, não recebemos e não temos acesso** às suas fotos, medidas ou anotações.
 
 ## Quais dados o app guarda e onde
 

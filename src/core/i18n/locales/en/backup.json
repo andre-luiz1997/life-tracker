@@ -14,7 +14,7 @@
   "create": "Create and share",
   "creating": "Creating backup… {{done}}/{{total}}",
   "preparing": "Preparing…",
-  "shareTitle": "Save Life Tracker backup",
+  "shareTitle": "Save KRONOS backup",
   "exportError": "Couldn't create the backup.",
   "restoreTitle": "Restore backup",
   "pickFile": "Choose .ltbackup file",

@@ -36,7 +36,7 @@ export async function exportBackup(
   onProgress?: (done: number, total: number) => void,
 ) {
   const date = new Date().toISOString().slice(0, 10);
-  const file = new File(Paths.cache, `life-tracker-${date}.ltbackup`);
+  const file = new File(Paths.cache, `kronos-${date}.ltbackup`);
   file.create({ overwrite: true });
   const handle = file.open(FileMode.Truncate);
   try {
