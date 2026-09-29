@@ -10,7 +10,11 @@ jest.mock('expo-sqlite', () => ({
   },
 }));
 
-jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
+// The official mock lacks a few hooks.
+jest.mock('react-native-reanimated', () => ({
+  ...require('react-native-reanimated/mock'),
+  useReducedMotion: () => false,
+}));
 
 jest.mock(
   'react-native-safe-area-context',

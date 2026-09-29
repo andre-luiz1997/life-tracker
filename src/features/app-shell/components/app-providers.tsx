@@ -8,22 +8,17 @@ import { useFonts } from 'expo-font';
 import { DarkTheme, DefaultTheme, ThemeProvider as NavigationThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { type PropsWithChildren, useEffect } from 'react';
+import { type PropsWithChildren, useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { DatabaseProvider } from '@/core/db';
 import { colorOf, ThemeProvider, useAppColorScheme } from '@/shared/theme';
 
+import { IntroSplash } from './intro-splash';
 import { StartupError } from './startup-error';
 
+// Hidden by IntroSplash, which takes over with the same look.
 SplashScreen.preventAutoHideAsync();
-
-function HideSplash() {
-  useEffect(() => {
-    SplashScreen.hideAsync();
-  }, []);
-  return null;
-}
 
 function NavigationTheme({ children }: PropsWithChildren) {
   const scheme = useAppColorScheme();
@@ -48,6 +43,7 @@ function NavigationTheme({ children }: PropsWithChildren) {
 }
 
 export function AppProviders({ children }: PropsWithChildren) {
+  const [introDone, setIntroDone] = useState(false);
   // Keep the splash screen up until the brand font is ready (avoids a flash of system font).
   const [fontsLoaded, fontError] = useFonts({
     Palanquin_400Regular,
@@ -61,19 +57,12 @@ export function AppProviders({ children }: PropsWithChildren) {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
         <NavigationTheme>
-          <DatabaseProvider
-            fallback={null}
-            renderError={(error) => (
-              <>
-                <HideSplash />
-                <StartupError error={error} />
-              </>
-            )}>
-            <HideSplash />
+          <DatabaseProvider fallback={null} renderError={(error) => <StartupError error={error} />}>
             {children}
           </DatabaseProvider>
         </NavigationTheme>
       </ThemeProvider>
+      {introDone ? null : <IntroSplash onDone={() => setIntroDone(true)} />}
     </GestureHandlerRootView>
   );
 }
