@@ -31,12 +31,14 @@ import {
   type CensorKind,
   cropToImage,
   type EditAction,
+  type EditState,
   initialEditState,
   type NormRect,
   outputSize,
   rectFromPoints,
   type Size,
 } from './edit-state';
+import { editorError, editorLog, timed } from './debug-log';
 import { historyReducer } from './history';
 import { encodeJpeg, loadSkImage, renderEdit } from './renderer';
 
@@ -61,16 +63,33 @@ export function EditorScreen({ timelineId, shotIndex }: { timelineId: string; sh
     if (!shotUri) return;
     let active = true;
     const [w, h] = sizeKey.split('x').map(Number);
+    const start = Date.now();
+    editorLog('prepareForEditing: start', { uri: shotUri.slice(-40), sizeKey });
     prepareForEditing(shotUri, w && h ? { width: w, height: h } : undefined)
-      .then(({ bytes }) => active && setImage(loadSkImage(bytes) ?? 'error'))
-      .catch(() => active && setImage('error'));
+      .then(({ bytes, width, height }) => {
+        editorLog('prepareForEditing: done', { ms: Date.now() - start, width, height, active });
+        if (active) setImage(loadSkImage(bytes) ?? 'error');
+      })
+      .catch((error) => {
+        editorError('prepareForEditing', error, { uri: shotUri.slice(-40) });
+        if (active) setImage('error');
+      });
     return () => {
       active = false;
     };
   }, [shotUri, sizeKey]);
 
   const angle = details.data?.angles.find((a) => a.id === pending?.angleId);
-  if (!pending || !shot || !details.data || !angle) return null;
+  if (!pending || !shot || !details.data || !angle) {
+    editorLog('EditorScreen: rendering nothing (missing data)', {
+      pending: !!pending,
+      shotIndex,
+      shots: pending?.shots.length ?? 0,
+      details: details.status,
+      angle: !!angle,
+    });
+    return null;
+  }
 
   if (image === 'error') return <EmptyState title={t('editor.loadError')} />;
   if (!image) {
@@ -127,9 +146,20 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
   const [area, setArea] = useState<Size | null>(null);
   const [draft, setDraft] = useState<NormRect | null>(null);
 
-  const apply = (action: EditAction) => dispatch({ type: 'apply', action, image: imageSize });
+  const apply = (action: EditAction) => {
+    editorLog('apply', { action, before: summarize(state) });
+    dispatch({ type: 'apply', action, image: imageSize });
+  };
+  // Called on every gesture/slider frame: not logged (gesture begin/end are).
   const preview = (action: EditAction) => dispatch({ type: 'preview', action, image: imageSize });
-  const checkpoint = () => dispatch({ type: 'checkpoint' });
+  const checkpoint = () => {
+    editorLog('checkpoint', { tool, undoSteps: history.past.length });
+    dispatch({ type: 'checkpoint' });
+  };
+
+  useEffect(() => {
+    editorLog('state', summarize(state));
+  }, [state]);
 
   // Frame: the output aspect fitted into the available area.
   const frame = useMemo(() => {
@@ -139,10 +169,20 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
     return { width: out.width * scale, height: out.height * scale };
   }, [area, imageSize, state]);
 
+  useEffect(() => {
+    editorLog('layout', { imageSize, area, frame });
+  }, [imageSize, area, frame]);
+
   const previewImage = useMemo(() => {
     if (!frame) return null;
     const side = Math.min(MAX_PREVIEW_SIDE, Math.max(frame.width, frame.height) * PixelRatio.get());
-    return renderEdit(image, state, side);
+    try {
+      return timed('renderEdit(preview)', () => renderEdit(image, state, side), {
+        side: Math.round(side),
+      });
+    } catch {
+      return null;
+    }
   }, [image, state, frame]);
 
   // Gesture deltas are tracked between frames so each update is incremental.
@@ -154,6 +194,7 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
     Gesture.Pan()
       .runOnJS(true)
       .onBegin(() => {
+        editorLog('frame pan: begin', { frame: !!frame });
         last.set({ ...last.get(), x: 0, y: 0 });
         checkpoint();
       })
@@ -166,23 +207,27 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
           dy: (e.translationY - prev.y) / frame.height,
         });
         last.set({ ...prev, x: e.translationX, y: e.translationY });
-      }),
+      })
+      .onEnd((e) => editorLog('frame pan: end', { tx: e.translationX, ty: e.translationY })),
     Gesture.Pinch()
       .runOnJS(true)
       .onBegin(() => {
+        editorLog('pinch: begin');
         last.set({ ...last.get(), scale: 1 });
       })
       .onUpdate((e) => {
         const prev = last.get();
         preview({ type: 'panZoom', zoom: e.scale / prev.scale });
         last.set({ ...prev, scale: e.scale });
-      }),
+      })
+      .onEnd((e) => editorLog('pinch: end', { scale: e.scale })),
   );
 
   const censorGesture = Gesture.Pan()
     .runOnJS(true)
     .minDistance(4)
     .onBegin((e) => {
+      editorLog('censor pan: begin', { x: e.x, y: e.y, frame: !!frame });
       if (!frame) return;
       censorStart.set({ x: e.x / frame.width, y: e.y / frame.height });
     })
@@ -197,21 +242,35 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
       const r = rectFromPoints(censorStart.get(), end);
       const a = cropToImage(state.crop, { x: r.x, y: r.y });
       const b = cropToImage(state.crop, { x: r.x + r.w, y: r.y + r.h });
+      editorLog('censor pan: end', { x: e.x, y: e.y, drawn: r, kind: censorKind });
       apply({
         type: 'addCensor',
         censor: { id: uuidv7(), kind: censorKind, ...rectFromPoints(a, b) },
       });
     })
-    .onFinalize(() => setDraft(null));
+    .onFinalize((_e, success) => {
+      editorLog('censor pan: finalize', { success });
+      setDraft(null);
+    });
 
   const onSave = () => {
-    const full = renderEdit(image, state, MAX_PHOTO_SIDE);
-    const thumb = renderEdit(image, state, MAX_THUMB_SIDE);
-    if (!full || !thumb) return;
-    void save(shot, {
-      full: { bytes: encodeJpeg(full, PHOTO_QUALITY), width: full.width(), height: full.height() },
-      thumb: { bytes: encodeJpeg(thumb, THUMB_QUALITY) },
-    });
+    editorLog('save: start', summarize(state));
+    try {
+      const full = timed('renderEdit(full)', () => renderEdit(image, state, MAX_PHOTO_SIDE));
+      const thumb = timed('renderEdit(thumb)', () => renderEdit(image, state, MAX_THUMB_SIDE));
+      if (!full || !thumb) {
+        editorLog('save: aborted, render returned null', { full: !!full, thumb: !!thumb });
+        return;
+      }
+      const fullBytes = timed('encodeJpeg(full)', () => encodeJpeg(full, PHOTO_QUALITY));
+      const thumbBytes = timed('encodeJpeg(thumb)', () => encodeJpeg(thumb, THUMB_QUALITY));
+      void save(shot, {
+        full: { bytes: fullBytes, width: full.width(), height: full.height() },
+        thumb: { bytes: thumbBytes },
+      });
+    } catch (error) {
+      editorError('save', error);
+    }
   };
 
   return (
@@ -241,6 +300,7 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
         className="flex-1 items-center justify-center p-3"
         onLayout={(e: LayoutChangeEvent) => {
           const { width, height } = e.nativeEvent.layout;
+          editorLog('onLayout', { width, height });
           setArea({ width: width - 24, height: height - 24 });
         }}>
         {frame && previewImage ? (
@@ -380,7 +440,10 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
               key={key}
               accessibilityRole="tab"
               accessibilityState={{ selected: tool === key }}
-              onPress={() => setTool(key)}
+              onPress={() => {
+                editorLog('tool', { tool: key });
+                setTool(key);
+              }}
               className="px-4 py-2">
               <Text
                 className={cn('font-body-semibold', tool === key ? 'text-white' : 'text-white/50')}>
@@ -392,4 +455,18 @@ function Editor({ image, shot, timelineId, angleId, initialAspect }: EditorProps
       </View>
     </View>
   );
+}
+
+/** Compact, loggable view of the edit state. */
+function summarize(state: EditState) {
+  const round = (v: number) => Math.round(v * 1000) / 1000;
+  return {
+    rotation: state.rotation,
+    flipH: state.flipH,
+    aspect: state.aspect,
+    crop: [state.crop.x, state.crop.y, state.crop.w, state.crop.h].map(round),
+    brightness: round(state.brightness),
+    contrast: round(state.contrast),
+    censors: state.censors.map((c) => `${c.kind}@${[c.x, c.y, c.w, c.h].map(round).join(',')}`),
+  };
 }

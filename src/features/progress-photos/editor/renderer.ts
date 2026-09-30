@@ -9,6 +9,7 @@ import {
   TileMode,
 } from '@shopify/react-native-skia';
 
+import { editorError, editorLog } from './debug-log';
 import {
   colorMatrix,
   type EditState,
@@ -24,7 +25,12 @@ const PIXEL_BLOCK_RATIO = 0.03;
 const BLUR_SIGMA_RATIO = 0.025;
 
 export function loadSkImage(bytes: Uint8Array): SkImage | null {
-  return Skia.Image.MakeImageFromEncoded(Skia.Data.fromBytes(bytes));
+  const image = Skia.Image.MakeImageFromEncoded(Skia.Data.fromBytes(bytes));
+  editorLog('loadSkImage', {
+    bytes: bytes.length,
+    image: image ? `${image.width()}x${image.height()}` : null,
+  });
+  return image;
 }
 
 /** Maps the source image into output space: orientation, then crop scaled to `out`. */
@@ -109,6 +115,7 @@ export function drawEdit(canvas: SkCanvas, image: SkImage, state: EditState, out
         height: Math.max(1, Math.round(rect.height / block)),
       };
       const surface = Skia.Surface.MakeOffscreen(small.width, small.height);
+      if (!surface) editorLog('pixelate: MakeOffscreen returned null', small);
       if (surface) {
         const c = surface.getCanvas();
         c.scale(small.width / rect.width, small.height / rect.height);
@@ -133,14 +140,28 @@ export function drawEdit(canvas: SkCanvas, image: SkImage, state: EditState, out
 export function renderEdit(image: SkImage, state: EditState, maxSide: number): SkImage | null {
   const out = outputSize({ width: image.width(), height: image.height() }, state, maxSide);
   const surface = Skia.Surface.MakeOffscreen(out.width, out.height);
-  if (!surface) return null;
+  if (!surface) {
+    editorLog('renderEdit: MakeOffscreen returned null', { ...out, maxSide });
+    return null;
+  }
   const canvas = surface.getCanvas();
   canvas.clear(Skia.Color('black'));
   drawEdit(canvas, image, state, out);
   surface.flush();
-  return surface.makeImageSnapshot();
+  // The snapshot is a GPU texture bound to this thread's context; the <Canvas> draws on the UI
+  // thread, so hand it a raster copy (same as Skia's own drawAsImage).
+  const snapshot = surface.makeImageSnapshot();
+  const raster = snapshot.makeNonTextureImage();
+  if (!raster) editorLog('renderEdit: makeNonTextureImage returned null', { ...out, maxSide });
+  return raster ?? snapshot;
 }
 
 export function encodeJpeg(image: SkImage, quality: number): Uint8Array {
-  return image.encodeToBytes(ImageFormat.JPEG, Math.round(quality * 100));
+  const bytes = image.encodeToBytes(ImageFormat.JPEG, Math.round(quality * 100));
+  if (!bytes?.length) {
+    editorError('encodeJpeg returned empty bytes', null, {
+      size: `${image.width()}x${image.height()}`,
+    });
+  }
+  return bytes;
 }
