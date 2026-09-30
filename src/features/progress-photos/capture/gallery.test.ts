@@ -1,7 +1,6 @@
 import { parseExifDate } from './gallery';
 
 jest.mock('expo-image-picker', () => ({ UIImagePickerPreferredAssetRepresentationMode: {} }));
-jest.mock('expo-media-library', () => ({}));
 
 describe('parseExifDate', () => {
   it('reads Android-style flat EXIF', () => {

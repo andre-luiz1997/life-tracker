@@ -3,9 +3,7 @@ import type { ConfigContext, ExpoConfig } from 'expo/config';
 // TODO: confirmar o identificador definitivo antes do primeiro build de loja.
 const BUNDLE_ID = 'com.andreluiz.lifetracker';
 
-// Both expo-image-picker and expo-media-library write NSPhotoLibraryUsageDescription.
-const PHOTOS_PERMISSION =
-  'O KRONOS acessa sua galeria para importar fotos e, se você pedir, apagar os originais importados.';
+const PHOTOS_PERMISSION = 'O KRONOS acessa sua galeria para importar fotos.';
 
 const FACE_ID_PERMISSION = 'O KRONOS usa o Face ID para desbloquear o app, se você ativar.';
 
@@ -68,15 +66,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         // Must not be `false`: that adds CAMERA to blockedPermissions, breaking expo-camera.
         cameraPermission: CAMERA_PERMISSION,
         microphonePermission: false,
-      },
-    ],
-    [
-      'expo-media-library',
-      {
-        photosPermission: PHOTOS_PERMISSION,
-        savePhotosPermission: false,
-        // Only deletes the originals the user imported; no broad READ_MEDIA_* (Play policy).
-        granularPermissions: [],
       },
     ],
     // DeviceMotion needs no permission; this only disables the pedometer prompt.

@@ -62,7 +62,7 @@ Plano completo: `docs/PLANO-MVP.md`. App 100% local (sem backend), dados sensív
 - Antes de concluir: `npm run check` (typecheck, lint, prettier, testes).
 - Imagens descriptografadas: sempre `cachePolicy="none"` no `expo-image` (o padrão grava em disco sem criptografia). Miniaturas via `useThumbnail` (memória), fotos cheias via `useFullPhoto` (cache temporário, limpo por `clearDecryptedPhotos`).
 - Todo arquivo temporário em texto puro (câmera, seletor, manipulator) deve ser apagado com `discardTempImage` assim que for cifrado ou descartado.
-- `expo-media-library`: usar a API nova (`Asset`), a antiga lança erro no SDK 57. Não passar `cameraPermission: false` ao `expo-image-picker` (bloqueia a câmera no Android).
+- Não passar `cameraPermission: false` ao `expo-image-picker` (bloqueia a câmera no Android).
 - UI do sistema aberta pelo app (seletor de fotos, compartilhar, prompts de permissão/biometria) deve ser envolvida em `withExternalActivity` (`@/core/lifecycle`), senão dispara o auto-bloqueio e a limpeza de cache.
 - Testes com Skia real: arquivos `*.skia.test.ts` rodam no projeto Jest `skia` (CanvasKit/WASM).
 - Marca: o vetor do logo é `assets/brand/kronos-logo.svg` (espelhado em `features/app-shell/lib/kronos-logo.ts`, um teste garante a paridade). Ícones, splash e favicon saem de `scripts/brand-assets.sh`; depois rode `npx expo prebuild`. A abertura animada (`IntroSplash`) assume que o logo da splash nativa tem `SPLASH_LOGO_HEIGHT` — mudou `imageWidth` ou o script, atualize a constante.

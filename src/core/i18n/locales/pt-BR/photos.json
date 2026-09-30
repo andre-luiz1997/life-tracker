@@ -186,14 +186,6 @@
     "edit": "Editar",
     "guide": "Guia"
   },
-  "gallery": {
-    "removeTitle": "Remover da galeria do celular?",
-    "removeMessage": "A foto já está salva e criptografada no app. Você pode apagar o original da galeria.",
-    "remove": "Remover",
-    "keep": "Manter",
-    "manualTitle": "Apague o original manualmente",
-    "manualMessage": "Não foi possível apagar a foto automaticamente. Abra o app de Galeria/Fotos e apague a foto original."
-  },
   "editor": {
     "title": "Editar foto",
     "undo": "Desfazer",

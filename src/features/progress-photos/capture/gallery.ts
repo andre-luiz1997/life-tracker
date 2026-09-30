@@ -2,15 +2,11 @@ import {
   launchImageLibraryAsync,
   UIImagePickerPreferredAssetRepresentationMode,
 } from 'expo-image-picker';
-import { Asset, requestPermissionsAsync } from 'expo-media-library';
-import { Platform } from 'react-native';
 
 import { withExternalActivity } from '@/core/lifecycle';
 
 export type PickedImage = {
   uri: string;
-  /** Media library id, when the platform returns it (often null on Android's photo picker). */
-  assetId: string | null;
   /** Capture date from EXIF, used as the suggested entry date. */
   takenAt: Date | null;
 };
@@ -44,34 +40,6 @@ export async function pickImage(): Promise<PickedImage | null> {
   if (result.canceled || !asset) return null;
   return {
     uri: asset.uri,
-    assetId: asset.assetId ?? null,
     takenAt: parseExifDate(asset.exif),
   };
-}
-
-export type DeleteOriginalResult = 'deleted' | 'unavailable' | 'failed';
-
-/**
- * Deletes the original from the phone's gallery. The OS always shows its own confirmation.
- * 'unavailable' = no asset id (Android photo picker) → the UI tells the user to delete manually.
- */
-export async function deleteOriginal(assetId: string | null): Promise<DeleteOriginalResult> {
-  if (!assetId) return 'unavailable';
-  // The permission prompt and the OS delete confirmation are external UI.
-  return withExternalActivity(async (): Promise<DeleteOriginalResult> => {
-    try {
-      if (Platform.OS === 'ios') {
-        // iOS needs read-write access; with "limited" access the picked photo may not be visible.
-        const permission = await requestPermissionsAsync(false);
-        if (!permission.granted) return 'failed';
-        await new Asset(`ph://${assetId}`).delete();
-      } else {
-        // Android 11+: MediaStore delete request (system dialog), no storage permission needed.
-        await new Asset(`content://media/external/images/media/${assetId}`).delete();
-      }
-      return 'deleted';
-    } catch {
-      return 'failed';
-    }
-  });
 }

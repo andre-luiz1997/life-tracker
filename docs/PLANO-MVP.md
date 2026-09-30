@@ -28,7 +28,7 @@
 | Estado de UI/sessão | `zustand` | Leve; só para estado efêmero (sessão desbloqueada, rascunho de captura/edição). Dados persistentes vivem no SQLite. |
 | Câmera | `expo-camera` (`CameraView`) | Suficiente para overlay fantasma, grade, timer, troca de câmera. `takePictureAsync` grava no cache, não na galeria. |
 | Sensores | `expo-sensors` (`DeviceMotion`) | Indicador de nível/inclinação e disparo automático (modo coroa). |
-| Galeria | `expo-image-picker` (seleção) + `expo-media-library` (`deleteAssetsAsync`) | Importar e remover o original. |
+| Galeria | `expo-image-picker` (seleção) | Importar fotos. |
 | Edição | `expo-image-manipulator` (crop/rotate/flip/resize) + `@shopify/react-native-skia` (color matrix, blur de regiões, composição) | Skia também serve para comparação e gráficos. |
 | Gestos/animação | `react-native-gesture-handler` + `react-native-reanimated` | Pinch/pan no editor, slider de comparação. |
 | Criptografia | `react-native-quick-crypto` (JSI, API do Node `crypto`) | AES-GCM e PBKDF2 rápidos, nativos. |
@@ -63,7 +63,7 @@ Regras:
 
 ```
 life-tracker/
-├── app.config.ts                 # config Expo + plugins (sqlcipher, camera, media-library…)
+├── app.config.ts                 # config Expo + plugins (sqlcipher, camera, image-picker…)
 ├── eas.json
 ├── drizzle.config.ts
 ├── docs/

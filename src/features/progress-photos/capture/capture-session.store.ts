@@ -8,9 +8,8 @@ export type PendingCapture = {
   source: 'camera' | 'gallery';
   /** One shot, or a hands-free burst to pick from. */
   shots: PendingShot[];
-  /** Gallery only: EXIF date (suggested entry date) and media library id (to delete the original). */
+  /** Gallery only: EXIF date, used as the suggested entry date. */
   takenAt?: Date | null;
-  assetId?: string | null;
 };
 
 /**

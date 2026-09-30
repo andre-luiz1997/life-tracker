@@ -48,7 +48,6 @@ export function SessionScreen({ timelineId }: { timelineId: string }) {
       source: 'gallery',
       shots: [{ uri: picked.uri }],
       takenAt: picked.takenAt,
-      assetId: picked.assetId,
     });
     router.push({ pathname: '/timeline/[timelineId]/review', params: { timelineId } });
   };

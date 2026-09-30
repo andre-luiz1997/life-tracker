@@ -186,14 +186,6 @@
     "edit": "Edit",
     "guide": "Guide"
   },
-  "gallery": {
-    "removeTitle": "Remove from the phone's gallery?",
-    "removeMessage": "The photo is already saved and encrypted in the app. You can delete the original from the gallery.",
-    "remove": "Remove",
-    "keep": "Keep",
-    "manualTitle": "Delete the original manually",
-    "manualMessage": "The photo couldn't be deleted automatically. Open your Gallery/Photos app and delete the original."
-  },
   "editor": {
     "title": "Edit photo",
     "undo": "Undo",

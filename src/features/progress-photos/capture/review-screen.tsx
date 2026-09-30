@@ -56,7 +56,6 @@ export function ReviewScreen({ timelineId }: { timelineId: string }) {
       ...pending,
       shots: [{ uri: picked.uri }],
       takenAt: picked.takenAt,
-      assetId: picked.assetId,
     });
   };
 
