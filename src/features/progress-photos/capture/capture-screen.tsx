@@ -368,7 +368,7 @@ function Camera(props: CameraProps) {
               />
             )}
             <Button
-              variant="ghost"
+              variant="onDark"
               label={t('capture.askHelp')}
               onPress={() => setMode('standard')}
             />
@@ -402,7 +402,7 @@ function Camera(props: CameraProps) {
         )}
         {props.initialMode === 'hands-free' && mode === 'standard' ? (
           <Button
-            variant="ghost"
+            variant="onDark"
             label={t('capture.handsFree')}
             onPress={() => setMode('hands-free')}
           />

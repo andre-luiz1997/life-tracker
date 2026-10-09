@@ -16,7 +16,14 @@
   },
   "settings": {
     "title": "Ajustes",
-    "version": "Versão {{version}}"
+    "version": "Versão {{version}}",
+    "appearance": {
+      "title": "Aparência",
+      "hint": "Escolha entre o tema claro e o escuro, ou siga o do aparelho.",
+      "system": "Automático",
+      "light": "Claro",
+      "dark": "Escuro"
+    }
   },
   "actions": {
     "cancel": "Cancelar",

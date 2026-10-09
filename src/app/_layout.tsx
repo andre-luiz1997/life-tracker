@@ -10,11 +10,13 @@ import {
   useStartupMaintenance,
 } from '@/features/progress-photos';
 import { AppLock } from '@/features/security';
+import { ColorSchemeSync } from '@/features/settings';
 import { colorOf, fonts, useAppColorScheme } from '@/shared/theme';
 
 export default function RootLayout() {
   return (
     <AppProviders>
+      <ColorSchemeSync />
       <AppLock onBackground={clearDecryptedPhotos}>
         <RootStack />
       </AppLock>

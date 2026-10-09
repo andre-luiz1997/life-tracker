@@ -16,7 +16,14 @@
   },
   "settings": {
     "title": "Settings",
-    "version": "Version {{version}}"
+    "version": "Version {{version}}",
+    "appearance": {
+      "title": "Appearance",
+      "hint": "Choose the light or dark theme, or follow the device.",
+      "system": "Automatic",
+      "light": "Light",
+      "dark": "Dark"
+    }
   },
   "actions": {
     "cancel": "Cancel",

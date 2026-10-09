@@ -5,13 +5,17 @@ import { colorOf, type ColorToken, useAppColorScheme } from '@/shared/theme';
 
 import { Text } from './text';
 
-/** Pill buttons: solid ink for the main action, outline for secondary, yellow accent. */
+/**
+ * Pill buttons: solid ink for the main action, outline for secondary, yellow accent.
+ * `onDark` is the translucent white used over photos/camera (same look as `Chip tone="onDark"`).
+ */
 const containerVariants = {
   primary: 'bg-primary',
   accent: 'bg-accent',
   secondary: 'border border-border bg-surface',
   danger: 'bg-danger/10',
   ghost: 'bg-transparent',
+  onDark: 'border border-white/50 bg-white/25',
 } as const;
 
 const labelVariants: Record<keyof typeof containerVariants, string> = {
@@ -20,6 +24,7 @@ const labelVariants: Record<keyof typeof containerVariants, string> = {
   secondary: 'text-foreground',
   danger: 'text-danger',
   ghost: 'text-foreground',
+  onDark: 'text-on-dark',
 };
 
 const spinnerColor: Record<keyof typeof containerVariants, ColorToken> = {
@@ -28,6 +33,7 @@ const spinnerColor: Record<keyof typeof containerVariants, ColorToken> = {
   secondary: 'foreground',
   danger: 'danger',
   ghost: 'foreground',
+  onDark: 'on-dark',
 };
 
 export type ButtonProps = Omit<PressableProps, 'children'> & {
