@@ -19,9 +19,9 @@ export const weightLossTemplate: TimelineTemplate = {
     { key: 'body_right', overlay: 'body-side', mirrorOverlay: true, ...body },
     { key: 'torso', overlay: 'body-torso', ...detail },
     { key: 'arms_relaxed', overlay: 'body-arms', ...detail },
-    { key: 'arms_flexed', overlay: 'body-arms', ...detail },
+    { key: 'arms_flexed', overlay: 'body-arms-flexed', ...detail },
     { key: 'legs', overlay: 'body-legs', ...detail },
-    { key: 'glutes', overlay: 'body-back', ...detail },
+    { key: 'glutes', overlay: 'body-glutes', ...detail },
   ],
   metrics: [
     { key: 'weight', unit: 'kg' },

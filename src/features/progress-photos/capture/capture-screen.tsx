@@ -86,7 +86,8 @@ export function CaptureScreen({ timelineId, angleId }: { timelineId: string; ang
       angleKey={angle.key}
       angleId={angle.id}
       angleLabel={angle.label}
-      overlay={(angle.overlayKey as OverlayKey | null) ?? config.overlay ?? null}
+      // The template wins over the key saved at creation, so older timelines get updated outlines.
+      overlay={config.overlay ?? (angle.overlayKey as OverlayKey | null) ?? null}
       mirrorOverlay={config.mirrorOverlay ?? false}
       initialFacing={config.camera}
       initialMode={config.captureMode === 'hands-free' ? 'hands-free' : 'standard'}

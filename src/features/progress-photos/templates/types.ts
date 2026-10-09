@@ -16,14 +16,16 @@ export type CaptureMode = 'standard' | 'timer' | 'hands-free';
 
 export type AspectRatio = '3:4' | '1:1' | '9:16';
 
-/** Silhouette drawn over the camera preview. SVGs arrive in F2. */
+/** Silhouette drawn over the camera preview, traced from the pose photos (one per pose). */
 export type OverlayKey =
   | 'body-front'
   | 'body-back'
   | 'body-side'
   | 'body-torso'
   | 'body-arms'
+  | 'body-arms-flexed'
   | 'body-legs'
+  | 'body-glutes'
   | 'head-front'
   | 'head-temple'
   | 'head-top'
